@@ -18,6 +18,12 @@
 		D1674CEF2B078C9D000697C2 /* DecodableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CEE2B078C9D000697C2 /* DecodableModel.swift */; };
 		D1674CF22B078D7A000697C2 /* LSLPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CF12B078D7A000697C2 /* LSLPError.swift */; };
 		D1674CF42B08A29C000697C2 /* JoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CF32B08A29C000697C2 /* JoinType.swift */; };
+		D1674CF72B08A3DA000697C2 /* ChangwonDangam.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1674CF62B08A3DA000697C2 /* ChangwonDangam.otf */; };
+		D1674CFC2B08A4AF000697C2 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1674CF82B08A4AF000697C2 /* Pretendard-Medium.otf */; };
+		D1674CFD2B08A4AF000697C2 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1674CF92B08A4AF000697C2 /* Pretendard-Regular.otf */; };
+		D1674CFE2B08A4AF000697C2 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1674CFA2B08A4AF000697C2 /* Pretendard-Light.otf */; };
+		D1674CFF2B08A4AF000697C2 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1674CFB2B08A4AF000697C2 /* Pretendard-SemiBold.otf */; };
+		D1674D012B08A4C5000697C2 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1674D002B08A4C5000697C2 /* Pretendard-Bold.otf */; };
 		D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234C2AFCEB1000684175 /* AppDelegate.swift */; };
 		D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */; };
 		D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC23502AFCEB1000684175 /* LoginViewController.swift */; };
@@ -47,6 +53,12 @@
 		D1674CEE2B078C9D000697C2 /* DecodableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableModel.swift; sourceTree = "<group>"; };
 		D1674CF12B078D7A000697C2 /* LSLPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSLPError.swift; sourceTree = "<group>"; };
 		D1674CF32B08A29C000697C2 /* JoinType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinType.swift; sourceTree = "<group>"; };
+		D1674CF62B08A3DA000697C2 /* ChangwonDangam.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ChangwonDangam.otf; sourceTree = "<group>"; };
+		D1674CF82B08A4AF000697C2 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		D1674CF92B08A4AF000697C2 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		D1674CFA2B08A4AF000697C2 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		D1674CFB2B08A4AF000697C2 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		D1674D002B08A4C5000697C2 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		D1CC23492AFCEB1000684175 /* Mobbie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobbie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1CC234C2AFCEB1000684175 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +118,20 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		D1674CF52B08A377000697C2 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				D1674CFA2B08A4AF000697C2 /* Pretendard-Light.otf */,
+				D1674CF92B08A4AF000697C2 /* Pretendard-Regular.otf */,
+				D1674CF82B08A4AF000697C2 /* Pretendard-Medium.otf */,
+				D1674CFB2B08A4AF000697C2 /* Pretendard-SemiBold.otf */,
+				D1674D002B08A4C5000697C2 /* Pretendard-Bold.otf */,
+				D1674CF62B08A3DA000697C2 /* ChangwonDangam.otf */,
+				D1CC23552AFCEB1200684175 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		D1CC23402AFCEB1000684175 = {
 			isa = PBXGroup;
 			children = (
@@ -133,7 +159,7 @@
 				D1CC23772AFCFF4A00684175 /* Login */,
 				D1CC237A2AFCFF9500684175 /* Data */,
 				D1674CD52B06084E000697C2 /* Network */,
-				D1CC23552AFCEB1200684175 /* Assets.xcassets */,
+				D1674CF52B08A377000697C2 /* Resource */,
 				D1CC23572AFCEB1200684175 /* LaunchScreen.storyboard */,
 				D1CC235A2AFCEB1200684175 /* Info.plist */,
 			);
@@ -256,8 +282,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1674CF72B08A3DA000697C2 /* ChangwonDangam.otf in Resources */,
+				D1674D012B08A4C5000697C2 /* Pretendard-Bold.otf in Resources */,
 				D1CC23592AFCEB1200684175 /* LaunchScreen.storyboard in Resources */,
+				D1674CFF2B08A4AF000697C2 /* Pretendard-SemiBold.otf in Resources */,
+				D1674CFD2B08A4AF000697C2 /* Pretendard-Regular.otf in Resources */,
 				D1CC23562AFCEB1200684175 /* Assets.xcassets in Resources */,
+				D1674CFC2B08A4AF000697C2 /* Pretendard-Medium.otf in Resources */,
+				D1674CFE2B08A4AF000697C2 /* Pretendard-Light.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
