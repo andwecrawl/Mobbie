@@ -88,7 +88,7 @@ class IntroViewController: BaseViewController {
         nextButton.rx.tap
             .bind { _ in
                 let vc = JoinViewController()
-                vc.VCType = .email
+                vc.joinType = .email
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)

@@ -50,7 +50,7 @@ class JoinViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     
-    var VCType: JoinType?
+    var joinType: JoinType?
     
     
     override func viewDidLoad() {
@@ -106,9 +106,9 @@ class JoinViewController: BaseViewController {
     
     override func configureView() {
         
-        informationLabel.text = VCType?.rawValue
-        descriptionLabel.text = VCType?.requirement
-        if VCType == .phoneNumber {
+        informationLabel.text = joinType?.rawValue
+        descriptionLabel.text = joinType?.requirement
+        if joinType == .phoneNumber {
             inputTextField.isSecureTextEntry = true
         }
         lineView.backgroundColor = .gray
@@ -118,7 +118,7 @@ class JoinViewController: BaseViewController {
     
     func bind() {
         
-        viewModel.joinType = VCType
+        viewModel.joinType = joinType
         
         let input = JoinViewModel.Input(
             userInput: inputTextField.rx.text.orEmpty,
@@ -144,16 +144,16 @@ class JoinViewController: BaseViewController {
         output.tap
             .bind(with: self, onNext: { owner, _ in
                 
-                if owner.VCType == .email {
+                if owner.joinType == .email {
                     
                     let vc = JoinViewController()
-                    vc.VCType = .password
+                    vc.joinType = .password
                     self.navigationController?.pushViewController(vc, animated: true)
                     
-                } else if owner.VCType == .password {
+                } else if owner.joinType == .password {
                     
                     let vc = JoinViewController()
-                    vc.VCType = .phoneNumber
+                    vc.joinType = .phoneNumber
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                 } else {
