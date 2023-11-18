@@ -50,7 +50,7 @@ class JoinViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     
-    var VCType: VCType?
+    var VCType: JoinType?
     
     
     override func viewDidLoad() {
@@ -118,7 +118,7 @@ class JoinViewController: BaseViewController {
     
     func bind() {
         
-        viewModel.VCType = VCType
+        viewModel.joinType = VCType
         
         let input = JoinViewModel.Input(
             userInput: inputTextField.rx.text.orEmpty,

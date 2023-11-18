@@ -11,7 +11,7 @@ import RxCocoa
 
 class JoinViewModel {
     
-    var VCType: VCType?
+    var joinType: JoinType?
     let disposeBag = DisposeBag()
     
     struct Input {
@@ -28,21 +28,21 @@ class JoinViewModel {
     
     func translate(input: Input) -> Output? {
         
-        guard let VCType else { return nil }
+        guard let joinType else { return nil }
         
         let isValid = BehaviorSubject(value: false)
         let text = BehaviorSubject<String>(value: "")
         
         input.userInput
             .bind(with: self) { owner, value in
-                let result = VCType == .phoneNumber ? value.formated(by: "###-####-####") : value
+                let result = joinType == .phoneNumber ? value.formated(by: "###-####-####") : value
                 text.onNext(result)
             }
             .disposed(by: disposeBag)
         
         input.userInput
             .map { str in
-                switch VCType {
+                switch joinType {
                 case .email:
                     return (str.range(of: RegexType.email.rawValue, options: .regularExpression) != nil)
                 case .password:
