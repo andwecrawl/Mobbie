@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ModelResponse: Decodable {
+struct JoinResponse: Decodable {
     let email: String
     let password: String
     let nickname: String
