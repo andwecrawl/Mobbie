@@ -6,60 +6,32 @@
 //
 
 import Foundation
-import Moya
 
-/*
- enum LSLPNetwork {
-     case signUp(model: Model)
-     case Login(email: String, password: String)
-     case emailValidation(email: String)
- }
- */
+import Moya
+import RxMoya
+import RxSwift
+import RxCocoa
+
 
 class APIManager {
     
     static let shared = APIManager()
+    
     private init() { }
     
-    private let provider = MoyaProvider<LSLPNetwork>()
-    
-    func signUp(model: Model) {
-        
-        provider.request(.signUp(model: model)) { result in
-            switch result {
-            case .success(let value):
-                print("success", value.statusCode)
-                print(value.data)
-                
-            case .failure(let error):
-                print("error", error)
-            }
+    private let requestClosure = { (endpoint: Endpoint, done: MoyaProvider.RequestResultClosure) in
+        do {
+            var request: URLRequest = try endpoint.urlRequest()
+            request.timeoutInterval = 10
+            done(.success(request))
+        } catch {
+            done(.failure(MoyaError.underlying(error, nil)))
         }
     }
     
-    func login(email: String, password: String) {
-        provider.request(.Login(email: email, password: password)) { result in
-            switch result {
-            case .success(let value):
-                print("success", value.statusCode)
-                print(value.data)
-                
-            case .failure(let error):
-                print("error", error)
-            }
-        }
-    }
+    private lazy var provider = MoyaProvider<LSLPNetwork>(requestClosure: requestClosure)
     
-    func checkEmailValidation(email: String) {
-        provider.request(.emailValidation(email: email)) { result in
-            switch result {
-            case .success(let value):
-                print("success", value.statusCode)
-                print(value.data)
-                
-            case .failure(let error):
-                print("error", error)
-            }
-        }
+    func fetchInSignProgress(_ networkCase: LSLPNetwork) -> Single<Response> {
+        return provider.rx.request(networkCase)
     }
 }
