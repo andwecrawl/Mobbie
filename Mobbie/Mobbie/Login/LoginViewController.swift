@@ -8,6 +8,12 @@
 import UIKit
 
 class LoginViewController: BaseViewController {
+    
+    let titleLabel = {
+        let label = UILabel()
+        label.text = "Mobbie"
+        return label
+    }
 
     let idTextField = {
         let view = UITextField()
@@ -36,7 +42,6 @@ class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        APIManager.shared.checkEmailValidation(email: "asd@gmail.com")
     }
     
     override func configureHierarchy() {
@@ -57,13 +62,13 @@ class LoginViewController: BaseViewController {
         
         idTextField.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
-            make.bottom.equalTo(passwordTextField.snp.top).inset(8)
             make.height.equalTo(50)
         }
         
         passwordTextField.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(idTextField)
-            make.centerY.equalToSuperview()
+            make.top.equalTo(idTextField.snp.bottom).offset(8)
+            make.center.equalToSuperview()
             make.height.equalTo(50)
         }
         
@@ -79,6 +84,10 @@ class LoginViewController: BaseViewController {
         
     }
     
-
 }
 
+
+
+#Preview("LoginViewController") {
+    LoginViewController()
+}
