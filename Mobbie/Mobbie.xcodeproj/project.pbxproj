@@ -24,6 +24,9 @@
 		D1674CFE2B08A4AF000697C2 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1674CFA2B08A4AF000697C2 /* Pretendard-Light.otf */; };
 		D1674CFF2B08A4AF000697C2 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1674CFB2B08A4AF000697C2 /* Pretendard-SemiBold.otf */; };
 		D1674D012B08A4C5000697C2 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1674D002B08A4C5000697C2 /* Pretendard-Bold.otf */; };
+		D1674D482B0B7479000697C2 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674D472B0B7478000697C2 /* UserInfo.swift */; };
+		D1674D4A2B0B7957000697C2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674D492B0B7957000697C2 /* LoginViewModel.swift */; };
+		D1674D4C2B0B7978000697C2 /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */; };
 		D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234C2AFCEB1000684175 /* AppDelegate.swift */; };
 		D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */; };
 		D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC23502AFCEB1000684175 /* LoginViewController.swift */; };
@@ -59,6 +62,9 @@
 		D1674CFA2B08A4AF000697C2 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		D1674CFB2B08A4AF000697C2 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		D1674D002B08A4C5000697C2 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		D1674D472B0B7478000697C2 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		D1674D492B0B7957000697C2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
 		D1CC23492AFCEB1000684175 /* Mobbie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobbie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1CC234C2AFCEB1000684175 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -170,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				D1CC23622AFCEB8100684175 /* BaseViewController.swift */,
+				D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -189,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				D1CC23502AFCEB1000684175 /* LoginViewController.swift */,
+				D1674D492B0B7957000697C2 /* LoginViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -196,6 +204,7 @@
 		D1CC237A2AFCFF9500684175 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D1674D472B0B7478000697C2 /* UserInfo.swift */,
 				D12B91BB2AFE4DB7006451FE /* RegexType.swift */,
 				D1CC23782AFCFF8E00684175 /* UserDefaultHelper.swift */,
 				D1CC237D2AFCFFAB00684175 /* Extension */,
@@ -311,14 +320,17 @@
 				D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */,
 				D1674CDC2B063FD2000697C2 /* EncodableModel.swift in Sources */,
 				D12B91BE2AFE5A4E006451FE /* FeedViewController.swift in Sources */,
+				D1674D482B0B7479000697C2 /* UserInfo.swift in Sources */,
 				D1CC23732AFCF93700684175 /* UILabel+.swift in Sources */,
 				D1CC23612AFCEB6C00684175 /* IntroViewController.swift in Sources */,
+				D1674D4C2B0B7978000697C2 /* ViewModelProtocol.swift in Sources */,
 				D12B91C12AFE5DCE006451FE /* JoinViewModel.swift in Sources */,
 				D1674CF42B08A29C000697C2 /* JoinType.swift in Sources */,
 				D1CC23792AFCFF8E00684175 /* UserDefaultHelper.swift in Sources */,
 				D1674CCD2B0546F9000697C2 /* String+.swift in Sources */,
 				D1674CF22B078D7A000697C2 /* LSLPError.swift in Sources */,
 				D1CC23752AFCFE5600684175 /* JoinViewController.swift in Sources */,
+				D1674D4A2B0B7957000697C2 /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
