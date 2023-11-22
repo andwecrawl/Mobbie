@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 
 class JoinViewModel {
+class JoinViewModel: ViewModel {
     
     var joinType: JoinType?
     let disposeBag = DisposeBag()
