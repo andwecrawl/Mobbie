@@ -7,15 +7,15 @@
 
 import UIKit
 
-class LoginViewController: BaseViewController {
+final class LoginViewController: BaseViewController {
     
-    let titleLabel = {
+    private let titleLabel = {
         let label = UILabel()
         label.text = "Mobbie"
         return label
     }
 
-    let idTextField = {
+    private let idTextField = {
         let view = UITextField()
         view.borderStyle = .roundedRect
         view.placeholder = "아이디를 입력해 주세요."
@@ -23,7 +23,7 @@ class LoginViewController: BaseViewController {
         return view
     }()
     
-    let passwordTextField = {
+    private let passwordTextField = {
         let view = UITextField()
         view.borderStyle = .roundedRect
         view.placeholder = "비밀번호를 입력해 주세요."
@@ -31,7 +31,7 @@ class LoginViewController: BaseViewController {
         return view
     }()
     
-    let loginButton = {
+    private let loginButton = {
         let button = UIButton()
         button.setTitle("로그인", for: .normal)
         button.layer.cornerRadius = 8

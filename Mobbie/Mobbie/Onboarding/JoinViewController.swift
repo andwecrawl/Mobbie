@@ -11,16 +11,16 @@ import RxCocoa
 
 
 
-class JoinViewController: BaseViewController {
+final class JoinViewController: BaseViewController {
     
-    let informationLabel = {
+    private let informationLabel = {
         let label = UILabel()
         label.text = "이메일을 입력해 주세요."
         label.font = .systemFont(ofSize: 28, weight: .semibold)
         return label
     }()
     
-    let descriptionLabel = {
+    private let descriptionLabel = {
         let label = UILabel()
         label.text = "몇 자 이상 입력해 주세요!"
         label.font = .systemFont(ofSize: 15, weight: .light)
@@ -28,16 +28,16 @@ class JoinViewController: BaseViewController {
         return label
     }()
     
-    let inputTextField = {
+    private let inputTextField = {
         let textField = UITextField()
         textField.placeholder = "무언가를 입력해 주세요!"
         textField.font = .systemFont(ofSize: 18)
         return textField
     }()
     
-    let lineView = UIView()
+    private let lineView = UIView()
     
-    let nextButton = {
+    private let nextButton = {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
         config.baseBackgroundColor = .systemGreen
@@ -46,11 +46,12 @@ class JoinViewController: BaseViewController {
         return button
     }()
     
-    let viewModel = JoinViewModel()
+    private let viewModel = JoinViewModel()
     
     let disposeBag = DisposeBag()
     
     var joinType: JoinType?
+    var userInfo = UserInfo(id: "", password: "", phoneNumber: "")
     
     
     override func viewDidLoad() {
@@ -122,10 +123,11 @@ class JoinViewController: BaseViewController {
         
         let input = JoinViewModel.Input(
             userInput: inputTextField.rx.text.orEmpty,
-            tap: nextButton.rx.tap
+            tap: nextButton.rx.tap, 
+            userInfo: BehaviorSubject(value: userInfo)
         )
         
-        guard let output = viewModel.translate(input: input) else { return }
+        guard let output = viewModel.transform(input: input) else { return }
         
         output.isValid
             .bind(with: self) { owner, isValid in
@@ -176,3 +178,4 @@ class JoinViewController: BaseViewController {
     
     
 }
+

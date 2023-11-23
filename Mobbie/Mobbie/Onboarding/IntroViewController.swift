@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 
-class IntroViewController: BaseViewController {
+final class IntroViewController: BaseViewController {
     
     let informationLabel = {
         let label = UILabel()
