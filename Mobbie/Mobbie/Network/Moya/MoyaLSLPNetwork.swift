@@ -8,13 +8,13 @@
 import Foundation
 import Moya
 
-enum LSLPNetwork {
-    case signUp(model: Model)
+enum MoyaNetwork {
+    case signUp(model: SignUpData)
     case Login(email: String, password: String)
     case emailValidation(email: String)
 }
 
-extension LSLPNetwork: TargetType {
+extension MoyaNetwork: TargetType {
     var baseURL: URL {
         return URL(string: APIKeyURL.baseURL.rawValue)!
     }
