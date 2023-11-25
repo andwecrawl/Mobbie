@@ -13,7 +13,7 @@ class UserDefaultsHelper {
     
     private init() { }
     
-    let userDefaults = UserDefaults.standard
+    private let userDefaults = UserDefaults.standard
     
     var haveBeenBefore: Bool {
         get {
