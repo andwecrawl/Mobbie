@@ -11,10 +11,10 @@
 		D12B91BE2AFE5A4E006451FE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B91BD2AFE5A4E006451FE /* FeedViewController.swift */; };
 		D12B91C12AFE5DCE006451FE /* JoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B91C02AFE5DCE006451FE /* JoinViewModel.swift */; };
 		D1674CCD2B0546F9000697C2 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CCC2B0546F9000697C2 /* String+.swift */; };
-		D1674CD72B060887000697C2 /* LSLPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CD62B060887000697C2 /* LSLPNetwork.swift */; };
+		D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CD62B060887000697C2 /* MoyaLSLPNetwork.swift */; };
 		D1674CDC2B063FD2000697C2 /* EncodableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CDB2B063FD2000697C2 /* EncodableModel.swift */; };
 		D1674CE42B064551000697C2 /* APIKey+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CE32B064551000697C2 /* APIKey+URL.swift */; };
-		D1674CE62B064842000697C2 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CE52B064842000697C2 /* APIManager.swift */; };
+		D1674CE62B064842000697C2 /* MoyaAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CE52B064842000697C2 /* MoyaAPIManager.swift */; };
 		D1674CEF2B078C9D000697C2 /* DecodableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CEE2B078C9D000697C2 /* DecodableModel.swift */; };
 		D1674CF22B078D7A000697C2 /* LSLPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CF12B078D7A000697C2 /* LSLPError.swift */; };
 		D1674CF42B08A29C000697C2 /* JoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CF32B08A29C000697C2 /* JoinType.swift */; };
@@ -27,6 +27,8 @@
 		D1674D482B0B7479000697C2 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674D472B0B7478000697C2 /* UserInfo.swift */; };
 		D1674D4A2B0B7957000697C2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674D492B0B7957000697C2 /* LoginViewModel.swift */; };
 		D1674D4C2B0B7978000697C2 /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */; };
+		D18530DB2B110EF600EACDAA /* LSLPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18530DA2B110EF600EACDAA /* LSLPNetwork.swift */; };
+		D18530DD2B111FB900EACDAA /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18530DC2B111FB900EACDAA /* APIManager.swift */; };
 		D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234C2AFCEB1000684175 /* AppDelegate.swift */; };
 		D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */; };
 		D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC23502AFCEB1000684175 /* LoginViewController.swift */; };
@@ -49,10 +51,10 @@
 		D12B91BD2AFE5A4E006451FE /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		D12B91C02AFE5DCE006451FE /* JoinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewModel.swift; sourceTree = "<group>"; };
 		D1674CCC2B0546F9000697C2 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
-		D1674CD62B060887000697C2 /* LSLPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSLPNetwork.swift; sourceTree = "<group>"; };
+		D1674CD62B060887000697C2 /* MoyaLSLPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLSLPNetwork.swift; sourceTree = "<group>"; };
 		D1674CDB2B063FD2000697C2 /* EncodableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableModel.swift; sourceTree = "<group>"; };
 		D1674CE32B064551000697C2 /* APIKey+URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIKey+URL.swift"; sourceTree = "<group>"; };
-		D1674CE52B064842000697C2 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		D1674CE52B064842000697C2 /* MoyaAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaAPIManager.swift; sourceTree = "<group>"; };
 		D1674CEE2B078C9D000697C2 /* DecodableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableModel.swift; sourceTree = "<group>"; };
 		D1674CF12B078D7A000697C2 /* LSLPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSLPError.swift; sourceTree = "<group>"; };
 		D1674CF32B08A29C000697C2 /* JoinType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinType.swift; sourceTree = "<group>"; };
@@ -65,6 +67,8 @@
 		D1674D472B0B7478000697C2 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		D1674D492B0B7957000697C2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
+		D18530DA2B110EF600EACDAA /* LSLPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSLPNetwork.swift; sourceTree = "<group>"; };
+		D18530DC2B111FB900EACDAA /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		D1CC23492AFCEB1000684175 /* Mobbie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobbie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1CC234C2AFCEB1000684175 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,10 +110,11 @@
 		D1674CD52B06084E000697C2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				D1674CD62B060887000697C2 /* LSLPNetwork.swift */,
+				D18530DA2B110EF600EACDAA /* LSLPNetwork.swift */,
 				D1674CF12B078D7A000697C2 /* LSLPError.swift */,
+				D18530DC2B111FB900EACDAA /* APIManager.swift */,
 				D1674CF02B078D6D000697C2 /* Model */,
-				D1674CE52B064842000697C2 /* APIManager.swift */,
+				D18530D92B110AB600EACDAA /* Moya */,
 				D1674CE32B064551000697C2 /* APIKey+URL.swift */,
 			);
 			path = Network;
@@ -136,6 +141,15 @@
 				D1CC23552AFCEB1200684175 /* Assets.xcassets */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		D18530D92B110AB600EACDAA /* Moya */ = {
+			isa = PBXGroup;
+			children = (
+				D1674CE52B064842000697C2 /* MoyaAPIManager.swift */,
+				D1674CD62B060887000697C2 /* MoyaLSLPNetwork.swift */,
+			);
+			path = Moya;
 			sourceTree = "<group>";
 		};
 		D1CC23402AFCEB1000684175 = {
@@ -309,14 +323,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1674CE62B064842000697C2 /* APIManager.swift in Sources */,
+				D18530DD2B111FB900EACDAA /* APIManager.swift in Sources */,
+				D1674CE62B064842000697C2 /* MoyaAPIManager.swift in Sources */,
 				D1CC23632AFCEB8100684175 /* BaseViewController.swift in Sources */,
 				D12B91BC2AFE4DB7006451FE /* RegexType.swift in Sources */,
 				D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */,
 				D1674CEF2B078C9D000697C2 /* DecodableModel.swift in Sources */,
 				D1674CE42B064551000697C2 /* APIKey+URL.swift in Sources */,
 				D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */,
-				D1674CD72B060887000697C2 /* LSLPNetwork.swift in Sources */,
+				D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */,
 				D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */,
 				D1674CDC2B063FD2000697C2 /* EncodableModel.swift in Sources */,
 				D12B91BE2AFE5A4E006451FE /* FeedViewController.swift in Sources */,
@@ -325,6 +340,7 @@
 				D1CC23612AFCEB6C00684175 /* IntroViewController.swift in Sources */,
 				D1674D4C2B0B7978000697C2 /* ViewModelProtocol.swift in Sources */,
 				D12B91C12AFE5DCE006451FE /* JoinViewModel.swift in Sources */,
+				D18530DB2B110EF600EACDAA /* LSLPNetwork.swift in Sources */,
 				D1674CF42B08A29C000697C2 /* JoinType.swift in Sources */,
 				D1CC23792AFCFF8E00684175 /* UserDefaultHelper.swift in Sources */,
 				D1674CCD2B0546F9000697C2 /* String+.swift in Sources */,
