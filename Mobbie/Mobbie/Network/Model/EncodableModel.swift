@@ -7,10 +7,11 @@
 
 import Foundation
 
-struct Model: Encodable {
+struct SignUpData: Encodable {
     let email: String
     let password: String
-    let phoneNumber: String
+    let nick: String
+    let phoneNum: String
 }
 
 struct LoginData: Encodable {

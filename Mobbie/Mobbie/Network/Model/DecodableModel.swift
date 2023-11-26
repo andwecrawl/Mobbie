@@ -28,6 +28,6 @@ struct ValidationResponse: Decodable {
     let message: String
 }
 
-struct ErrorMessages: Decodable {
+struct ErrorResponse: Decodable {
     let message: String
 }
