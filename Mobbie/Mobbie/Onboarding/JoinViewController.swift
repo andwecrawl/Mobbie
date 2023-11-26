@@ -115,20 +115,21 @@ final class JoinViewController: BaseViewController {
         lineView.backgroundColor = .gray
     }
     
-    let isValid = BehaviorSubject(value: false)
-    
     func bind() {
         
         viewModel.joinType = joinType
         
         let input = JoinViewModel.Input(
             userInput: inputTextField.rx.text.orEmpty,
-            tap: nextButton.rx.tap, 
-            userInfo: BehaviorSubject(value: userInfo)
+            tap: nextButton.rx.tap,
+            userInfo: userInfo
         )
         
         guard let output = viewModel.transform(input: input) else { return }
         
+//        nextButton.rx.isEnabled
+//        nextButton.rx.configuration
+//        lineView.rx.backgroundColor
         output.isValid
             .bind(with: self) { owner, isValid in
                 
