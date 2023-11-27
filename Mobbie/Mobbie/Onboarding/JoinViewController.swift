@@ -37,12 +37,11 @@ final class JoinViewController: BaseViewController {
     
     private let lineView = UIView()
     
-    private let nextButton = {
+    private var nextButton = {
         let button = UIButton()
-        var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .systemGreen
-        config.title = "다음으로"
-        button.configuration = config
+        button.backgroundColor = .systemGreen
+        button.setTitle("다음으로", for: .normal)
+        button.layer.cornerRadius = 8
         return button
     }()
     
@@ -51,13 +50,14 @@ final class JoinViewController: BaseViewController {
     let disposeBag = DisposeBag()
     
     var joinType: JoinType?
-    var userInfo = UserInfo(id: "", password: "", phoneNumber: "")
+    var userInfo: UserInfo?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         bind()
+        print("\(userInfo?.id), \(userInfo?.password), \(userInfo?.phoneNumber)")
     }
     
     override func configureHierarchy() {
@@ -82,19 +82,19 @@ final class JoinViewController: BaseViewController {
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(informationLabel.snp.bottom).offset(4)
+            make.top.equalTo(informationLabel.snp.bottom).offset(8)
             make.horizontalEdges.equalTo(informationLabel)
         }
         
         inputTextField.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(informationLabel)
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(40)
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(44)
         }
         
         lineView.snp.makeConstraints { make in
             make.bottom.equalTo(inputTextField.snp.bottom).offset(4)
             make.horizontalEdges.equalTo(inputTextField)
-            make.height.equalTo(1)
+            make.height.equalTo(2)
         }
         
         nextButton.snp.makeConstraints { make in
@@ -109,7 +109,8 @@ final class JoinViewController: BaseViewController {
         
         informationLabel.text = joinType?.rawValue
         descriptionLabel.text = joinType?.requirement
-        if joinType == .phoneNumber {
+        inputTextField.placeholder = joinType?.placeholder
+        if joinType == .password {
             inputTextField.isSecureTextEntry = true
         }
         lineView.backgroundColor = .gray
@@ -127,12 +128,8 @@ final class JoinViewController: BaseViewController {
         
         guard let output = viewModel.transform(input: input) else { return }
         
-//        nextButton.rx.isEnabled
-//        nextButton.rx.configuration
-//        lineView.rx.backgroundColor
         output.isValid
             .bind(with: self) { owner, isValid in
-                
                 owner.nextButton.isEnabled = isValid
                 var config = UIButton.Configuration.filled()
                 config.baseBackgroundColor = isValid ? .systemGreen : .gray
@@ -174,6 +171,7 @@ final class JoinViewController: BaseViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
         
     }
     

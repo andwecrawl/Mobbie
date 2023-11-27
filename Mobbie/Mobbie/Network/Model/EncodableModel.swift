@@ -10,7 +10,7 @@ import Foundation
 struct SignUpData: Encodable {
     let email: String
     let password: String
-    let nick: String
+    let nick = UUID()
     let phoneNum: String
 }
 
