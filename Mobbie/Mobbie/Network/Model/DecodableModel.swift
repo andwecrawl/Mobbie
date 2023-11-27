@@ -8,20 +8,20 @@
 import Foundation
 
 struct JoinResponse: Decodable {
+    let id: String
     let email: String
-    let password: String
     let nickname: String
     
     enum CodingKeys: String, CodingKey {
-        case email = "_id"
-        case password
+        case id = "_id"
+        case email
         case nickname = "nick"
     }
 }
 
 struct LoginResponse: Decodable {
-    let email: String
-    let password: String
+    let token: String
+    let refreshToken: String
 }
 
 struct ValidationResponse: Decodable {
