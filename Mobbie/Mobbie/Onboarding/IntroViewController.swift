@@ -14,14 +14,14 @@ final class IntroViewController: BaseViewController {
     
     let informationLabel = {
         let label = UILabel()
-        label.text = "새싹 동료들과의 소통,\n모두 새싹모음에서"
+        label.text = "새싹 동료들과의 소통,\n모두 Mobbie에서"
         label.font = .systemFont(ofSize: 28, weight: .semibold)
         return label
     }()
     
     let descriptionLabel = {
         let label = UILabel()
-        label.text = "왠지 무서운 오픈라운지 대신\n간편하게 만나요!"
+        label.text = "익명으로 편하게\n동료들과 소통해요!"
         label.font = .systemFont(ofSize: 16, weight: .light)
         label.textColor = .systemGray2
         return label
@@ -85,6 +85,7 @@ final class IntroViewController: BaseViewController {
     
     func bind() {
         
+        print("bind")
         nextButton.rx.tap
             .bind { _ in
                 let vc = JoinViewController()
