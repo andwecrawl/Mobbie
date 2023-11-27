@@ -119,11 +119,15 @@ final class JoinViewController: BaseViewController {
     func bind() {
         
         viewModel.joinType = joinType
+        viewModel.completionHandler = { str in
+            self.sendOneSideAlert(title: str, message: "다시 입력해 주세요.")
+        }
         
         let input = JoinViewModel.Input(
             userInput: inputTextField.rx.text.orEmpty,
             tap: nextButton.rx.tap,
-            userInfo: userInfo
+            userInfo: userInfo ?? UserInfo(id: "", password: "", phoneNumber: "")
+            
         )
         
         guard let output = viewModel.transform(input: input) else { return }
@@ -131,15 +135,13 @@ final class JoinViewController: BaseViewController {
         output.isValid
             .bind(with: self) { owner, isValid in
                 owner.nextButton.isEnabled = isValid
-                var config = UIButton.Configuration.filled()
-                config.baseBackgroundColor = isValid ? .systemGreen : .gray
-                config.title = "다음으로"
-                owner.nextButton.configuration = config
+                owner.nextButton.backgroundColor = isValid ? .systemGreen : .gray
                 
                 owner.lineView.backgroundColor = isValid ? .systemGreen : .systemRed
             }
             .disposed(by: disposeBag)
         
+        userInfo = output.userInfo
         
         output.tap
             .bind(with: self, onNext: { owner, _ in
@@ -148,12 +150,14 @@ final class JoinViewController: BaseViewController {
                     
                     let vc = JoinViewController()
                     vc.joinType = .password
+                    vc.userInfo = output.userInfo
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                 } else if owner.joinType == .password {
                     
                     let vc = JoinViewController()
                     vc.joinType = .phoneNumber
+                    vc.userInfo = output.userInfo
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                 } else {
