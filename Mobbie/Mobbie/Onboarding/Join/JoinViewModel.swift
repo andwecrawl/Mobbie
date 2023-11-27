@@ -28,7 +28,7 @@ final class JoinViewModel: ViewModel {
         
         let isValid: BehaviorSubject<Bool>
         let tap: ControlEvent<Void>
-        let userInfo: UserInfo
+        let userInfo: BehaviorSubject<UserInfo>
     }
     
     func transform(input: Input) -> Output? {
@@ -54,10 +54,7 @@ final class JoinViewModel: ViewModel {
             .disposed(by: disposeBag)
         
         subjectInfo
-            .bind(with: self) { owner, value in
-                value
-            }
-        
+            .onNext(newInfo)
         newInfo = input.userInfo
         
         input.userInput
@@ -84,6 +81,8 @@ final class JoinViewModel: ViewModel {
             .bind(to: isValid)
             .disposed(by: disposeBag)
         
+        
+        
 //        isValid
 //            .debounce(.seconds(1), scheduler: MainScheduler.instance)
 //            .subscribe(with: self) { owner, isValid in
@@ -109,8 +108,8 @@ final class JoinViewModel: ViewModel {
         switch joinType {
         case .email:
             
-            input.userInput
-                .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            input.tap
+                .throttle(.seconds(1), scheduler: MainScheduler.instance)
                 .flatMap { _ in
                     return MoyaAPIManager.shared.fetchInSignProgress(.emailValidation(email: self.newInfo.id), type: ValidationResponse.self) { self.completionHandler?($0.message) }
                 }
@@ -152,12 +151,13 @@ final class JoinViewModel: ViewModel {
             input.tap
                 .throttle(.seconds(1), scheduler: MainScheduler.instance)
                 .flatMap {
+                    print(self.newInfo)
                     return MoyaAPIManager.shared.fetchInSignProgress(.Login(email: self.newInfo.id, password: self.newInfo.password), type: LoginResponse.self) { print("error Handling: \($0)") }
                 }
                 .subscribe(with: self) { owner, response in
                     switch response {
                     case .success(let result):
-                        print("===== login Success!!: \(result.email), \(result.password)")
+                        print("===== login Success!!: \(result.token), \(result.refreshToken)")
                     case .failure(let error):
                         "======= error message: \(error.localizedDescription)"
                     }
@@ -171,7 +171,7 @@ final class JoinViewModel: ViewModel {
         return Output(
             isValid: isValid,
             tap: input.tap,
-            userInfo: newInfo
+            userInfo: subjectInfo
         )
     }
 }

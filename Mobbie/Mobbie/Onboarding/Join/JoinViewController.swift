@@ -141,23 +141,23 @@ final class JoinViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        userInfo = output.userInfo
-        
         output.tap
-            .bind(with: self, onNext: { owner, _ in
-                
+            .withLatestFrom(output.userInfo, resultSelector: { _, value in
+                return value
+            })
+            .bind(with: self, onNext: { owner, userInfo in
                 if owner.joinType == .email {
                     
                     let vc = JoinViewController()
                     vc.joinType = .password
-                    vc.userInfo = output.userInfo
+                    vc.userInfo = userInfo
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                 } else if owner.joinType == .password {
                     
                     let vc = JoinViewController()
                     vc.joinType = .phoneNumber
-                    vc.userInfo = output.userInfo
+                    vc.userInfo = userInfo
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                 } else {
@@ -165,7 +165,7 @@ final class JoinViewController: BaseViewController {
                     let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                     let SceneDelegate = windowScene?.delegate as? SceneDelegate
                     
-                    let vc = FeedViewController()
+                    let vc = WelcomeViewController()
                     let nav = UINavigationController(rootViewController: vc)
                     
                     UserDefaultsHelper.shared.haveBeenBefore = true
