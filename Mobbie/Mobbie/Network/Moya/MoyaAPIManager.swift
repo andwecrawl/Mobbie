@@ -42,11 +42,12 @@ class MoyaAPIManager {
                 switch response {
                 case .success(let response):
                     print("============ response: \(response)")
+                    print(String(data: response.data, encoding: .utf8))
                     let statusCode = response.statusCode
                     
                     if response.statusCode == 200 {
                         
-                        let result = try! JSONDecoder().decode(T.self, from: response.data)
+                        guard let result = self.handleDecodingError(type: T.self, data: response.data) else { return }
                         print("============ success result: \(result)")
                         observer.onNext(.success(result))
                         
