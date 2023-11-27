@@ -31,6 +31,8 @@
 		D18530DD2B111FB900EACDAA /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18530DC2B111FB900EACDAA /* APIManager.swift */; };
 		D185310D2B13619300EACDAA /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D185310C2B13619300EACDAA /* RxCocoa */; };
 		D185310F2B13619300EACDAA /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D185310E2B13619300EACDAA /* RxSwift */; };
+		D18531222B14F09E00EACDAA /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18531212B14F09E00EACDAA /* WelcomeViewController.swift */; };
+		D18531272B14FF5200EACDAA /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18531262B14FF5200EACDAA /* WelcomeViewModel.swift */; };
 		D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234C2AFCEB1000684175 /* AppDelegate.swift */; };
 		D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */; };
 		D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC23502AFCEB1000684175 /* LoginViewController.swift */; };
@@ -69,6 +71,8 @@
 		D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
 		D18530DA2B110EF600EACDAA /* LSLPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSLPNetwork.swift; sourceTree = "<group>"; };
 		D18530DC2B111FB900EACDAA /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		D18531212B14F09E00EACDAA /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		D18531262B14FF5200EACDAA /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		D1CC23492AFCEB1000684175 /* Mobbie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobbie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1CC234C2AFCEB1000684175 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -152,6 +156,33 @@
 			path = Moya;
 			sourceTree = "<group>";
 		};
+		D18531232B14F4E100EACDAA /* Join */ = {
+			isa = PBXGroup;
+			children = (
+				D1CC23742AFCFE5600684175 /* JoinViewController.swift */,
+				D12B91C02AFE5DCE006451FE /* JoinViewModel.swift */,
+				D1674CF32B08A29C000697C2 /* JoinType.swift */,
+			);
+			path = Join;
+			sourceTree = "<group>";
+		};
+		D18531242B14F4E600EACDAA /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				D1CC23602AFCEB6C00684175 /* IntroViewController.swift */,
+			);
+			path = Intro;
+			sourceTree = "<group>";
+		};
+		D18531252B14F4EC00EACDAA /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				D18531212B14F09E00EACDAA /* WelcomeViewController.swift */,
+				D18531262B14FF5200EACDAA /* WelcomeViewModel.swift */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
 		D1CC23402AFCEB1000684175 = {
 			isa = PBXGroup;
 			children = (
@@ -198,10 +229,9 @@
 		D1CC23762AFCFF3700684175 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				D1CC23602AFCEB6C00684175 /* IntroViewController.swift */,
-				D1CC23742AFCFE5600684175 /* JoinViewController.swift */,
-				D12B91C02AFE5DCE006451FE /* JoinViewModel.swift */,
-				D1674CF32B08A29C000697C2 /* JoinType.swift */,
+				D18531242B14F4E600EACDAA /* Intro */,
+				D18531232B14F4E100EACDAA /* Join */,
+				D18531252B14F4EC00EACDAA /* Welcome */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -329,6 +359,7 @@
 				D12B91BC2AFE4DB7006451FE /* RegexType.swift in Sources */,
 				D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */,
 				D1674CEF2B078C9D000697C2 /* DecodableModel.swift in Sources */,
+				D18531222B14F09E00EACDAA /* WelcomeViewController.swift in Sources */,
 				D1674CE42B064551000697C2 /* APIKey+URL.swift in Sources */,
 				D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */,
 				D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */,
@@ -337,6 +368,7 @@
 				D12B91BE2AFE5A4E006451FE /* FeedViewController.swift in Sources */,
 				D1674D482B0B7479000697C2 /* UserInfo.swift in Sources */,
 				D1CC23732AFCF93700684175 /* UILabel+.swift in Sources */,
+				D18531272B14FF5200EACDAA /* WelcomeViewModel.swift in Sources */,
 				D1CC23612AFCEB6C00684175 /* IntroViewController.swift in Sources */,
 				D1674D4C2B0B7978000697C2 /* ViewModelProtocol.swift in Sources */,
 				D12B91C12AFE5DCE006451FE /* JoinViewModel.swift in Sources */,
