@@ -94,7 +94,7 @@ final class WelcomeViewController: BaseViewController {
             tap: nextButton.rx.tap,
             userInfo: userInfo
         )
-        let output = viewModel.transform(input: input)
+        guard let output = viewModel.transform(input: input) else { return }
         
         print("bind")
         output.tap

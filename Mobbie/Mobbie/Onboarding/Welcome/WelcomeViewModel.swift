@@ -23,7 +23,7 @@ class WelcomeViewModel: ViewModel {
         let tap: ControlEvent<Void>
     }
     
-    func transform(input: Input) -> Output {
+    func transform(input: Input) -> Output? {
         newInfo.onNext(input.userInfo)
         
         input.tap
