@@ -30,7 +30,7 @@ final class IntroViewController: BaseViewController {
     let nextButton = {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .systemGreen
+        config.baseBackgroundColor = UIColor.highlightOrange
         config.title = "시작하기"
         button.configuration = config
         return button

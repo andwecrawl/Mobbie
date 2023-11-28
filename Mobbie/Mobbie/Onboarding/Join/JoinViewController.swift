@@ -125,8 +125,9 @@ final class JoinViewController: BaseViewController {
         
         let input = JoinViewModel.Input(
             userInput: inputTextField.rx.text.orEmpty,
+            userInfo: userInfo ?? UserInfo(id: "", password: "", phoneNumber: ""), 
             tap: nextButton.rx.tap,
-            userInfo: userInfo ?? UserInfo(id: "", password: "", phoneNumber: "")
+            nextButtonIsEnabled: nextButton.rx.isEnabled
             
         )
         
@@ -134,8 +135,7 @@ final class JoinViewController: BaseViewController {
         
         output.isValid
             .bind(with: self) { owner, isValid in
-                owner.nextButton.isEnabled = isValid
-                owner.nextButton.backgroundColor = isValid ? .systemGreen : .gray
+                owner.nextButton.backgroundColor = isValid ? .highlightOrange : .gray
                 
                 owner.lineView.backgroundColor = isValid ? .systemGreen : .systemRed
             }
