@@ -34,6 +34,9 @@
 		D18531222B14F09E00EACDAA /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18531212B14F09E00EACDAA /* WelcomeViewController.swift */; };
 		D18531272B14FF5200EACDAA /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18531262B14FF5200EACDAA /* WelcomeViewModel.swift */; };
 		D1B2C5CC2B15C8BF0065B51F /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B2C5CB2B15C8BF0065B51F /* Design.swift */; };
+		D1B2C5CF2B15EF8F0065B51F /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = D1B2C5CE2B15EF8F0065B51F /* Lottie */; };
+		D1B2C5D12B15FACA0065B51F /* congratulations.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B2C5D02B15FACA0065B51F /* congratulations.json */; };
+		D1B2C5D32B1613110065B51F /* TransitionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B2C5D22B1613110065B51F /* TransitionProtocol.swift */; };
 		D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234C2AFCEB1000684175 /* AppDelegate.swift */; };
 		D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */; };
 		D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC23502AFCEB1000684175 /* LoginViewController.swift */; };
@@ -75,6 +78,8 @@
 		D18531212B14F09E00EACDAA /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		D18531262B14FF5200EACDAA /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		D1B2C5CB2B15C8BF0065B51F /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
+		D1B2C5D02B15FACA0065B51F /* congratulations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = congratulations.json; sourceTree = "<group>"; };
+		D1B2C5D22B1613110065B51F /* TransitionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionProtocol.swift; sourceTree = "<group>"; };
 		D1CC23492AFCEB1000684175 /* Mobbie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobbie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1CC234C2AFCEB1000684175 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +104,7 @@
 				D185310F2B13619300EACDAA /* RxSwift in Frameworks */,
 				D185310D2B13619300EACDAA /* RxCocoa in Frameworks */,
 				D1CC236F2AFCEE6000684175 /* Moya in Frameworks */,
+				D1B2C5CF2B15EF8F0065B51F /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +150,7 @@
 				D1674CFB2B08A4AF000697C2 /* Pretendard-SemiBold.otf */,
 				D1674D002B08A4C5000697C2 /* Pretendard-Bold.otf */,
 				D1674CF62B08A3DA000697C2 /* ChangwonDangam.otf */,
+				D1B2C5D02B15FACA0065B51F /* congratulations.json */,
 				D1CC23552AFCEB1200684175 /* Assets.xcassets */,
 			);
 			path = Resource;
@@ -224,6 +231,7 @@
 			children = (
 				D1CC23622AFCEB8100684175 /* BaseViewController.swift */,
 				D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */,
+				D1B2C5D22B1613110065B51F /* TransitionProtocol.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -290,6 +298,7 @@
 				D1CC23702AFCEE6000684175 /* RxMoya */,
 				D185310C2B13619300EACDAA /* RxCocoa */,
 				D185310E2B13619300EACDAA /* RxSwift */,
+				D1B2C5CE2B15EF8F0065B51F /* Lottie */,
 			);
 			productName = SACdyBuddy;
 			productReference = D1CC23492AFCEB1000684175 /* Mobbie.app */;
@@ -323,6 +332,7 @@
 				D1CC236A2AFCEE4200684175 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				D1CC236D2AFCEE6000684175 /* XCRemoteSwiftPackageReference "Moya" */,
 				D185310B2B13619300EACDAA /* XCRemoteSwiftPackageReference "RxSwift" */,
+				D1B2C5CD2B15EF8F0065B51F /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = D1CC234A2AFCEB1000684175 /* Products */;
 			projectDirPath = "";
@@ -343,6 +353,7 @@
 				D1CC23592AFCEB1200684175 /* LaunchScreen.storyboard in Resources */,
 				D1674CFF2B08A4AF000697C2 /* Pretendard-SemiBold.otf in Resources */,
 				D1674CFD2B08A4AF000697C2 /* Pretendard-Regular.otf in Resources */,
+				D1B2C5D12B15FACA0065B51F /* congratulations.json in Resources */,
 				D1CC23562AFCEB1200684175 /* Assets.xcassets in Resources */,
 				D1674CFC2B08A4AF000697C2 /* Pretendard-Medium.otf in Resources */,
 				D1674CFE2B08A4AF000697C2 /* Pretendard-Light.otf in Resources */,
@@ -368,6 +379,7 @@
 				D1B2C5CC2B15C8BF0065B51F /* Design.swift in Sources */,
 				D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */,
 				D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */,
+				D1B2C5D32B1613110065B51F /* TransitionProtocol.swift in Sources */,
 				D1674CDC2B063FD2000697C2 /* EncodableModel.swift in Sources */,
 				D12B91BE2AFE5A4E006451FE /* FeedViewController.swift in Sources */,
 				D1674D482B0B7479000697C2 /* UserInfo.swift in Sources */,
@@ -605,6 +617,14 @@
 				minimumVersion = 6.6.0;
 			};
 		};
+		D1B2C5CD2B15EF8F0065B51F /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.3;
+			};
+		};
 		D1CC236A2AFCEE4200684175 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -633,6 +653,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D185310B2B13619300EACDAA /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		D1B2C5CE2B15EF8F0065B51F /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D1B2C5CD2B15EF8F0065B51F /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		D1CC236B2AFCEE4200684175 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
