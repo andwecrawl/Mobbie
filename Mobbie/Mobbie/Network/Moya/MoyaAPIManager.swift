@@ -33,7 +33,7 @@ class MoyaAPIManager {
     private lazy var provider = MoyaProvider<MoyaNetwork>(requestClosure: requestClosure)
     
     
-    func fetchInSignProgress<T: Decodable>(_ api: MoyaNetwork, type: T.Type, errorHandler: @escaping (ErrorResponse) -> Void) -> Observable<Result<T, Error>> {
+    func fetchInSignProgress<T: Decodable>(_ api: MoyaNetwork, type: T.Type) -> Observable<Result<T, Error>> {
         print("hi")
         return Observable.create { observer in
             print("hello")
@@ -52,11 +52,9 @@ class MoyaAPIManager {
                         observer.onNext(.success(result))
                         
                     } else {
-                        let value = try! JSONDecoder().decode(ErrorResponse.self, from: response.data)
                         let error = LSLPError(rawValue: statusCode) ?? .undefinedError
-                        errorHandler(value)
                         
-                        print("============ network error result: \(value)")
+                        print("============ network error result: \(error)")
                         observer.onNext(.failure(error))
                     }
                     
