@@ -20,8 +20,9 @@ enum LSLPError: Int, Error {
     case wrongURL = 444 // 비정상 URL을 통한 요청
     case unauthenticated = 445 // 본인의 것이 아닌 게시글 / 댓글 삭제 시 권한 X
     case undefinedError = 500 // 비정상 요청 및 정의되지 않는 error
-    
-    var descriptions: String {
+}
+extension LSLPError: LocalizedError {
+    public var errorDescription: String? {
         switch self {
         case .worngRequest:
             return "필수값을 채워주세요."
