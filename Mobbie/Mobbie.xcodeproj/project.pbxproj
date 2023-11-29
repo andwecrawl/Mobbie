@@ -144,6 +144,7 @@
 		D1674CF52B08A377000697C2 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				D1B2C5CB2B15C8BF0065B51F /* Design.swift */,
 				D1674CFA2B08A4AF000697C2 /* Pretendard-Light.otf */,
 				D1674CF92B08A4AF000697C2 /* Pretendard-Regular.otf */,
 				D1674CF82B08A4AF000697C2 /* Pretendard-Medium.otf */,
@@ -262,7 +263,6 @@
 				D12B91BB2AFE4DB7006451FE /* RegexType.swift */,
 				D1CC23782AFCFF8E00684175 /* UserDefaultHelper.swift */,
 				D1CC237D2AFCFFAB00684175 /* Extension */,
-				D1B2C5CB2B15C8BF0065B51F /* Design.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
