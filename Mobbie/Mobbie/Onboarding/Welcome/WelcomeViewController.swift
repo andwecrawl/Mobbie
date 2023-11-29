@@ -36,7 +36,6 @@ final class WelcomeViewController: BaseViewController {
     let nextButton = {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .systemGreen
         config.baseBackgroundColor = UIColor.highlightOrange
         config.title = "시작하기"
         button.configuration = config
@@ -62,7 +61,6 @@ final class WelcomeViewController: BaseViewController {
         [
             informationLabel,
             nextButton,
-            descriptionLabel
             descriptionLabel,
             animationView
         ]
@@ -114,12 +112,22 @@ final class WelcomeViewController: BaseViewController {
         )
         guard let output = viewModel.transform(input: input) else { return }
         
-        print("bind")
         output.tap
-            .bind { _ in
+            .bind(with: self, onNext: { owner, _ in
+                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                let SceneDelegate = windowScene?.delegate as? SceneDelegate
+                
                 let vc = FeedViewController()
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
+                let nav = UINavigationController(rootViewController: vc)
+                
+                UIView.transition(with: SceneDelegate?.window ?? UIWindow(), duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    SceneDelegate?.window?.rootViewController = nav
+                }) { (completed) in
+                    if completed {
+                        SceneDelegate?.window?.makeKeyAndVisible()
+                    }
+                }
+            })
             .disposed(by: disposeBag)
         
     }
