@@ -30,7 +30,7 @@ class WelcomeViewModel: ViewModel {
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .flatMap {
                 print(self.newInfo)
-                return MoyaAPIManager.shared.fetchInSignProgress(.Login(email: input.userInfo.id, password: input.userInfo.password), type: LoginResponse.self) { print("error Handling: \($0)") }
+                return MoyaAPIManager.shared.fetchInSignProgress(.Login(email: input.userInfo.id, password: input.userInfo.password), type: LoginResponse.self)
             }
             .subscribe(with: self) { owner, response in
                 switch response {
@@ -41,6 +41,7 @@ class WelcomeViewModel: ViewModel {
                 }
             }
             .disposed(by: disposeBag)
+        
         
         return Output(
             tap: input.tap
