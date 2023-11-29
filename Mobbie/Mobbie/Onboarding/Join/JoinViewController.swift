@@ -39,7 +39,7 @@ final class JoinViewController: BaseViewController {
     
     private var nextButton = {
         let button = UIButton()
-        button.backgroundColor = .systemGreen
+        button.backgroundColor = UIColor.highlightOrange
         button.setTitle("다음으로", for: .normal)
         button.layer.cornerRadius = 8
         return button
@@ -137,7 +137,7 @@ final class JoinViewController: BaseViewController {
             .bind(with: self) { owner, isValid in
                 owner.nextButton.backgroundColor = isValid ? .highlightOrange : .gray
                 
-                owner.lineView.backgroundColor = isValid ? .systemGreen : .systemRed
+                owner.lineView.backgroundColor = isValid ? .highlightOrange : .systemRed
             }
             .disposed(by: disposeBag)
         
