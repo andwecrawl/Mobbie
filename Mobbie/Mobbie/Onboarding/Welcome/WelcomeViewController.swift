@@ -8,19 +8,26 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Lottie
 
 final class WelcomeViewController: BaseViewController {
+    
+    private let animationView: LottieAnimationView = {
+       let lottieView = LottieAnimationView(name: "congratulations")
+       lottieView.frame = CGRect(x: 0, y: 0, width: 100, height: 300)
+       return lottieView
+    }()
     
     let informationLabel = {
         let label = UILabel()
         label.text = "환영합니다!"
-        label.font = .systemFont(ofSize: 28, weight: .semibold)
+        label.font = .systemFont(ofSize: 33, weight: .semibold)
         return label
     }()
     
     let descriptionLabel = {
         let label = UILabel()
-        label.text = "Mobbie와 함께\n 즐거운 시간 보내세요!"
+        label.text = "Mobbie와 함께\n즐거운 시간 보내세요!"
         label.font = .systemFont(ofSize: 16, weight: .light)
         label.textColor = .systemGray2
         return label
@@ -30,6 +37,7 @@ final class WelcomeViewController: BaseViewController {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
         config.baseBackgroundColor = .systemGreen
+        config.baseBackgroundColor = UIColor.highlightOrange
         config.title = "시작하기"
         button.configuration = config
         return button
@@ -55,6 +63,8 @@ final class WelcomeViewController: BaseViewController {
             informationLabel,
             nextButton,
             descriptionLabel
+            descriptionLabel,
+            animationView
         ]
             .forEach({ view.addSubview($0) })
         
@@ -64,7 +74,12 @@ final class WelcomeViewController: BaseViewController {
         
         informationLabel.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(24)
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(80)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(100)
+        }
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(informationLabel.snp.bottom).offset(30)
+            make.horizontalEdges.equalTo(informationLabel)
         }
         
         nextButton.snp.makeConstraints { make in
@@ -73,9 +88,9 @@ final class WelcomeViewController: BaseViewController {
             make.height.equalTo(52)
         }
         
-        descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(informationLabel.snp.bottom).offset(24)
-            make.horizontalEdges.equalTo(informationLabel)
+        animationView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(informationLabel)
         }
     }
     
@@ -85,6 +100,9 @@ final class WelcomeViewController: BaseViewController {
         
         descriptionLabel.numberOfLines = 0
         descriptionLabel.setLineSpacing(lineSpacing: 5)
+        
+        animationView.loopMode = .playOnce
+        animationView.play()
     }
     
     func bind() {
