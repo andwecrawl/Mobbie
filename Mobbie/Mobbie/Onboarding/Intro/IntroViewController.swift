@@ -60,7 +60,7 @@ final class IntroViewController: BaseViewController {
         
         informationLabel.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(24)
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(80)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(100)
         }
         
         nextButton.snp.makeConstraints { make in
@@ -70,7 +70,7 @@ final class IntroViewController: BaseViewController {
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(informationLabel.snp.bottom).offset(24)
+            make.top.equalTo(informationLabel.snp.bottom).offset(30)
             make.horizontalEdges.equalTo(informationLabel)
         }
     }
