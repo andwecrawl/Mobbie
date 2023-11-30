@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 final class LoginViewController: BaseViewController {
     
@@ -41,6 +42,11 @@ final class LoginViewController: BaseViewController {
         return button
     }()
     
+    let viewModel = LoginViewModel()
+    
+    let disposeBag = DisposeBag()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -57,7 +63,6 @@ final class LoginViewController: BaseViewController {
             .forEach {
                 view.addSubview($0)
             }
-        
     }
     
     override func setConstraints() {
@@ -70,6 +75,7 @@ final class LoginViewController: BaseViewController {
         idTextField.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(50)
+            make.top.equalTo(titleLabel.snp.bottom).offset(12)
         }
         
         passwordTextField.snp.makeConstraints { make in
@@ -89,10 +95,50 @@ final class LoginViewController: BaseViewController {
     override func configureView() {
         passwordTextField.isSecureTextEntry = true
         
+        bind()
     }
     
+    
+    func bind() {
+        
+        let input = LoginViewModel.Input(
+            tap: loginButton.rx.tap,
+            id: idTextField.rx.text.orEmpty,
+            password: passwordTextField.rx.text.orEmpty
+        )
+        
+        guard let output = viewModel.transform(input: input) else { return }
+        
+        output.canLogin
+            .bind(with: self) { owner, value in
+                owner.loginButton.isEnabled = value
+                owner.loginButton.backgroundColor = value ? .highlightOrange : .gray
+            }
+            .disposed(by: disposeBag)
+        
+        output.canLogin
+            .bind(with: self) { owner, login in
+                
+                if login {
+                    
+                    
+                } else {
+                    self.sendOneSideAlert(title: "계정을 확인해 주세요!", message: "아직 가입하지 않았거나 비밀번호가 맞지 않아요.")
+                }
+                
+            }
+            .disposed(by: disposeBag)
+    }
 }
 
+extension LoginViewController {
+    func sendOneSideAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okay = UIAlertAction(title: "okay", style: .default, handler: nil)
+        alert.addAction(okay)
+        present(alert, animated: true)
+    }
+}
 
 
 #Preview("LoginViewController") {
