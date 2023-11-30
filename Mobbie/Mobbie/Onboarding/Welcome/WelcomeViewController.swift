@@ -14,7 +14,7 @@ final class WelcomeViewController: BaseViewController, TransitionProtocol {
     
     private let animationView: LottieAnimationView = {
        let lottieView = LottieAnimationView(name: "congratulations")
-       lottieView.frame = CGRect(x: 0, y: 0, width: 100, height: 300)
+       lottieView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
        return lottieView
     }()
     
@@ -35,10 +35,9 @@ final class WelcomeViewController: BaseViewController, TransitionProtocol {
     
     let nextButton = {
         let button = UIButton()
-        var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = UIColor.highlightOrange
-        config.title = "시작하기"
-        button.configuration = config
+        button.backgroundColor = UIColor.highlightOrange
+        button.setTitle("시작하기", for: .normal)
+        button.layer.cornerRadius = 8
         return button
     }()
     
@@ -87,8 +86,7 @@ final class WelcomeViewController: BaseViewController, TransitionProtocol {
         }
         
         animationView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(informationLabel)
+            make.center.equalToSuperview()
         }
     }
     
@@ -114,8 +112,6 @@ final class WelcomeViewController: BaseViewController, TransitionProtocol {
         
         output.tap
             .bind(with: self, onNext: { owner, _ in
-                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                let SceneDelegate = windowScene?.delegate as? SceneDelegate
                 
                 self.transitionTo(FeedViewController())
                 
