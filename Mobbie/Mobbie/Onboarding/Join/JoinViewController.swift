@@ -11,7 +11,7 @@ import RxCocoa
 
 
 
-final class JoinViewController: BaseViewController {
+final class JoinViewController: BaseViewController, TransitionProtocol {
     
     private let informationLabel = {
         let label = UILabel()
@@ -133,15 +133,25 @@ final class JoinViewController: BaseViewController {
         
         guard let output = viewModel.transform(input: input) else { return }
         
-        output.isValid
-            .bind(with: self) { owner, isValid in
-                owner.nextButton.backgroundColor = isValid ? .highlightOrange : .gray
-                
-                owner.lineView.backgroundColor = isValid ? .highlightOrange : .systemRed
+        Observable.combineLatest(output.isValid, output.text)
+            .bind(with: self) { owner, tuple in
+                if !tuple.1.isEmpty {
+                    owner.nextButton.backgroundColor = tuple.0 ? .highlightOrange : .gray
+                    
+                    owner.lineView.backgroundColor = tuple.0 ? .highlightOrange : .systemRed
+                }
             }
             .disposed(by: disposeBag)
         
         output.tap
+            .withLatestFrom(output.isValid, resultSelector: { _, isValid in
+                if isValid {
+                    return true
+                } else {
+                    return false
+                }
+            })
+            .filter({ $0 == true })
             .withLatestFrom(output.userInfo, resultSelector: { _, value in
                 return value
             })
@@ -162,22 +172,17 @@ final class JoinViewController: BaseViewController {
                     
                 } else {
                     
-                    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                    let SceneDelegate = windowScene?.delegate as? SceneDelegate
+                    UserDefaultsHelper.shared.haveBeenBefore = true
                     
                     let vc = WelcomeViewController()
-                    let nav = UINavigationController(rootViewController: vc)
+                    vc.userInfo = userInfo
                     
                     self.transitionTo(vc)
                     
                 }
             })
             .disposed(by: disposeBag)
-        
-        
     }
-    
-    
 }
 
 extension JoinViewController {
