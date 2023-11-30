@@ -10,8 +10,9 @@ import Moya
 
 enum MoyaNetwork {
     case signUp(model: SignUpData)
-    case Login(email: String, password: String)
-    case emailValidation(email: String)
+    case Login(model: LoginData)
+    case emailValidation(model: ValidationData)
+    case refreshAccessToken
 }
 
 extension MoyaNetwork: TargetType {
@@ -23,10 +24,12 @@ extension MoyaNetwork: TargetType {
         switch self {
         case .signUp(_):
             return "join"
-        case .Login(_, _):
+        case .Login(_):
             return "login"
         case .emailValidation(_):
             return "validation/email"
+        case .refreshAccessToken:
+            return "refresh"
         }
     }
     
@@ -40,21 +43,38 @@ extension MoyaNetwork: TargetType {
         case .signUp(let model):
             return .requestJSONEncodable(model)
             
-        case .Login(let email, let password):
-            let data = LoginData(email: email, password: password)
-            return .requestJSONEncodable(data)
+        case .Login(let model):
+            return .requestJSONEncodable(model)
             
-        case .emailValidation(email: let email):
-            let data = EmailValidation(email: email)
-            return .requestJSONEncodable(data)
+        case .emailValidation(let email):
+            return .requestJSONEncodable(email)
+            
+        case .refreshAccessToken:
+            return .requestPlain
         }
     }
     
-    var headers: [String : String]? {
+    var content: [String : String]? {
         [
             "Content-Type": "application/json",
             "SesacKey": APIKeyURL.APIKey.rawValue
         ]
+    }
+    
+    var headers: [String : String]? {
+        switch self {
+        case .signUp, .Login, .emailValidation:
+            [
+                "Content-Type": "application/json",
+                "SesacKey": APIKeyURL.APIKey.rawValue
+            ]
+        case .refreshAccessToken:
+            [
+                "Authorization": UserDefaultsHelper.shared.accessToken,
+                "SesacKey": APIKeyURL.APIKey.rawValue,
+                "Refresh": UserDefaultsHelper.shared.refreshToken
+            ]
+        }
     }
     
     
