@@ -24,5 +24,21 @@ class UserDefaultsHelper {
         }
     }
     
+    var accessToken: String {
+        get {
+            return userDefaults.string(forKey: "accessToken") ?? ""
+        }
+        set {
+            userDefaults.set(newValue, forKey: "accessToken")
+        }
+    }
     
+    var refreshToken: String {
+        get {
+            return userDefaults.string(forKey: "refreshToken") ?? ""
+        }
+        set {
+            userDefaults.set(newValue, forKey: "refreshToken")
+        }
+    }
 }
