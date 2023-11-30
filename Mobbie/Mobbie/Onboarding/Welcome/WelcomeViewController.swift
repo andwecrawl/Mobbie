@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import Lottie
 
-final class WelcomeViewController: BaseViewController {
+final class WelcomeViewController: BaseViewController, TransitionProtocol {
     
     private let animationView: LottieAnimationView = {
        let lottieView = LottieAnimationView(name: "congratulations")
@@ -117,16 +117,8 @@ final class WelcomeViewController: BaseViewController {
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                 let SceneDelegate = windowScene?.delegate as? SceneDelegate
                 
-                let vc = FeedViewController()
-                let nav = UINavigationController(rootViewController: vc)
+                self.transitionTo(FeedViewController())
                 
-                UIView.transition(with: SceneDelegate?.window ?? UIWindow(), duration: 0.3, options: .transitionCrossDissolve, animations: {
-                    SceneDelegate?.window?.rootViewController = nav
-                }) { (completed) in
-                    if completed {
-                        SceneDelegate?.window?.makeKeyAndVisible()
-                    }
-                }
             })
             .disposed(by: disposeBag)
         
