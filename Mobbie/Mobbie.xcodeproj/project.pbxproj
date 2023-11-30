@@ -36,7 +36,6 @@
 		D1B2C5CC2B15C8BF0065B51F /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B2C5CB2B15C8BF0065B51F /* Design.swift */; };
 		D1B2C5CF2B15EF8F0065B51F /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = D1B2C5CE2B15EF8F0065B51F /* Lottie */; };
 		D1B2C5D12B15FACA0065B51F /* congratulations.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B2C5D02B15FACA0065B51F /* congratulations.json */; };
-		D1B2C5D32B1613110065B51F /* TransitionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B2C5D22B1613110065B51F /* TransitionProtocol.swift */; };
 		D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234C2AFCEB1000684175 /* AppDelegate.swift */; };
 		D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */; };
 		D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC23502AFCEB1000684175 /* LoginViewController.swift */; };
@@ -50,6 +49,10 @@
 		D1CC23732AFCF93700684175 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC23722AFCF93700684175 /* UILabel+.swift */; };
 		D1CC23752AFCFE5600684175 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC23742AFCFE5600684175 /* JoinViewController.swift */; };
 		D1CC23792AFCFF8E00684175 /* UserDefaultHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC23782AFCFF8E00684175 /* UserDefaultHelper.swift */; };
+		D1D332192B175A7F00852274 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332182B175A7F00852274 /* FeedCollectionViewCell.swift */; };
+		D1D3321B2B175A9E00852274 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D3321A2B175A9E00852274 /* BaseCollectionViewCell.swift */; };
+		D1D3321D2B17863D00852274 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D3321C2B17863D00852274 /* AuthInterceptor.swift */; };
+		D1D3328B2B189BB500852274 /* chab.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1D3328A2B189BB500852274 /* chab.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,7 +82,6 @@
 		D18531262B14FF5200EACDAA /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		D1B2C5CB2B15C8BF0065B51F /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		D1B2C5D02B15FACA0065B51F /* congratulations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = congratulations.json; sourceTree = "<group>"; };
-		D1B2C5D22B1613110065B51F /* TransitionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionProtocol.swift; sourceTree = "<group>"; };
 		D1CC23492AFCEB1000684175 /* Mobbie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobbie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1CC234C2AFCEB1000684175 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +94,10 @@
 		D1CC23722AFCF93700684175 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		D1CC23742AFCFE5600684175 /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
 		D1CC23782AFCFF8E00684175 /* UserDefaultHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelper.swift; sourceTree = "<group>"; };
+		D1D332182B175A7F00852274 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
+		D1D3321A2B175A9E00852274 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		D1D3321C2B17863D00852274 /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
+		D1D3328A2B189BB500852274 /* chab.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chab.otf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				D12B91BD2AFE5A4E006451FE /* FeedViewController.swift */,
+				D1D332182B175A7F00852274 /* FeedCollectionViewCell.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -123,8 +130,8 @@
 			isa = PBXGroup;
 			children = (
 				D18530DA2B110EF600EACDAA /* LSLPNetwork.swift */,
-				D1674CF12B078D7A000697C2 /* LSLPError.swift */,
 				D18530DC2B111FB900EACDAA /* APIManager.swift */,
+				D1674CF12B078D7A000697C2 /* LSLPError.swift */,
 				D1674CF02B078D6D000697C2 /* Model */,
 				D18530D92B110AB600EACDAA /* Moya */,
 				D1674CE32B064551000697C2 /* APIKey+URL.swift */,
@@ -145,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				D1B2C5CB2B15C8BF0065B51F /* Design.swift */,
+				D1D3328A2B189BB500852274 /* chab.otf */,
 				D1674CFA2B08A4AF000697C2 /* Pretendard-Light.otf */,
 				D1674CF92B08A4AF000697C2 /* Pretendard-Regular.otf */,
 				D1674CF82B08A4AF000697C2 /* Pretendard-Medium.otf */,
@@ -162,6 +170,7 @@
 			children = (
 				D1674CE52B064842000697C2 /* MoyaAPIManager.swift */,
 				D1674CD62B060887000697C2 /* MoyaLSLPNetwork.swift */,
+				D1D3321C2B17863D00852274 /* AuthInterceptor.swift */,
 			);
 			path = Moya;
 			sourceTree = "<group>";
@@ -216,8 +225,8 @@
 				D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */,
 				D1CC23642AFCEB8500684175 /* Base */,
 				D1CC23762AFCFF3700684175 /* Onboarding */,
-				D12B91BF2AFE5A55006451FE /* Feed */,
 				D1CC23772AFCFF4A00684175 /* Login */,
+				D12B91BF2AFE5A55006451FE /* Feed */,
 				D1CC237A2AFCFF9500684175 /* Data */,
 				D1674CD52B06084E000697C2 /* Network */,
 				D1674CF52B08A377000697C2 /* Resource */,
@@ -231,8 +240,8 @@
 			isa = PBXGroup;
 			children = (
 				D1CC23622AFCEB8100684175 /* BaseViewController.swift */,
+				D1D3321A2B175A9E00852274 /* BaseCollectionViewCell.swift */,
 				D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */,
-				D1B2C5D22B1613110065B51F /* TransitionProtocol.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -353,6 +362,7 @@
 				D1CC23592AFCEB1200684175 /* LaunchScreen.storyboard in Resources */,
 				D1674CFF2B08A4AF000697C2 /* Pretendard-SemiBold.otf in Resources */,
 				D1674CFD2B08A4AF000697C2 /* Pretendard-Regular.otf in Resources */,
+				D1D3328B2B189BB500852274 /* chab.otf in Resources */,
 				D1B2C5D12B15FACA0065B51F /* congratulations.json in Resources */,
 				D1CC23562AFCEB1200684175 /* Assets.xcassets in Resources */,
 				D1674CFC2B08A4AF000697C2 /* Pretendard-Medium.otf in Resources */,
@@ -368,18 +378,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				D18530DD2B111FB900EACDAA /* APIManager.swift in Sources */,
+				D1D3321D2B17863D00852274 /* AuthInterceptor.swift in Sources */,
 				D1674CE62B064842000697C2 /* MoyaAPIManager.swift in Sources */,
 				D1CC23632AFCEB8100684175 /* BaseViewController.swift in Sources */,
 				D12B91BC2AFE4DB7006451FE /* RegexType.swift in Sources */,
 				D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */,
 				D1674CEF2B078C9D000697C2 /* DecodableModel.swift in Sources */,
+				D1D332192B175A7F00852274 /* FeedCollectionViewCell.swift in Sources */,
 				D18531222B14F09E00EACDAA /* WelcomeViewController.swift in Sources */,
 				D1674CE42B064551000697C2 /* APIKey+URL.swift in Sources */,
 				D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */,
 				D1B2C5CC2B15C8BF0065B51F /* Design.swift in Sources */,
 				D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */,
 				D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */,
-				D1B2C5D32B1613110065B51F /* TransitionProtocol.swift in Sources */,
 				D1674CDC2B063FD2000697C2 /* EncodableModel.swift in Sources */,
 				D12B91BE2AFE5A4E006451FE /* FeedViewController.swift in Sources */,
 				D1674D482B0B7479000697C2 /* UserInfo.swift in Sources */,
@@ -388,6 +399,7 @@
 				D1CC23612AFCEB6C00684175 /* IntroViewController.swift in Sources */,
 				D1674D4C2B0B7978000697C2 /* ViewModelProtocol.swift in Sources */,
 				D12B91C12AFE5DCE006451FE /* JoinViewModel.swift in Sources */,
+				D1D3321B2B175A9E00852274 /* BaseCollectionViewCell.swift in Sources */,
 				D18530DB2B110EF600EACDAA /* LSLPNetwork.swift in Sources */,
 				D1674CF42B08A29C000697C2 /* JoinType.swift in Sources */,
 				D1CC23792AFCFF8E00684175 /* UserDefaultHelper.swift in Sources */,

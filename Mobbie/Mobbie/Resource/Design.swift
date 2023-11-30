@@ -35,6 +35,7 @@ enum Design {
         case preSemiBold = "Pretendard-SemiBold"
         case preBold = "Pretendard-Bold"
         case changwon = "ChangwonDangamAsac"
+        case chab = "LOTTERIACHAB"
         
         /// 아이폰 작은 글씨(size: 12)
         var smallFont: UIFont {
@@ -53,11 +54,15 @@ enum Design {
             return UIFont(name: self.rawValue, size: FontSize.extraLarge.rawValue)!
         }
         
+        func getFonts(size: CGFloat) -> UIFont {
+            return UIFont(name: self.rawValue, size: size)!
+        }
+        
         enum FontSize: CGFloat {
-            case small = 13
-            case medium = 15
-            case large = 17
-            case extraLarge = 18
+            case small = 14
+            case medium = 16
+            case large = 18
+            case extraLarge = 28
         }
     }
     
