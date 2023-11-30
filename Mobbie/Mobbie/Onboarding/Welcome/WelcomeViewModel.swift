@@ -29,13 +29,15 @@ class WelcomeViewModel: ViewModel {
         input.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .flatMap {
-                print(self.newInfo)
-                return MoyaAPIManager.shared.fetchInSignProgress(.Login(email: input.userInfo.id, password: input.userInfo.password), type: LoginResponse.self)
+                let model = LoginData(email: input.userInfo.id, password: input.userInfo.password)
+                return MoyaAPIManager.shared.fetchInSignProgress(.Login(model: model), type: LoginResponse.self)
             }
             .subscribe(with: self) { owner, response in
                 switch response {
                 case .success(let result):
                     print("===== login Success!!: \(result.token), \(result.refreshToken)")
+                    UserDefaultsHelper.shared.accessToken = result.token
+                    UserDefaultsHelper.shared.refreshToken = result.refreshToken
                 case .failure(let error):
                     "======= error message: \(error.localizedDescription)"
                 }
