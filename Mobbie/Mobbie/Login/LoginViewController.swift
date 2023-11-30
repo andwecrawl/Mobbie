@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 
-final class LoginViewController: BaseViewController {
+final class LoginViewController: BaseViewController, TransitionProtocol {
     
     private let titleLabel = {
         let label = UILabel()
@@ -121,6 +121,7 @@ final class LoginViewController: BaseViewController {
                 
                 if login {
                     
+                    self.transitionTo(FeedViewController())
                     
                 } else {
                     self.sendOneSideAlert(title: "계정을 확인해 주세요!", message: "아직 가입하지 않았거나 비밀번호가 맞지 않아요.")
