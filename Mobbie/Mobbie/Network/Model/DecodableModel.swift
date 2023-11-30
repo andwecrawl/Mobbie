@@ -24,6 +24,10 @@ struct LoginResponse: Decodable {
     let refreshToken: String
 }
 
+struct TokenResponse: Decodable {
+    let token: String
+}
+
 struct ValidationResponse: Decodable {
     let message: String
 }
