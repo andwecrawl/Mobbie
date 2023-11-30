@@ -15,10 +15,10 @@ struct SignUpData: Encodable {
 }
 
 struct LoginData: Encodable {
-    let email: String
-    let password: String
+    var email: String
+    var password: String
 }
 
-struct EmailValidation: Encodable {
+struct ValidationData: Encodable {
     let email: String
 }
