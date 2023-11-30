@@ -27,8 +27,6 @@
 		D1674D482B0B7479000697C2 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674D472B0B7478000697C2 /* UserInfo.swift */; };
 		D1674D4A2B0B7957000697C2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674D492B0B7957000697C2 /* LoginViewModel.swift */; };
 		D1674D4C2B0B7978000697C2 /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */; };
-		D18530DB2B110EF600EACDAA /* LSLPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18530DA2B110EF600EACDAA /* LSLPNetwork.swift */; };
-		D18530DD2B111FB900EACDAA /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18530DC2B111FB900EACDAA /* APIManager.swift */; };
 		D185310D2B13619300EACDAA /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D185310C2B13619300EACDAA /* RxCocoa */; };
 		D185310F2B13619300EACDAA /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D185310E2B13619300EACDAA /* RxSwift */; };
 		D18531222B14F09E00EACDAA /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18531212B14F09E00EACDAA /* WelcomeViewController.swift */; };
@@ -77,8 +75,6 @@
 		D1674D472B0B7478000697C2 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		D1674D492B0B7957000697C2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
-		D18530DA2B110EF600EACDAA /* LSLPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSLPNetwork.swift; sourceTree = "<group>"; };
-		D18530DC2B111FB900EACDAA /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		D18531212B14F09E00EACDAA /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		D18531262B14FF5200EACDAA /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		D1B2C5CB2B15C8BF0065B51F /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
@@ -131,8 +127,6 @@
 		D1674CD52B06084E000697C2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				D18530DA2B110EF600EACDAA /* LSLPNetwork.swift */,
-				D18530DC2B111FB900EACDAA /* APIManager.swift */,
 				D1674CF12B078D7A000697C2 /* LSLPError.swift */,
 				D1674CF02B078D6D000697C2 /* Model */,
 				D18530D92B110AB600EACDAA /* Moya */,
@@ -380,7 +374,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D18530DD2B111FB900EACDAA /* APIManager.swift in Sources */,
 				D1D3321D2B17863D00852274 /* AuthInterceptor.swift in Sources */,
 				D1674CE62B064842000697C2 /* MoyaAPIManager.swift in Sources */,
 				D1CC23632AFCEB8100684175 /* BaseViewController.swift in Sources */,
@@ -403,7 +396,6 @@
 				D1674D4C2B0B7978000697C2 /* ViewModelProtocol.swift in Sources */,
 				D12B91C12AFE5DCE006451FE /* JoinViewModel.swift in Sources */,
 				D1D3321B2B175A9E00852274 /* BaseCollectionViewCell.swift in Sources */,
-				D18530DB2B110EF600EACDAA /* LSLPNetwork.swift in Sources */,
 				D1674CF42B08A29C000697C2 /* JoinType.swift in Sources */,
 				D1D3328D2B18ACE200852274 /* TransitionProtocol.swift in Sources */,
 				D1CC23792AFCFF8E00684175 /* UserDefaultHelper.swift in Sources */,
