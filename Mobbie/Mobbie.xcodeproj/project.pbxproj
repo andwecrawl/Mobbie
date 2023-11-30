@@ -53,6 +53,7 @@
 		D1D3321B2B175A9E00852274 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D3321A2B175A9E00852274 /* BaseCollectionViewCell.swift */; };
 		D1D3321D2B17863D00852274 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D3321C2B17863D00852274 /* AuthInterceptor.swift */; };
 		D1D3328B2B189BB500852274 /* chab.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1D3328A2B189BB500852274 /* chab.otf */; };
+		D1D3328D2B18ACE200852274 /* TransitionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D3328C2B18ACE200852274 /* TransitionProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,7 @@
 		D1D3321A2B175A9E00852274 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1D3321C2B17863D00852274 /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		D1D3328A2B189BB500852274 /* chab.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chab.otf; sourceTree = "<group>"; };
+		D1D3328C2B18ACE200852274 /* TransitionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +244,7 @@
 				D1CC23622AFCEB8100684175 /* BaseViewController.swift */,
 				D1D3321A2B175A9E00852274 /* BaseCollectionViewCell.swift */,
 				D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */,
+				D1D3328C2B18ACE200852274 /* TransitionProtocol.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				D1D3321B2B175A9E00852274 /* BaseCollectionViewCell.swift in Sources */,
 				D18530DB2B110EF600EACDAA /* LSLPNetwork.swift in Sources */,
 				D1674CF42B08A29C000697C2 /* JoinType.swift in Sources */,
+				D1D3328D2B18ACE200852274 /* TransitionProtocol.swift in Sources */,
 				D1CC23792AFCFF8E00684175 /* UserDefaultHelper.swift in Sources */,
 				D1674CCD2B0546F9000697C2 /* String+.swift in Sources */,
 				D1674CF22B078D7A000697C2 /* LSLPError.swift in Sources */,
