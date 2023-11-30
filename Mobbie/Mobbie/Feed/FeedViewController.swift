@@ -9,12 +9,15 @@ import UIKit
 
 class FeedViewController: BaseViewController {
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     
     override func configureHierarchy() {
+        super.configureHierarchy()
         
     }
     
@@ -25,5 +28,16 @@ class FeedViewController: BaseViewController {
     override func configureView() {
         
     }
+    
+    /// Show the loading empty state
+    private func showLoading() {
+        
+        var config = UIContentUnavailableConfiguration.loading()
+        config.text = "Fetching content. Please wait..."
+        config.textProperties.font = Design.Font.preSemiBold.largeFont
+        
+        self.contentUnavailableConfiguration = config
+    }
+    
     
 }
