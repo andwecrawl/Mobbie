@@ -20,8 +20,9 @@ final class JoinViewModel: ViewModel {
     
     struct Input {
         let userInput: ControlProperty<String>
-        let tap: ControlEvent<Void>
         var userInfo: UserInfo
+        let tap: ControlEvent<Void>
+        var nextButtonIsEnabled: Binder<Bool>
     }
     
     struct Output {
@@ -29,18 +30,25 @@ final class JoinViewModel: ViewModel {
         let isValid: BehaviorSubject<Bool>
         let tap: ControlEvent<Void>
         let userInfo: BehaviorSubject<UserInfo>
+        let text: BehaviorSubject<String>
     }
     
     func transform(input: Input) -> Output? {
         
         guard let joinType else { return nil }
-        print(joinType)
         
         let isValid = BehaviorSubject(value: false)
-        let isFilled = BehaviorSubject(value: true)
+        let isFilled = BehaviorSubject(value: false)
         let text = BehaviorSubject<String>(value: "")
         let subjectInfo = BehaviorSubject(value: input.userInfo)
-
+        
+        
+        isValid
+            .bind(with: self) { owenr, value in
+                input.nextButtonIsEnabled.onNext(value)
+            }
+            .disposed(by: disposeBag)
+        
         
         input.userInput
             .bind(with: self) { owner, value in
@@ -49,22 +57,20 @@ final class JoinViewModel: ViewModel {
             }
             .disposed(by: disposeBag)
         
+        
         text
             .bind(to: input.userInput)
             .disposed(by: disposeBag)
         
-        subjectInfo
-            .onNext(newInfo)
-        newInfo = input.userInfo
         
-        input.userInput
+        text
             .map { str in
                 isFilled.onNext(str.isEmpty ? false : true)
                 switch joinType {
                 case .email:
                     self.newInfo.id = str
                     subjectInfo.onNext(self.newInfo)
-                    print(self.newInfo)
+                    Swift.print(self.newInfo)
                     return (str.range(of: RegexType.email.rawValue, options: .regularExpression) != nil)
                 case .password:
                     self.newInfo.password = str
@@ -82,36 +88,24 @@ final class JoinViewModel: ViewModel {
             .disposed(by: disposeBag)
         
         
+        subjectInfo
+            .onNext(newInfo)
+        newInfo = input.userInfo
         
-//        isValid
-//            .debounce(.seconds(1), scheduler: MainScheduler.instance)
-//            .subscribe(with: self) { owner, isValid in
-//                if isValid {
-//                    
-//                } else {
-//                    
-//                }
-//            }
-//            .disposed(by: disposeBag)
-        
-        
-        Observable.combineLatest(isValid, isFilled)
-            .map({ isValid, isFilled in
-                return isValid && isFilled
-            })
-            .subscribe(with: self, onNext: { owner, value in
-                if value {
-                    
-                }
-            })
-        
-        switch joinType {
-        case .email:
-            
-            input.tap
-                .throttle(.seconds(1), scheduler: MainScheduler.instance)
-                .flatMap { _ in
-                    return MoyaAPIManager.shared.fetchInSignProgress(.emailValidation(email: self.newInfo.id), type: ValidationResponse.self) { self.completionHandler?($0.message) }
+        if joinType == .email {
+            input.userInput
+                .debounce(.seconds(1), scheduler: MainScheduler.instance)
+                .withLatestFrom(isValid, resultSelector: { str, bool in
+                    if bool {
+                        return str
+                    } else {
+                        return ""
+                    }
+                })
+                .filter { !$0.isEmpty }
+                .flatMap { str in
+                    let model = ValidationData(email: str)
+                    return MoyaAPIManager.shared.fetchInSignProgress(.emailValidation(model: model), type: ValidationResponse.self)
                 }
                 .subscribe(with: self) { owner, response in
                     switch response {
@@ -119,59 +113,37 @@ final class JoinViewModel: ViewModel {
                         print("===== success message: \(result.message)")
                         isValid.onNext(true)
                     case .failure(let error):
-                        "======= error message: \(error.localizedDescription)"
+                        print("======= error message: \(error.localizedDescription)")
                         isValid.onNext(false)
+                        input.userInput.onNext("")
+                        self.completionHandler?(error.localizedDescription)
                     }
                 }
                 .disposed(by: disposeBag)
-            
-        case .password:
-            break
-            
-        case .phoneNumber:
-            
+        } else if joinType == .phoneNumber {
             input.tap
                 .throttle(.seconds(1), scheduler: MainScheduler.instance)
                 .flatMap {
                     let model = SignUpData(email: self.newInfo.id, password: self.newInfo.password, phoneNum: self.newInfo.phoneNumber)
-                    return MoyaAPIManager.shared.fetchInSignProgress(.signUp(model: model), type: JoinResponse.self) { print("error Handling: \($0)") }
+                    return MoyaAPIManager.shared.fetchInSignProgress(.signUp(model: model), type: JoinResponse.self)
                 }
                 .subscribe(with: self) { owner, response in
                     switch response {
                     case .success(let result):
                         print("===== success message: \(result.email)")
                     case .failure(let error):
-                        "======= error message: \(error.localizedDescription)"
+                        print("======= error message: \(error)")
+                        self.completionHandler?(error.localizedDescription)
                     }
                 }
                 .disposed(by: disposeBag)
-            
-        case .end:
-            
-            input.tap
-                .throttle(.seconds(1), scheduler: MainScheduler.instance)
-                .flatMap {
-                    print(self.newInfo)
-                    return MoyaAPIManager.shared.fetchInSignProgress(.Login(email: self.newInfo.id, password: self.newInfo.password), type: LoginResponse.self) { print("error Handling: \($0)") }
-                }
-                .subscribe(with: self) { owner, response in
-                    switch response {
-                    case .success(let result):
-                        print("===== login Success!!: \(result.token), \(result.refreshToken)")
-                    case .failure(let error):
-                        "======= error message: \(error.localizedDescription)"
-                    }
-                }
-                .disposed(by: disposeBag)
-            
         }
-        
-        print("newInfo: \(newInfo)")
-        
+            
         return Output(
             isValid: isValid,
             tap: input.tap,
-            userInfo: subjectInfo
+            userInfo: subjectInfo,
+            text: text
         )
     }
 }
