@@ -8,13 +8,10 @@
 import Foundation
 
 import Moya
-import Alamofire
 import RxSwift
 import RxCocoa
 
-
-
-class MoyaAPIManager {
+final class MoyaAPIManager {
     
     static let shared = MoyaAPIManager()
     
@@ -90,4 +87,6 @@ class MoyaAPIManager {
          }
         return nil
     }
+    
+    
 }
