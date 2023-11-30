@@ -15,24 +15,24 @@ final class IntroViewController: BaseViewController {
     let informationLabel = {
         let label = UILabel()
         label.text = "새싹 동료들과의 소통,\n모두 Mobbie에서"
-        label.font = .systemFont(ofSize: 28, weight: .semibold)
+        label.font = Design.Font.preBold.exlargeFont
         return label
     }()
     
     let descriptionLabel = {
         let label = UILabel()
         label.text = "익명으로 편하게\n동료들과 소통해요!"
-        label.font = .systemFont(ofSize: 16, weight: .light)
+        label.font = Design.Font.preMedium.midFont
         label.textColor = .systemGray2
         return label
     }()
     
     let nextButton = {
         let button = UIButton()
-        var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = UIColor.highlightOrange
-        config.title = "시작하기"
-        button.configuration = config
+        button.backgroundColor = UIColor.highlightOrange
+        button.setTitle("회원가입", for: .normal)
+        button.titleLabel?.font = Design.Font.preMedium.largeFont
+        button.layer.cornerRadius = 8
         return button
     }()
     
