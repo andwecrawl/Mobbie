@@ -12,8 +12,10 @@ final class LoginViewController: BaseViewController {
     private let titleLabel = {
         let label = UILabel()
         label.text = "Mobbie"
+        label.textColor = UIColor.highlightMint
+        label.font = Design.Font.chab.getFonts(size: 48)
         return label
-    }
+    }()
 
     private let idTextField = {
         let view = UITextField()
@@ -35,19 +37,19 @@ final class LoginViewController: BaseViewController {
         let button = UIButton()
         button.setTitle("로그인", for: .normal)
         button.layer.cornerRadius = 8
-        button.backgroundColor = .systemGreen
+        button.backgroundColor = UIColor.highlightOrange
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func configureHierarchy() {
         super.configureHierarchy()
         
         [
+            titleLabel,
             idTextField,
             passwordTextField,
             loginButton
@@ -60,6 +62,11 @@ final class LoginViewController: BaseViewController {
     
     override func setConstraints() {
         
+        titleLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(130)
+        }
+        
         idTextField.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(50)
@@ -68,19 +75,19 @@ final class LoginViewController: BaseViewController {
         passwordTextField.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(idTextField)
             make.top.equalTo(idTextField.snp.bottom).offset(8)
-            make.center.equalToSuperview()
             make.height.equalTo(50)
         }
         
         loginButton.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(idTextField)
-            make.top.equalTo(passwordTextField.snp.bottom).offset(8)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(16)
             make.height.equalTo(50)
         }
         
     }
     
     override func configureView() {
+        passwordTextField.isSecureTextEntry = true
         
     }
     
