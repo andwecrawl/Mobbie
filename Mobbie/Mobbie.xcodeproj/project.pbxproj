@@ -127,7 +127,7 @@
 		D1674CD52B06084E000697C2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				D1674CF12B078D7A000697C2 /* LSLPError.swift */,
+				D1D332AE2B19993000852274 /* Error */,
 				D1674CF02B078D6D000697C2 /* Model */,
 				D18530D92B110AB600EACDAA /* Moya */,
 				D1674CE32B064551000697C2 /* APIKey+URL.swift */,
@@ -280,6 +280,14 @@
 				D1674CCC2B0546F9000697C2 /* String+.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		D1D332AE2B19993000852274 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				D1674CF12B078D7A000697C2 /* LSLPError.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
