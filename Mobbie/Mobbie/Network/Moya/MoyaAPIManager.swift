@@ -20,14 +20,14 @@ final class MoyaAPIManager {
     private let requestClosure = { (endpoint: Endpoint, done: MoyaProvider.RequestResultClosure) in
         do {
             var request: URLRequest = try endpoint.urlRequest()
-            request.timeoutInterval = 10
+            request.timeoutInterval = 5
             done(.success(request))
         } catch {
             done(.failure(MoyaError.underlying(error, nil)))
         }
     }
     
-    private lazy var provider = MoyaProvider<MoyaNetwork>(requestClosure: requestClosure)
+    private lazy var provider = MoyaProvider<MoyaNetwork>(requestClosure: requestClosure, session: Session(interceptor: AuthInterceptor.shared))
     
     
     func fetchInSignProgress<T: Decodable>(_ api: MoyaNetwork, type: T.Type) -> Observable<Result<T, Error>> {
