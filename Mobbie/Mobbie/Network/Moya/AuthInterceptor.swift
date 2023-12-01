@@ -16,8 +16,6 @@ final class AuthInterceptor: RequestInterceptor {
     private init() {}
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        var urlRequest = urlRequest
-        urlRequest.setValue(UserDefaultsHelper.shared.accessToken, forHTTPHeaderField: "Authorization")
         
         print("adator 적용 \(urlRequest.headers)")
         completion(.success(urlRequest))
@@ -26,7 +24,7 @@ final class AuthInterceptor: RequestInterceptor {
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         
            print("retry 진입")
-        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 || response.statusCode == 419
+        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 419
            else {
                completion(.doNotRetryWithError(error))
                return
@@ -57,6 +55,7 @@ final class AuthInterceptor: RequestInterceptor {
                     
                 }
             }
+            .dispose()
         
        }
 }
