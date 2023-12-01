@@ -52,6 +52,7 @@
 		D1D3321D2B17863D00852274 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D3321C2B17863D00852274 /* AuthInterceptor.swift */; };
 		D1D3328B2B189BB500852274 /* chab.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1D3328A2B189BB500852274 /* chab.otf */; };
 		D1D3328D2B18ACE200852274 /* TransitionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D3328C2B18ACE200852274 /* TransitionProtocol.swift */; };
+		D1D332B02B19A3F300852274 /* SettingOutlet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332AF2B19A3F300852274 /* SettingOutlet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +97,7 @@
 		D1D3321C2B17863D00852274 /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		D1D3328A2B189BB500852274 /* chab.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chab.otf; sourceTree = "<group>"; };
 		D1D3328C2B18ACE200852274 /* TransitionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionProtocol.swift; sourceTree = "<group>"; };
+		D1D332AF2B19A3F300852274 /* SettingOutlet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOutlet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +241,7 @@
 				D1D3321A2B175A9E00852274 /* BaseCollectionViewCell.swift */,
 				D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */,
 				D1D3328C2B18ACE200852274 /* TransitionProtocol.swift */,
+				D1D332AF2B19A3F300852274 /* SettingOutlet.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				D1B2C5CC2B15C8BF0065B51F /* Design.swift in Sources */,
 				D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */,
 				D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */,
+				D1D332B02B19A3F300852274 /* SettingOutlet.swift in Sources */,
 				D1674CDC2B063FD2000697C2 /* EncodableModel.swift in Sources */,
 				D12B91BE2AFE5A4E006451FE /* FeedViewController.swift in Sources */,
 				D1674D482B0B7479000697C2 /* UserInfo.swift in Sources */,
