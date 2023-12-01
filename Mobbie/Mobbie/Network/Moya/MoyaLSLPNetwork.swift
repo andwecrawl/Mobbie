@@ -77,5 +77,8 @@ extension MoyaNetwork: TargetType {
         }
     }
     
+    var validationType: ValidationType {
+        return .successCodes
+    }
     
 }
