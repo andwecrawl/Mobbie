@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UserDefaultsHelper {
+final class UserDefaultsHelper {
     
     static let shared = UserDefaultsHelper()
     

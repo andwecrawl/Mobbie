@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class WelcomeViewModel: ViewModel {
+final class WelcomeViewModel: ViewModel {
     
     let newInfo: BehaviorSubject<UserInfo> = BehaviorSubject(value: UserInfo(id: "", password: "", phoneNumber: ""))
     var disposeBag = DisposeBag()

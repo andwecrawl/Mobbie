@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FeedViewController: BaseViewController {
+final class FeedViewController: BaseViewController {
     
     
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FeedCollectionViewCell: BaseCollectionViewCell {
+final class FeedCollectionViewCell: BaseCollectionViewCell {
     
     let userLabel = {
         let label = UILabel()
