@@ -12,14 +12,14 @@ import RxCocoa
 
 final class IntroViewController: BaseViewController {
     
-    let informationLabel = {
+    private let informationLabel = {
         let label = UILabel()
         label.text = "새싹 동료들과의 소통,\n모두 Mobbie에서"
         label.font = Design.Font.preBold.exlargeFont
         return label
     }()
     
-    let descriptionLabel = {
+    private let descriptionLabel = {
         let label = UILabel()
         label.text = "익명으로 편하게\n동료들과 소통해요!"
         label.font = Design.Font.preMedium.midFont
@@ -27,7 +27,7 @@ final class IntroViewController: BaseViewController {
         return label
     }()
     
-    let nextButton = {
+    private let nextButton = {
         let button = UIButton()
         button.backgroundColor = UIColor.highlightOrange
         button.setTitle("회원가입", for: .normal)

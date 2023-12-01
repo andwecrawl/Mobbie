@@ -18,14 +18,14 @@ final class WelcomeViewController: BaseViewController, TransitionProtocol {
        return lottieView
     }()
     
-    let informationLabel = {
+    private let informationLabel = {
         let label = UILabel()
         label.text = "환영합니다!"
         label.font = .systemFont(ofSize: 33, weight: .semibold)
         return label
     }()
     
-    let descriptionLabel = {
+    private let descriptionLabel = {
         let label = UILabel()
         label.text = "Mobbie와 함께\n즐거운 시간 보내세요!"
         label.font = .systemFont(ofSize: 16, weight: .light)
@@ -33,7 +33,7 @@ final class WelcomeViewController: BaseViewController, TransitionProtocol {
         return label
     }()
     
-    let nextButton = {
+    private let nextButton = {
         let button = UIButton()
         button.backgroundColor = UIColor.highlightOrange
         button.setTitle("시작하기", for: .normal)
