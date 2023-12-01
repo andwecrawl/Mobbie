@@ -42,6 +42,15 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
         return button
     }()
     
+    private let signUpButton = {
+        let button = UIButton()
+        button.setTitle("새로운 계정 만들기", for: .normal)
+        button.titleLabel?.font = Design.Font.preRegular.smallFont
+        button.backgroundColor = .clear
+        button.setTitleColor(UIColor.highlightOrange, for: .normal)
+        return button
+    }()
+    
     let viewModel = LoginViewModel()
     
     let disposeBag = DisposeBag()
@@ -58,7 +67,8 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
             titleLabel,
             idTextField,
             passwordTextField,
-            loginButton
+            loginButton,
+            signUpButton
         ]
             .forEach {
                 view.addSubview($0)
@@ -90,6 +100,12 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
             make.height.equalTo(50)
         }
         
+        signUpButton.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(idTextField)
+            make.top.equalTo(loginButton.snp.bottom).offset(12)
+            make.height.equalTo(30)
+        }
+        
     }
     
     override func configureView() {
@@ -102,23 +118,25 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
     func bind() {
         
         let input = LoginViewModel.Input(
-            tap: loginButton.rx.tap,
+            loginButtonTapped: loginButton.rx.tap,
+            signUpButtonTapped: signUpButton.rx.tap,
             id: idTextField.rx.text.orEmpty,
             password: passwordTextField.rx.text.orEmpty
         )
         
         guard let output = viewModel.transform(input: input) else { return }
         
-        output.canLogin
+        output.canTryLogin
             .bind(with: self) { owner, value in
                 owner.loginButton.isEnabled = value
                 owner.loginButton.backgroundColor = value ? .highlightOrange : .gray
             }
             .disposed(by: disposeBag)
         
-        output.canLogin
+        output.loginButtonTapped
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .withLatestFrom(output.canLogin)
             .bind(with: self) { owner, login in
-                
                 if login {
                     
                     self.transitionTo(FeedViewController())
@@ -126,7 +144,15 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
                 } else {
                     self.sendOneSideAlert(title: "계정을 확인해 주세요!", message: "아직 가입하지 않았거나 비밀번호가 맞지 않아요.")
                 }
-                
+            }
+            .disposed(by: disposeBag)
+        
+        output.signUpButtonTapped
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                let vc = JoinViewController()
+                vc.joinType = .email
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }
