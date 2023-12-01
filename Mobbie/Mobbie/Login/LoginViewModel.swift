@@ -15,23 +15,21 @@ final class LoginViewModel: ViewModel {
     var disposeBag = DisposeBag()
     
     struct Input {
-        let tap: ControlEvent<Void>
+        let loginButtonTapped: ControlEvent<Void>
+        let signUpButtonTapped: ControlEvent<Void>
         let id: ControlProperty<String>
         let password: ControlProperty<String>
     }
     
     struct Output {
-        let tap: ControlEvent<Void>
-        let isEmpty: BehaviorSubject<Bool>
-        let isValidID: BehaviorSubject<Bool>
-        let isValidPassword: BehaviorSubject<Bool>
+        let loginButtonTapped: ControlEvent<Void>
+        let signUpButtonTapped: ControlEvent<Void>
         let canTryLogin: BehaviorSubject<Bool>
         let canLogin: BehaviorSubject<Bool>
     }
     
     func transform(input: Input) -> Output? {
         
-        let isEmpty = BehaviorSubject(value: false)
         let isValidID = BehaviorSubject(value: false)
         let isValidPassword = BehaviorSubject(value: false)
         let canTryLogin = BehaviorSubject(value: false)
@@ -53,10 +51,6 @@ final class LoginViewModel: ViewModel {
             .bind(to: isValidPassword)
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(input.id, input.password)
-            .map { $0.0.isEmpty || $0.1.isEmpty }
-            .bind(to: isEmpty)
-            .disposed(by: disposeBag)
         
         Observable.combineLatest(isValidID, isValidPassword)
             .map { $0.0 && $0.1 }
@@ -64,7 +58,7 @@ final class LoginViewModel: ViewModel {
             .disposed(by: disposeBag)
         
         
-        input.tap
+        input.loginButtonTapped
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .withLatestFrom(canTryLogin)
             .filter { $0 }
@@ -88,10 +82,8 @@ final class LoginViewModel: ViewModel {
         
         
         return Output(
-            tap: input.tap, 
-            isEmpty: isEmpty,
-            isValidID: isValidID,
-            isValidPassword: isValidPassword,
+            loginButtonTapped: input.loginButtonTapped,
+            signUpButtonTapped: input.signUpButtonTapped,
             canTryLogin: canTryLogin,
             canLogin: canLogin
         )
