@@ -70,7 +70,6 @@ final class JoinViewModel: ViewModel {
                 case .email:
                     self.newInfo.id = str
                     subjectInfo.onNext(self.newInfo)
-                    Swift.print(self.newInfo)
                     return (str.range(of: RegexType.email.rawValue, options: .regularExpression) != nil)
                 case .password:
                     self.newInfo.password = str
