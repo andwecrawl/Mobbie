@@ -57,6 +57,8 @@ final class MoyaAPIManager {
                     
                 case .failure(let error):
                     
+                    let statusCode = error.response?.statusCode
+                    let error = LSLPError(rawValue: statusCode ?? 500) ?? .undefinedError
                     print("============ error result: \(error)")
                     observer.onError(error)
                     
