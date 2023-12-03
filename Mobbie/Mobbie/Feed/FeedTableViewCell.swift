@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FeedCollectionViewCell: BaseCollectionViewCell {
+final class FeedTableViewCell: BaseTableViewCell {
     
     let userLabel = {
         let label = UILabel()
@@ -21,7 +21,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         return label
     }()
     
-    let textLabel = {
+    let contentLabel = {
         let label = UILabel()
         label.font = Design.Font.preMedium.largeFont
         label.numberOfLines = 0
@@ -51,9 +51,36 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     
     override func configureHierarchy() {
         
+        [
+            userLabel,
+            timeLabel,
+            contentLabel,
+            commentButton,
+            likedButton,
+            detailButton
+        ]
+            .forEach { contentView.addSubview($0) }
+        
+        
     }
     
     override func setConstraints() {
+        
+        userLabel.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().inset(20)
+        }
+        
+        timeLabel.snp.makeConstraints { make in
+            make.top.equalTo(userLabel)
+            make.leading.equalTo(userLabel.snp.trailing).offset(4)
+        }
+        
+        contentLabel.snp.makeConstraints { make in
+            make.top.equalTo(userLabel.snp.bottom).offset(8)
+            make.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        
         
     }
     
