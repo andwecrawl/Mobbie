@@ -57,6 +57,8 @@
 		D1D332CF2B1C725200852274 /* PostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332CE2B1C725200852274 /* PostResponse.swift */; };
 		D1D332D12B1C963A00852274 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332D02B1C963A00852274 /* BaseTableViewCell.swift */; };
 		D1D332D32B1C9C7500852274 /* IdentifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332D22B1C9C7500852274 /* IdentifierProtocol.swift */; };
+		D1D332F42B1CA87700852274 /* StackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332F32B1CA87700852274 /* StackView+.swift */; };
+		D1D332F62B1CA99600852274 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332F52B1CA99600852274 /* PhotoCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +108,8 @@
 		D1D332CE2B1C725200852274 /* PostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResponse.swift; sourceTree = "<group>"; };
 		D1D332D02B1C963A00852274 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		D1D332D22B1C9C7500852274 /* IdentifierProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierProtocol.swift; sourceTree = "<group>"; };
+		D1D332F32B1CA87700852274 /* StackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView+.swift"; sourceTree = "<group>"; };
+		D1D332F52B1CA99600852274 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,7 @@
 			children = (
 				D12B91BD2AFE5A4E006451FE /* FeedViewController.swift */,
 				D1D332182B175A7F00852274 /* FeedTableViewCell.swift */,
+				D1D332F52B1CA99600852274 /* PhotoCollectionViewCell.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -289,6 +294,7 @@
 			children = (
 				D1CC23722AFCF93700684175 /* UILabel+.swift */,
 				D1674CCC2B0546F9000697C2 /* String+.swift */,
+				D1D332F32B1CA87700852274 /* StackView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -426,6 +432,7 @@
 				D1D332CF2B1C725200852274 /* PostResponse.swift in Sources */,
 				D1D332CD2B1C6A9000852274 /* PostModel.swift in Sources */,
 				D1D332D32B1C9C7500852274 /* IdentifierProtocol.swift in Sources */,
+				D1D332F62B1CA99600852274 /* PhotoCollectionViewCell.swift in Sources */,
 				D1CC23632AFCEB8100684175 /* BaseViewController.swift in Sources */,
 				D12B91BC2AFE4DB7006451FE /* RegexType.swift in Sources */,
 				D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */,
@@ -433,6 +440,7 @@
 				D1D332192B175A7F00852274 /* FeedTableViewCell.swift in Sources */,
 				D18531222B14F09E00EACDAA /* WelcomeViewController.swift in Sources */,
 				D1674CE42B064551000697C2 /* APIKey+URL.swift in Sources */,
+				D1D332F42B1CA87700852274 /* StackView+.swift in Sources */,
 				D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */,
 				D1B2C5CC2B15C8BF0065B51F /* Design.swift in Sources */,
 				D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */,
