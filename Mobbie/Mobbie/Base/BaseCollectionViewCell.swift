@@ -11,7 +11,6 @@ import UIKit
 import SnapKit
 
 class BaseCollectionViewCell: UICollectionViewCell {
-    static let identifier = "BaseCollectionViewCell"
     
     override init(frame: CGRect) {
         super.init(frame: frame)
