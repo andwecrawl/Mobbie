@@ -30,7 +30,7 @@ final class WelcomeViewModel: ViewModel {
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .flatMap {
                 let model = LoginData(email: input.userInfo.id, password: input.userInfo.password)
-                return MoyaAPIManager.shared.fetchInSignProgress(.Login(model: model), type: LoginResponse.self)
+                return MoyaAPIManager.shared.fetchInSignProgress(.login(model: model), type: LoginResponse.self)
             }
             .subscribe(with: self) { owner, response in
                 switch response {

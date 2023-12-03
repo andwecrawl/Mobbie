@@ -64,7 +64,7 @@ final class LoginViewModel: ViewModel {
             .filter { $0 }
             .flatMap { _ in
                 let model = LoginData(email: self.model.email, password: self.model.password)
-                return MoyaAPIManager.shared.fetchInSignProgress(.Login(model: model), type: LoginResponse.self)
+                return MoyaAPIManager.shared.fetchInSignProgress(.login(model: model), type: LoginResponse.self)
             }
             .subscribe(with: self) { owner, response in
                 switch response {
