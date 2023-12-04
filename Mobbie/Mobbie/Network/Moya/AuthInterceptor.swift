@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 import Alamofire
 import Moya
 
@@ -15,16 +16,19 @@ final class AuthInterceptor: RequestInterceptor {
 
     private init() {}
     
+    var disposeBag = DisposeBag()
+    
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         
            print("retry 진입")
         guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 419
            else {
-               completion(.doNotRetryWithError(error))
+            print("error?")
+               completion(.doNotRetry)
                return
            }
 
-           // statusCode == 401 || 419
+           // statusCode == 419
         MoyaAPIManager.shared.fetchInSignProgress(.refreshAccessToken, type: TokenResponse.self)
             .subscribe(with: self) { owner, response in
                 switch response {
@@ -35,7 +39,7 @@ final class AuthInterceptor: RequestInterceptor {
                     completion(.retry)
                 case .failure(let error):
                     // 갱신 실패 -> 로그인 화면으로 전환
-                    completion(.doNotRetryWithError(error))
+                    completion(.doNotRetry)
                     
                     // 이전에 쌓였던 화면이 clear => 새로 진입
                     let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
@@ -49,7 +53,7 @@ final class AuthInterceptor: RequestInterceptor {
                     
                 }
             }
-            .dispose()
+            .disposed(by: disposeBag)
         
        }
 }
