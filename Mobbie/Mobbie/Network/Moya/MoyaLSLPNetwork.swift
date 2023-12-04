@@ -127,6 +127,11 @@ extension MoyaNetwork: TargetType {
     }
     
     var validationType: ValidationType {
-        return .successCodes
+        switch self {
+        case .refreshAccessToken:
+            return .successCodes
+        default:
+            return .none
+        }
     }
 }
