@@ -59,6 +59,8 @@
 		D1D332D32B1C9C7500852274 /* IdentifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332D22B1C9C7500852274 /* IdentifierProtocol.swift */; };
 		D1D332F42B1CA87700852274 /* StackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332F32B1CA87700852274 /* StackView+.swift */; };
 		D1D332F62B1CA99600852274 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332F52B1CA99600852274 /* PhotoCollectionViewCell.swift */; };
+		D1D332F92B1E3BB600852274 /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = D1D332F82B1E3BB600852274 /* SideMenu */; };
+		D1D332FC2B1E3BFE00852274 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332FB2B1E3BFE00852274 /* SettingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +112,7 @@
 		D1D332D22B1C9C7500852274 /* IdentifierProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierProtocol.swift; sourceTree = "<group>"; };
 		D1D332F32B1CA87700852274 /* StackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView+.swift"; sourceTree = "<group>"; };
 		D1D332F52B1CA99600852274 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		D1D332FB2B1E3BFE00852274 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,7 @@
 				D1CC236C2AFCEE4200684175 /* SnapKit in Frameworks */,
 				D185310F2B13619300EACDAA /* RxSwift in Frameworks */,
 				D185310D2B13619300EACDAA /* RxCocoa in Frameworks */,
+				D1D332F92B1E3BB600852274 /* SideMenu in Frameworks */,
 				D1CC236F2AFCEE6000684175 /* Moya in Frameworks */,
 				D1B2C5CF2B15EF8F0065B51F /* Lottie in Frameworks */,
 			);
@@ -237,6 +241,7 @@
 				D1CC23642AFCEB8500684175 /* Base */,
 				D1CC23762AFCFF3700684175 /* Onboarding */,
 				D1CC23772AFCFF4A00684175 /* Login */,
+				D1D332FA2B1E3BF000852274 /* Setting */,
 				D12B91BF2AFE5A55006451FE /* Feed */,
 				D1CC237A2AFCFF9500684175 /* Data */,
 				D1674CD52B06084E000697C2 /* Network */,
@@ -335,6 +340,14 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		D1D332FA2B1E3BF000852274 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				D1D332FB2B1E3BFE00852274 /* SettingViewController.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -358,6 +371,7 @@
 				D185310C2B13619300EACDAA /* RxCocoa */,
 				D185310E2B13619300EACDAA /* RxSwift */,
 				D1B2C5CE2B15EF8F0065B51F /* Lottie */,
+				D1D332F82B1E3BB600852274 /* SideMenu */,
 			);
 			productName = SACdyBuddy;
 			productReference = D1CC23492AFCEB1000684175 /* Mobbie.app */;
@@ -392,6 +406,7 @@
 				D1CC236D2AFCEE6000684175 /* XCRemoteSwiftPackageReference "Moya" */,
 				D185310B2B13619300EACDAA /* XCRemoteSwiftPackageReference "RxSwift" */,
 				D1B2C5CD2B15EF8F0065B51F /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				D1D332F72B1E3BB600852274 /* XCRemoteSwiftPackageReference "SideMenu" */,
 			);
 			productRefGroup = D1CC234A2AFCEB1000684175 /* Products */;
 			projectDirPath = "";
@@ -444,6 +459,7 @@
 				D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */,
 				D1B2C5CC2B15C8BF0065B51F /* Design.swift in Sources */,
 				D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */,
+				D1D332FC2B1E3BFE00852274 /* SettingViewController.swift in Sources */,
 				D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */,
 				D1D332B02B19A3F300852274 /* SettingOutlet.swift in Sources */,
 				D1D332D12B1C963A00852274 /* BaseTableViewCell.swift in Sources */,
@@ -709,6 +725,14 @@
 				minimumVersion = 15.0.3;
 			};
 		};
+		D1D332F72B1E3BB600852274 /* XCRemoteSwiftPackageReference "SideMenu" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jonkykong/SideMenu.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -741,6 +765,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D1CC236D2AFCEE6000684175 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = RxMoya;
+		};
+		D1D332F82B1E3BB600852274 /* SideMenu */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D1D332F72B1E3BB600852274 /* XCRemoteSwiftPackageReference "SideMenu" */;
+			productName = SideMenu;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
