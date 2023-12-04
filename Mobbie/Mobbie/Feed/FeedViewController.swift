@@ -9,15 +9,18 @@ import UIKit
 
 final class FeedViewController: BaseViewController {
     
-    private let tableView = {
+    private lazy var tableView = {
         let view = UITableView(frame: .zero)
         view.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
+        view.delegate = self
+        view.dataSource = self
         return view
     }()
     
     private let writeButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor.highlightMint
+        button.backgroundColor = UIColor.highlightOrange
+        button.tintColor = .white
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.layer.cornerRadius = 30
         button.makeShadow()
@@ -54,8 +57,6 @@ final class FeedViewController: BaseViewController {
     }
     
     override func configureView() {
-        tableView.delegate = self
-        tableView.dataSource = self
     }
     
     /// Show the loading empty state
@@ -79,8 +80,11 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier) as? FeedTableViewCell else { return UITableViewCell() }
-        
-        cell.backgroundColor = .yellow
+        cell.userLabel.text = "안녕하세요?"
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 300
     }
 }
