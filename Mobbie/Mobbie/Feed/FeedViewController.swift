@@ -42,6 +42,10 @@ final class FeedViewController: BaseViewController {
     }
     
     override func setConstraints() {
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
         writeButton.snp.makeConstraints { make in
             make.width.equalTo(60)
             make.height.equalTo(writeButton.snp.width)
@@ -50,7 +54,8 @@ final class FeedViewController: BaseViewController {
     }
     
     override func configureView() {
-        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     /// Show the loading empty state
@@ -75,7 +80,7 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier) as? FeedTableViewCell else { return UITableViewCell() }
         
-        
+        cell.backgroundColor = .yellow
         return cell
     }
 }
