@@ -47,7 +47,7 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
         button.setTitle("새로운 계정 만들기", for: .normal)
         button.titleLabel?.font = Design.Font.preRegular.smallFont
         button.backgroundColor = .clear
-        button.setTitleColor(UIColor.highlightOrange, for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
         return button
     }()
     
@@ -126,6 +126,7 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
         
         guard let output = viewModel.transform(input: input) else { return }
         
+        
         output.canTryLogin
             .bind(with: self) { owner, value in
                 owner.loginButton.isEnabled = value
@@ -133,12 +134,10 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
             }
             .disposed(by: disposeBag)
         
-        output.loginButtonTapped
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .withLatestFrom(output.canLogin)
+        
+        output.canLogin
             .bind(with: self) { owner, login in
                 if login {
-                    
                     self.transitionTo(FeedViewController())
                     
                 } else {
@@ -146,6 +145,7 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
                 }
             }
             .disposed(by: disposeBag)
+
         
         output.signUpButtonTapped
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
@@ -155,6 +155,7 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+        
     }
 }
 

@@ -25,7 +25,7 @@ final class LoginViewModel: ViewModel {
         let loginButtonTapped: ControlEvent<Void>
         let signUpButtonTapped: ControlEvent<Void>
         let canTryLogin: BehaviorSubject<Bool>
-        let canLogin: BehaviorSubject<Bool>
+        let canLogin: PublishSubject<Bool>
     }
     
     func transform(input: Input) -> Output? {
@@ -33,7 +33,8 @@ final class LoginViewModel: ViewModel {
         let isValidID = BehaviorSubject(value: false)
         let isValidPassword = BehaviorSubject(value: false)
         let canTryLogin = BehaviorSubject(value: false)
-        let canLogin = BehaviorSubject(value: false)
+        let canLogin = PublishSubject<Bool>()
+        
         
         input.id
             .map {
@@ -46,7 +47,8 @@ final class LoginViewModel: ViewModel {
         input.password
             .map {
                 self.model.password = $0
-                return ($0.range(of: RegexType.password.rawValue, options: .regularExpression) != nil)
+                return true
+//                return ($0.range(of: RegexType.password.rawValue, options: .regularExpression) != nil)
             }
             .bind(to: isValidPassword)
             .disposed(by: disposeBag)
@@ -63,6 +65,7 @@ final class LoginViewModel: ViewModel {
             .withLatestFrom(canTryLogin)
             .filter { $0 }
             .flatMap { _ in
+                print("clicked")
                 let model = LoginData(email: self.model.email, password: self.model.password)
                 return MoyaAPIManager.shared.fetchInSignProgress(.login(model: model), type: LoginResponse.self)
             }
@@ -79,7 +82,6 @@ final class LoginViewModel: ViewModel {
                 }
             }
             .disposed(by: disposeBag)
-        
         
         return Output(
             loginButtonTapped: input.loginButtonTapped,
