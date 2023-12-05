@@ -13,11 +13,14 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNavigationBar()
         configureHierarchy()
         setConstraints()
         configureView()
     }
     
+    func setNavigationBar() {
+    }
     
     func configureHierarchy() {
         view.backgroundColor = .background
