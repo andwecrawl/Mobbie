@@ -12,6 +12,8 @@ final class FeedViewController: BaseViewController {
     private lazy var tableView = {
         let view = UITableView(frame: .zero)
         view.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
+        view.rowHeight = UITableView.automaticDimension
+        view.estimatedRowHeight = 100
         view.delegate = self
         view.dataSource = self
         return view
@@ -31,6 +33,11 @@ final class FeedViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    override func setNavigationBar() {
+        self.navigationController?.navigationBar.titleTextAttributes =  [.font: Design.Font.chab.exlargeFont]
+        title = "Mobbie"
     }
     
     override func configureHierarchy() {
@@ -82,9 +89,5 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier) as? FeedTableViewCell else { return UITableViewCell() }
         cell.userLabel.text = "안녕하세요?"
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
     }
 }
