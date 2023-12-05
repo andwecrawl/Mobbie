@@ -62,6 +62,8 @@
 		D1D332F92B1E3BB600852274 /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = D1D332F82B1E3BB600852274 /* SideMenu */; };
 		D1D332FC2B1E3BFE00852274 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332FB2B1E3BFE00852274 /* SettingViewController.swift */; };
 		D1D333002B1EDEA200852274 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332FF2B1EDEA200852274 /* SearchViewController.swift */; };
+		D1D333032B1F323E00852274 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D333022B1F323E00852274 /* AddPostViewController.swift */; };
+		D1D333052B1F3F8B00852274 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D333042B1F3F8B00852274 /* FeedViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,6 +117,8 @@
 		D1D332F52B1CA99600852274 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1D332FB2B1E3BFE00852274 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D1D332FF2B1EDEA200852274 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		D1D333022B1F323E00852274 /* AddPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
+		D1D333042B1F3F8B00852274 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				D12B91BD2AFE5A4E006451FE /* FeedViewController.swift */,
+				D1D333042B1F3F8B00852274 /* FeedViewModel.swift */,
 				D1D332182B175A7F00852274 /* FeedTableViewCell.swift */,
 				D1D332F52B1CA99600852274 /* PhotoCollectionViewCell.swift */,
 			);
@@ -245,6 +250,7 @@
 				D1CC23772AFCFF4A00684175 /* Login */,
 				D1D332FA2B1E3BF000852274 /* Setting */,
 				D12B91BF2AFE5A55006451FE /* Feed */,
+				D1D333012B1F322B00852274 /* AddPost */,
 				D1D332FE2B1EDE9200852274 /* Search */,
 				D1CC237A2AFCFF9500684175 /* Data */,
 				D1674CD52B06084E000697C2 /* Network */,
@@ -359,6 +365,14 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		D1D333012B1F322B00852274 /* AddPost */ = {
+			isa = PBXGroup;
+			children = (
+				D1D333022B1F323E00852274 /* AddPostViewController.swift */,
+			);
+			path = AddPost;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -457,6 +471,7 @@
 				D1674CE62B064842000697C2 /* MoyaAPIManager.swift in Sources */,
 				D1D332CF2B1C725200852274 /* PostResponse.swift in Sources */,
 				D1D332CD2B1C6A9000852274 /* PostModel.swift in Sources */,
+				D1D333032B1F323E00852274 /* AddPostViewController.swift in Sources */,
 				D1D333002B1EDEA200852274 /* SearchViewController.swift in Sources */,
 				D1D332D32B1C9C7500852274 /* IdentifierProtocol.swift in Sources */,
 				D1D332F62B1CA99600852274 /* PhotoCollectionViewCell.swift in Sources */,
@@ -482,6 +497,7 @@
 				D18531272B14FF5200EACDAA /* WelcomeViewModel.swift in Sources */,
 				D1CC23612AFCEB6C00684175 /* IntroViewController.swift in Sources */,
 				D1674D4C2B0B7978000697C2 /* ViewModelProtocol.swift in Sources */,
+				D1D333052B1F3F8B00852274 /* FeedViewModel.swift in Sources */,
 				D12B91C12AFE5DCE006451FE /* JoinViewModel.swift in Sources */,
 				D1D3321B2B175A9E00852274 /* BaseCollectionViewCell.swift in Sources */,
 				D1674CF42B08A29C000697C2 /* JoinType.swift in Sources */,
