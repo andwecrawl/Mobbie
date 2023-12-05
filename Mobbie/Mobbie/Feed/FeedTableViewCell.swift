@@ -129,6 +129,7 @@ final class FeedTableViewCell: BaseTableViewCell {
     override func configureView() {
         timeLabel.text = "20분 전"
         contentLabel.text = "밤은깊었는데잠은안오고늘어난두통과싸우고이리저리뒤척이다생각에잠겨또펜을붙잡고밤은깊었는데잠은안오고늘어난두통과싸우고이리저리뒤척이다생각에잠겨또펜을붙잡고밤은깊었는데잠은안오고늘어난두통과싸우고이리저리뒤척이다생각에잠겨또펜을붙잡고밤은깊었는데잠은안오고늘어난두통과싸우고이리저리뒤척이다생각에잠겨또펜을붙잡고"
+        contentLabel.setLineSpacing(lineSpacing: 4)
     }
     
     func setCollectionViewLayout() -> UICollectionViewLayout {
