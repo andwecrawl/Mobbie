@@ -30,7 +30,7 @@ enum MoyaNetwork {
 
 extension MoyaNetwork: TargetType {
     var baseURL: URL {
-        return URL(string: APIKeyURL.baseURL.rawValue)!
+        return URL(string: APIKeyURL.testURL.rawValue)!
     }
     
     var path: String {
@@ -89,10 +89,8 @@ extension MoyaNetwork: TargetType {
             ]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString )
         default: return .requestPlain
-//        case .fetchPost:
-//            let params: [String: String]
 //        case .deletePost:
-//            <#code#>
+//            
 //        case .writeComment(_, let content), .modifiyComment(_, _, let content):
 //            return .requestJSONEncodable(content)
         }
