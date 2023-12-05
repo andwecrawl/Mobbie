@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxMoya
 
 final class FeedViewController: BaseViewController {
     
@@ -29,12 +31,22 @@ final class FeedViewController: BaseViewController {
         return button
     }()
     
+    var posts: [Posts] = [] {
+        didSet {
+            print(self)
+        }
+    }
+    var cursor: String = ""
+    
+    let viewModel = FeedViewModel()
+    
+    let disposeBag = DisposeBag()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
+        bind()
     }
     
     override func setNavigationBar() {
@@ -69,6 +81,40 @@ final class FeedViewController: BaseViewController {
     }
     
     override func configureView() {
+        
+    }
+    
+    func bind() {
+        
+        let input = FeedViewModel.Input(
+            addButtonTapped: writeButton.rx.tap
+        )
+        
+        guard let output = viewModel.transform(input: input) else { return }
+        
+        
+        viewModel.cursor.onNext(cursor)
+        
+        output.addButtonTapped
+            .bind(with: self) { owner, _ in
+                let vc = AddPostViewController()
+                vc.modalPresentationStyle = .overFullScreen
+                let nav = UINavigationController(rootViewController: vc)
+                owner.present(nav, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.data
+            .bind(with: self) { owner, response in
+                switch response {
+                case .success(let result):
+                    owner.posts.append(contentsOf: result.data)
+                    owner.cursor = result.nextCursor
+                case .failure(let error):
+                    owner.sendOneSideAlert(title: error.localizedDescription, message: "다시 시도해 주세요.")
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     /// Show the loading empty state
