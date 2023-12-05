@@ -8,6 +8,17 @@
 import Foundation
 
 struct PostResponse: Decodable {
+    let data: [Posts]
+    let nextCursor: String
+
+    enum CodingKeys: String, CodingKey {
+        case data
+        case nextCursor = "next_cursor"
+    }
+}
+
+
+struct Posts: Decodable {
     var _id: String
     var creator: User
     var time: String
@@ -28,7 +39,6 @@ struct Comment: Decodable {
 struct User: Decodable {
     var _id: String
     var nick: String
-    var profile: String
 }
 
 struct DeletePostResponse {
