@@ -33,10 +33,15 @@ final class FeedViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
     }
     
     override func setNavigationBar() {
-        self.navigationController?.navigationBar.titleTextAttributes =  [.font: Design.Font.chab.exlargeFont]
+        self.navigationController?.navigationBar.titleTextAttributes =  [
+            .font: Design.Font.chab.getFonts(size: 26),
+            .foregroundColor: UIColor.highlightMint
+        ]
         title = "Mobbie"
     }
     
