@@ -61,6 +61,7 @@
 		D1D332F62B1CA99600852274 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332F52B1CA99600852274 /* PhotoCollectionViewCell.swift */; };
 		D1D332F92B1E3BB600852274 /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = D1D332F82B1E3BB600852274 /* SideMenu */; };
 		D1D332FC2B1E3BFE00852274 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332FB2B1E3BFE00852274 /* SettingViewController.swift */; };
+		D1D333002B1EDEA200852274 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332FF2B1EDEA200852274 /* SearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +114,7 @@
 		D1D332F32B1CA87700852274 /* StackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView+.swift"; sourceTree = "<group>"; };
 		D1D332F52B1CA99600852274 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1D332FB2B1E3BFE00852274 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		D1D332FF2B1EDEA200852274 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 				D1CC23772AFCFF4A00684175 /* Login */,
 				D1D332FA2B1E3BF000852274 /* Setting */,
 				D12B91BF2AFE5A55006451FE /* Feed */,
+				D1D332FE2B1EDE9200852274 /* Search */,
 				D1CC237A2AFCFF9500684175 /* Data */,
 				D1674CD52B06084E000697C2 /* Network */,
 				D1674CF52B08A377000697C2 /* Resource */,
@@ -348,6 +351,14 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
+		D1D332FE2B1EDE9200852274 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				D1D332FF2B1EDEA200852274 /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -446,6 +457,7 @@
 				D1674CE62B064842000697C2 /* MoyaAPIManager.swift in Sources */,
 				D1D332CF2B1C725200852274 /* PostResponse.swift in Sources */,
 				D1D332CD2B1C6A9000852274 /* PostModel.swift in Sources */,
+				D1D333002B1EDEA200852274 /* SearchViewController.swift in Sources */,
 				D1D332D32B1C9C7500852274 /* IdentifierProtocol.swift in Sources */,
 				D1D332F62B1CA99600852274 /* PhotoCollectionViewCell.swift in Sources */,
 				D1CC23632AFCEB8100684175 /* BaseViewController.swift in Sources */,
