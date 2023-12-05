@@ -39,7 +39,7 @@ final class AuthInterceptor: RequestInterceptor {
                     completion(.retry)
                 case .failure(let error):
                     // 갱신 실패 -> 로그인 화면으로 전환
-                    completion(.doNotRetry)
+                    completion(.doNotRetryWithError(error))
                     
                     // 이전에 쌓였던 화면이 clear => 새로 진입
                     let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
