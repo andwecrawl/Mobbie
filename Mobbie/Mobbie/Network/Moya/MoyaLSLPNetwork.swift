@@ -18,9 +18,9 @@ enum MoyaNetwork {
     case refreshAccessToken
     
     // 게시글
-    case writePost
-    case fetchPost
-    case modifiyPost(postID: String)
+    case writePost(model: PostModel)
+    case fetchPost(nextCursor: String)
+    case modifiyPost(postID: String, model: PostModel)
     case deletePost(postID: String)
     
     // 댓글
@@ -45,7 +45,7 @@ extension MoyaNetwork: TargetType {
             return "refresh"
         case .writePost, .fetchPost:
             return "post"
-        case .modifiyPost(let postID), .deletePost(let postID):
+        case .modifiyPost(let postID, _), .deletePost(let postID):
             return "post/\(postID)"
         case .writeComment(let postID, _):
             return "post/\(postID)/comment"
@@ -77,19 +77,24 @@ extension MoyaNetwork: TargetType {
             
         case .emailValidation(let model):
             return .requestJSONEncodable(model)
-            
         case .refreshAccessToken:
             return .requestPlain
-        case .writePost:
-            <#code#>
-        case .fetchPost:
-            let params: [String: String]
-        case .modifiyPost:
-            <#code#>
-        case .deletePost:
-            <#code#>
-        case .writeComment(_, let content), .modifiyComment(_, _, let content):
-            return .requestJSONEncodable(content)
+        case .writePost(let model), .modifiyPost(_, let model):
+            return .requestJSONEncodable(model)
+        case .fetchPost(let cursor):
+            var params: [String: String] = [
+                "next": cursor,
+                "limit": "20",
+                "product_id": "" // 추후 작성 ...
+            ]
+            return .requestParameters(parameters: params, encoding: URLEncoding.queryString )
+        default: return .requestPlain
+//        case .fetchPost:
+//            let params: [String: String]
+//        case .deletePost:
+//            <#code#>
+//        case .writeComment(_, let content), .modifiyComment(_, _, let content):
+//            return .requestJSONEncodable(content)
         }
     }
     
