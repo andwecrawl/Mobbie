@@ -68,6 +68,8 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     let buttonStackView = UIStackView()
     
+    var post: Posts?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -102,7 +104,7 @@ final class FeedTableViewCell: BaseTableViewCell {
         
         timeLabel.snp.makeConstraints { make in
             make.centerY.equalTo(userLabel)
-            make.leading.equalTo(userLabel.snp.trailing).offset(4)
+            make.leading.equalTo(userLabel.snp.trailing).offset(6)
         }
         
         detailButton.snp.makeConstraints { make in
@@ -145,5 +147,13 @@ final class FeedTableViewCell: BaseTableViewCell {
 
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
+    }
+    
+    func configureCell() {
+        guard let post else { return }
+        
+        userLabel.text = post.creator.nick
+        contentLabel.text = post.content ?? ""
+        timeLabel.text = post.time.parsingToDate()
     }
 }
