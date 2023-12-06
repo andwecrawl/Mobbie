@@ -18,6 +18,7 @@ final class FeedViewController: BaseViewController {
         view.estimatedRowHeight = 100
         view.delegate = self
         view.dataSource = self
+        view.prefetchDataSource = self
         return view
     }()
     
@@ -126,7 +127,8 @@ final class FeedViewController: BaseViewController {
 }
 
 
-extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
+extension FeedViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.posts.count
     }
@@ -141,5 +143,14 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configureCell()
         
         return cell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach { path in
+            if path.row == viewModel.posts.count - 2 {
+                viewModel.cursor.onNext(cursor)
+            }
+        }
     }
 }
