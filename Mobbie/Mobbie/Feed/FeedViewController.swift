@@ -108,15 +108,6 @@ final class FeedViewController: BaseViewController {
                 }
             }
             .disposed(by: disposeBag)
-        
-//        output.getData
-//            .filter { $0 }
-//            .withLatestFrom(output.nextCursor)
-//            .bind(with: self) { owner, cursor in
-//                self.cursor = cursor // 나중에 페이지네이션 할 때 viewModel에 VC의 cursor를 넣어주깅 ^_^
-//            }
-//            .disposed(by: disposeBag)
-        
             
     }
     
