@@ -31,11 +31,6 @@ final class FeedViewController: BaseViewController {
         return button
     }()
     
-    var posts: [Posts] = [] {
-        didSet {
-            print(self)
-        }
-    }
     var cursor: String = ""
     
     let viewModel = FeedViewModel()
@@ -104,17 +99,25 @@ final class FeedViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        output.data
-            .bind(with: self) { owner, response in
-                switch response {
-                case .success(let result):
-                    owner.posts.append(contentsOf: result.data)
-                    owner.cursor = result.nextCursor
-                case .failure(let error):
-                    owner.sendOneSideAlert(title: error.localizedDescription, message: "다시 시도해 주세요.")
+        Observable.combineLatest(output.getData, output.nextCursor, output.errorMessage)
+            .bind(with: self) { owner, value in
+                if value.0 {
+                    owner.cursor = value.1
+                } else {
+                    owner.sendOneSideAlert(title: value.2, message: "다시 시도해 주세요!")
                 }
             }
             .disposed(by: disposeBag)
+        
+//        output.getData
+//            .filter { $0 }
+//            .withLatestFrom(output.nextCursor)
+//            .bind(with: self) { owner, cursor in
+//                self.cursor = cursor // 나중에 페이지네이션 할 때 viewModel에 VC의 cursor를 넣어주깅 ^_^
+//            }
+//            .disposed(by: disposeBag)
+        
+            
     }
     
     /// Show the loading empty state
