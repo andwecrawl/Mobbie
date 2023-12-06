@@ -31,6 +31,7 @@
 		D185310F2B13619300EACDAA /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D185310E2B13619300EACDAA /* RxSwift */; };
 		D18531222B14F09E00EACDAA /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18531212B14F09E00EACDAA /* WelcomeViewController.swift */; };
 		D18531272B14FF5200EACDAA /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18531262B14FF5200EACDAA /* WelcomeViewModel.swift */; };
+		D1AD1C0D2B20D32800C4389C /* AddPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AD1C0C2B20D32800C4389C /* AddPostViewModel.swift */; };
 		D1B2C5CC2B15C8BF0065B51F /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B2C5CB2B15C8BF0065B51F /* Design.swift */; };
 		D1B2C5CF2B15EF8F0065B51F /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = D1B2C5CE2B15EF8F0065B51F /* Lottie */; };
 		D1B2C5D12B15FACA0065B51F /* congratulations.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B2C5D02B15FACA0065B51F /* congratulations.json */; };
@@ -90,6 +91,7 @@
 		D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
 		D18531212B14F09E00EACDAA /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		D18531262B14FF5200EACDAA /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
+		D1AD1C0C2B20D32800C4389C /* AddPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewModel.swift; sourceTree = "<group>"; };
 		D1B2C5CB2B15C8BF0065B51F /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		D1B2C5D02B15FACA0065B51F /* congratulations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = congratulations.json; sourceTree = "<group>"; };
 		D1CC23492AFCEB1000684175 /* Mobbie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobbie.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -372,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				D1D333022B1F323E00852274 /* AddPostViewController.swift */,
+				D1AD1C0C2B20D32800C4389C /* AddPostViewModel.swift */,
 			);
 			path = AddPost;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				D1D333052B1F3F8B00852274 /* FeedViewModel.swift in Sources */,
 				D12B91C12AFE5DCE006451FE /* JoinViewModel.swift in Sources */,
 				D1D3321B2B175A9E00852274 /* BaseCollectionViewCell.swift in Sources */,
+				D1AD1C0D2B20D32800C4389C /* AddPostViewModel.swift in Sources */,
 				D1674CF42B08A29C000697C2 /* JoinType.swift in Sources */,
 				D1D3328D2B18ACE200852274 /* TransitionProtocol.swift in Sources */,
 				D1CC23792AFCFF8E00684175 /* UserDefaultHelper.swift in Sources */,
