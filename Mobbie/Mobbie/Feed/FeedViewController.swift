@@ -103,6 +103,7 @@ final class FeedViewController: BaseViewController {
             .bind(with: self) { owner, value in
                 if value.0 {
                     owner.cursor = value.1
+                    owner.tableView.reloadData()
                 } else {
                     owner.sendOneSideAlert(title: value.2, message: "다시 시도해 주세요!")
                 }
@@ -127,12 +128,18 @@ final class FeedViewController: BaseViewController {
 
 extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return viewModel.posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier) as? FeedTableViewCell else { return UITableViewCell() }
-        cell.userLabel.text = "안녕하세요?"
+        
+        let row = indexPath.row
+        let post = viewModel.posts[row]
+        
+        cell.post = post
+        cell.configureCell()
+        
         return cell
     }
 }
