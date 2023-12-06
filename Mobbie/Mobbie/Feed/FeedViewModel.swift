@@ -11,6 +11,12 @@ import RxCocoa
 
 class FeedViewModel: ViewModel {
     
+    var posts: [Posts] = [] {
+        didSet {
+            print("=============== posts ===================")
+            print(self)
+        }
+    }
     var cursor = PublishSubject<String>()
     var disposeBag = DisposeBag()
     
@@ -21,35 +27,53 @@ class FeedViewModel: ViewModel {
     
     struct Output {
         let addButtonTapped: ControlEvent<Void>
-        let data: PublishSubject<Result<PostResponse, Error>>
+        let getData: PublishSubject<Bool>
+        let nextCursor: BehaviorSubject<String>
+        let errorMessage: BehaviorSubject<String>
     }
     
     func transform(input: Input) -> Output? {
         
+        let getData = PublishSubject<Bool>()
+        let nextCursor = BehaviorSubject(value: "")
+        let isError = BehaviorSubject(value: "")
         let data = PublishSubject<Result<PostResponse, Error>>()
         
-        cursor
-            .subscribe(with: self) { owner, cursor in
-                
-            MoyaAPIManager.shared.fetchInSignProgress(.fetchPost(nextCursor: cursor), type: PostResponse.self)
-                .bind(with: self) { owner, response in
-                    switch response {
-                    case .success(let result):
-                        data.onNext(.success(result))
-                        print("success Result: \(result)")
-                    case .failure(let error):
-                        data.onNext(.failure(error))
-                        print("error Result: \(error)")
-                    }
+        data
+            .bind(with: self) { owner, response in
+                switch response {
+                case .success(let result):
+                    owner.posts.append(contentsOf: result.data)
+                    getData.onNext(true)
+                    nextCursor.onNext(result.nextCursor)
+                case .failure(let error):
+                    isError.onNext(error.localizedDescription)
                 }
-                .disposed(by: owner.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        cursor
+            .flatMap { cursor in
+                MoyaAPIManager.shared.fetchInSignProgress(.fetchPost(nextCursor: cursor), type: PostResponse.self)
+            }
+            .bind(with: self) { owner, response in
+                switch response {
+                case .success(let result):
+                    data.onNext(.success(result))
+                    print("success Result: \(result)")
+                case .failure(let error):
+                    data.onNext(.failure(error))
+                    print("error Result: \(error)")
+                }
             }
             .disposed(by: disposeBag)
         
         return Output(
             addButtonTapped: input.addButtonTapped,
-            data: data
-            
+            getData: getData,
+            nextCursor: nextCursor,
+            errorMessage: isError
         )
     }
 }
