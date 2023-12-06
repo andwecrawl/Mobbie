@@ -22,11 +22,12 @@ struct Posts: Decodable {
     var _id: String
     var creator: User
     var time: String
-    var content: String
+    var content: String?
     var likes: [String]
     var image: [String]
     var hashTags: [String]
     var comments: [Comment]
+    var product_id: String?
 }
 
 struct Comment: Decodable {
