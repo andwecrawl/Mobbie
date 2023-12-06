@@ -64,6 +64,7 @@
 		D1D333002B1EDEA200852274 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D332FF2B1EDEA200852274 /* SearchViewController.swift */; };
 		D1D333032B1F323E00852274 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D333022B1F323E00852274 /* AddPostViewController.swift */; };
 		D1D333052B1F3F8B00852274 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D333042B1F3F8B00852274 /* FeedViewModel.swift */; };
+		D1D333072B20BDC900852274 /* TimeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D333062B20BDC900852274 /* TimeHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -119,6 +120,7 @@
 		D1D332FF2B1EDEA200852274 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		D1D333022B1F323E00852274 /* AddPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
 		D1D333042B1F3F8B00852274 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		D1D333062B20BDC900852274 /* TimeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +300,7 @@
 				D1674D472B0B7478000697C2 /* UserInfo.swift */,
 				D12B91BB2AFE4DB7006451FE /* RegexType.swift */,
 				D1CC23782AFCFF8E00684175 /* UserDefaultHelper.swift */,
+				D1D333062B20BDC900852274 /* TimeHandler.swift */,
 				D1CC237D2AFCFFAB00684175 /* Extension */,
 			);
 			path = Data;
@@ -477,6 +480,7 @@
 				D1D332F62B1CA99600852274 /* PhotoCollectionViewCell.swift in Sources */,
 				D1CC23632AFCEB8100684175 /* BaseViewController.swift in Sources */,
 				D12B91BC2AFE4DB7006451FE /* RegexType.swift in Sources */,
+				D1D333072B20BDC900852274 /* TimeHandler.swift in Sources */,
 				D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */,
 				D1674CEF2B078C9D000697C2 /* LoginResponse.swift in Sources */,
 				D1D332192B175A7F00852274 /* FeedTableViewCell.swift in Sources */,
