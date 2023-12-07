@@ -32,6 +32,7 @@
 		D18531222B14F09E00EACDAA /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18531212B14F09E00EACDAA /* WelcomeViewController.swift */; };
 		D18531272B14FF5200EACDAA /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18531262B14FF5200EACDAA /* WelcomeViewModel.swift */; };
 		D1AD1C0D2B20D32800C4389C /* AddPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AD1C0C2B20D32800C4389C /* AddPostViewModel.swift */; };
+		D1AD1C122B221BAA00C4389C /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = D1AD1C112B221BAA00C4389C /* Toast */; };
 		D1B2C5CC2B15C8BF0065B51F /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B2C5CB2B15C8BF0065B51F /* Design.swift */; };
 		D1B2C5CF2B15EF8F0065B51F /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = D1B2C5CE2B15EF8F0065B51F /* Lottie */; };
 		D1B2C5D12B15FACA0065B51F /* congratulations.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B2C5D02B15FACA0065B51F /* congratulations.json */; };
@@ -130,6 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1AD1C122B221BAA00C4389C /* Toast in Frameworks */,
 				D1CC23712AFCEE6000684175 /* RxMoya in Frameworks */,
 				D1CC236C2AFCEE4200684175 /* SnapKit in Frameworks */,
 				D185310F2B13619300EACDAA /* RxSwift in Frameworks */,
@@ -403,6 +405,7 @@
 				D185310E2B13619300EACDAA /* RxSwift */,
 				D1B2C5CE2B15EF8F0065B51F /* Lottie */,
 				D1D332F82B1E3BB600852274 /* SideMenu */,
+				D1AD1C112B221BAA00C4389C /* Toast */,
 			);
 			productName = SACdyBuddy;
 			productReference = D1CC23492AFCEB1000684175 /* Mobbie.app */;
@@ -438,6 +441,7 @@
 				D185310B2B13619300EACDAA /* XCRemoteSwiftPackageReference "RxSwift" */,
 				D1B2C5CD2B15EF8F0065B51F /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				D1D332F72B1E3BB600852274 /* XCRemoteSwiftPackageReference "SideMenu" */,
+				D1AD1C102B221BAA00C4389C /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = D1CC234A2AFCEB1000684175 /* Products */;
 			projectDirPath = "";
@@ -737,6 +741,14 @@
 				minimumVersion = 6.6.0;
 			};
 		};
+		D1AD1C102B221BAA00C4389C /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
 		D1B2C5CD2B15EF8F0065B51F /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -781,6 +793,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D185310B2B13619300EACDAA /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		D1AD1C112B221BAA00C4389C /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D1AD1C102B221BAA00C4389C /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 		D1B2C5CE2B15EF8F0065B51F /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
