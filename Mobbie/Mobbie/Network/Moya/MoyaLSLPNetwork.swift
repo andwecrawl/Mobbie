@@ -30,7 +30,7 @@ enum MoyaNetwork {
 
 extension MoyaNetwork: TargetType {
     var baseURL: URL {
-        return URL(string: APIKeyURL.testURL.rawValue)!
+        return URL(string: APIKeyURL.baseURL.rawValue)!
     }
     
     var path: String {
@@ -80,7 +80,11 @@ extension MoyaNetwork: TargetType {
         case .refreshAccessToken:
             return .requestPlain
         case .writePost(let model), .modifiyPost(_, let model):
-            return .requestJSONEncodable(model)
+            let image = MultipartFormData(provider: .data(model.file ?? Data()), name: "file", fileName: "\(model.file).jpg", mimeType: "image/jpg")
+            let productID = MultipartFormData(provider: .data(model.product_id.data(using: .utf8)!), name: "product_id")
+            let content = MultipartFormData(provider: .data(model.content.data(using: .utf8)!), name: "content")
+            let multipartData: [MultipartFormData] = [image, productID, content]
+            return .uploadMultipart(multipartData)
         case .fetchPost(let cursor):
             var params: [String: String] = [
                 "next": cursor,
