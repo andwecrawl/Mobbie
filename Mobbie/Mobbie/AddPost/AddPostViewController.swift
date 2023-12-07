@@ -67,7 +67,7 @@ class AddPostViewController: BaseViewController {
         textView.sizeToFit()
         textView.snp.makeConstraints { make in
             let height = UIScreen.main.bounds.height
-            make.height.greaterThanOrEqualTo(height - 300)
+            make.height.greaterThanOrEqualTo(height - 150)
             make.top.horizontalEdges.equalToSuperview()
         }
         
