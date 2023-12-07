@@ -131,10 +131,10 @@ extension MoyaNetwork: TargetType {
     
     var validationType: ValidationType {
         switch self {
-        case .refreshAccessToken:
-            return .successCodes
-        default:
+        case .signUp, .login, .emailValidation:
             return .none
+        default:
+            return .successCodes
         }
     }
 }
