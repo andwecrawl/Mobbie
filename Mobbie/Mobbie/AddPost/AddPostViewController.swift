@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Toast
 
 class AddPostViewController: BaseViewController, TransitionProtocol {
     
@@ -17,8 +18,19 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         return view
     }()
     
+    let placeholderView = UIView()
+    
+    let placeholderLabel = {
+        let label = UILabel()
+        label.text = "무슨 일이 일어나고 있나요?"
+        label.textColor = .gray.withAlphaComponent(0.6)
+        label.font = Design.Font.preRegular.largeFont
+        return label
+    }()
+    
     let textView = {
         let view = UITextView()
+        view.backgroundColor = .clear
         view.returnKeyType = .default
         view.keyboardAppearance = .dark
         view.keyboardDismissMode = .onDrag
@@ -54,10 +66,12 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
     
     let viewModel = AddPostViewModel()
     
+    let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        bind()
         
     }
     
@@ -65,7 +79,8 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         super.configureHierarchy()
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
-        stackView.addArrangedSubview(textView)
+        stackView.AddArrangedSubviews([placeholderView])
+        [placeholderLabel, textView].forEach { placeholderView.addSubview($0) }
         
     }
     
@@ -82,11 +97,18 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
             make.centerX.equalToSuperview()
         }
         
-        textView.sizeToFit()
-        textView.snp.makeConstraints { make in
+        placeholderView.snp.makeConstraints { make in
             let height = UIScreen.main.bounds.height
             make.height.greaterThanOrEqualTo(height - 150)
             make.top.horizontalEdges.equalToSuperview()
+        }
+        
+        textView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        placeholderLabel.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalTo(textView).inset(8)
         }
         
     }
@@ -110,13 +132,23 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         Observable.combineLatest(output.isSaved, output.errorMessage)
             .bind(with: self) { owner, value in
                 if value.0 { // saved
-                    
+                    owner.view.makeToast("저장되었습니다.", position: .center)
+                    owner.addButtonTapped()
                 } else {
-                    
+                    owner.sendOneSideAlert(title: value.1, message: "다시 시도해 주세요!")
                 }
             }
+            .disposed(by: disposeBag)
         
-        
+        output.text
+            .bind(with: self) { owner, str in
+                if str.isEmpty {
+                    owner.placeholderLabel.isHidden = false
+                } else {
+                    owner.placeholderLabel.isHidden = true
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {

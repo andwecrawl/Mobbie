@@ -23,6 +23,7 @@ class AddPostViewModel: ViewModel {
     
     struct Output {
         let addButtonTapped: ControlEvent<Void>
+        let text: ControlProperty<String>
         let isSaved: PublishRelay<Bool>
         let errorMessage: BehaviorRelay<String>
     }
@@ -35,6 +36,7 @@ class AddPostViewModel: ViewModel {
         input.addButtonTapped
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .withLatestFrom(input.text)
+            .filter { !$0.replacingOccurrences(of: " ", with: "").isEmpty }
             .flatMap { str in
                 MoyaAPIManager.shared.fetchInSignProgress(.writePost(model: PostModel(content: str, product_id: "")), type: Posts.self)
             }
@@ -58,6 +60,7 @@ class AddPostViewModel: ViewModel {
         
         return Output(
             addButtonTapped: input.addButtonTapped,
+            text: input.text,
             isSaved: isSaved,
             errorMessage: errorMessage
         )
