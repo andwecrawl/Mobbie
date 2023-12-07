@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-class AddPostViewController: BaseViewController {
+class AddPostViewController: BaseViewController, TransitionProtocol {
     
     let scrollView = {
         let view = UIScrollView()
@@ -36,10 +38,26 @@ class AddPostViewController: BaseViewController {
         return view
     }()
     
+    let addButton = {
+        let view = UIButton()
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = .highlightOrange
+        config.title = "게시하기"
+        var container = AttributeContainer()
+        container.foregroundColor = UIColor.white
+        container.font = Design.Font.preMedium.midFont
+        config.attributedTitle = AttributedString("게시하기", attributes: container)
+        view.configuration = config
+        return view
+    }()
+    
     let viewModel = AddPostViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
     }
     
@@ -77,32 +95,49 @@ class AddPostViewController: BaseViewController {
         textView.becomeFirstResponder()
     }
     
+    
     func bind() {
+        viewModel.alert = sendOneSideAlert(title:message:)
+        viewModel.transition = self
+        
         let input = AddPostViewModel.Input(
-            
+            addButtonTapped: addButton.rx.tap,
+            text: textView.rx.text.orEmpty
         )
         
-        let output = viewModel.transform(input: input)
+        guard let output = viewModel.transform(input: input) else { return }
+        
+        Observable.combineLatest(output.isSaved, output.errorMessage)
+            .bind(with: self) { owner, value in
+                if value.0 { // saved
+                    
+                } else {
+                    
+                }
+            }
+        
         
     }
     
     override func setNavigationBar() {
         let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonTapped))
-        cancelButton.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
+        cancelButton.setTitleTextAttributes([
+            .foregroundColor: UIColor.white,
+            .font: Design.Font.preMedium.getFonts(size: 17)
+        ], for: .normal)
         
-        let addButton = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(addButtonTapped))
-        addButton.tintColor = .white
+        let addButton = UIBarButtonItem(customView: self.addButton)
         
         navigationItem.leftBarButtonItem = cancelButton
+        navigationItem.rightBarButtonItem = addButton
     }
     
     @objc func cancelButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        navigationController?.dismiss(animated: true)
     }
     
     @objc func addButtonTapped() {
         // post code
-        navigationController?.popViewController(animated: true)
+        navigationController?.dismiss(animated: true)
     }
-    
 }
