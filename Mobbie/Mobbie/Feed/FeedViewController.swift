@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxMoya
 
-final class FeedViewController: BaseViewController {
+final class FeedViewController: BaseViewController, TransitionProtocol {
     
     private lazy var tableView = {
         let view = UITableView(frame: .zero)
@@ -94,8 +94,8 @@ final class FeedViewController: BaseViewController {
         output.addButtonTapped
             .bind(with: self) { owner, _ in
                 let vc = AddPostViewController()
-                vc.modalPresentationStyle = .overFullScreen
                 let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .fullScreen
                 owner.present(nav, animated: true)
             }
             .disposed(by: disposeBag)
@@ -106,7 +106,12 @@ final class FeedViewController: BaseViewController {
                     owner.cursor = value.1
                     owner.tableView.reloadData()
                 } else {
-                    owner.sendOneSideAlert(title: value.2, message: "다시 시도해 주세요!")
+                    if value.2 == "expiredRefreshToken" {
+                        owner.sendOneSideAlert(title: "세션이 만료되었습니다!", message: "다시 로그인해 주세요.")
+                        owner.transitionTo(LoginViewController())
+                    } else {
+                        owner.sendOneSideAlert(title: value.2, message: "다시 시도해 주세요!")
+                    }
                 }
             }
             .disposed(by: disposeBag)
