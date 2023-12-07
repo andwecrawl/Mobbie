@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxMoya
+import Toast
 
 final class FeedViewController: BaseViewController, TransitionProtocol {
     
@@ -43,6 +44,12 @@ final class FeedViewController: BaseViewController, TransitionProtocol {
         super.viewDidLoad()
         
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        cursor = ""
+        viewModel.posts = []
+        viewModel.cursor.onNext(cursor)
     }
     
     override func setNavigationBar() {
@@ -87,7 +94,6 @@ final class FeedViewController: BaseViewController, TransitionProtocol {
         )
         
         guard let output = viewModel.transform(input: input) else { return }
-        
         
         viewModel.cursor.onNext(cursor)
         
@@ -152,10 +158,10 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource, UITabl
     
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        indexPaths.forEach { path in
-            if path.row == viewModel.posts.count - 2 {
-                viewModel.cursor.onNext(cursor)
-            }
+        let isEnd = indexPaths.contains { $0.row == viewModel.posts.count - 2 }
+        
+        if isEnd {
+            viewModel.cursor.onNext(cursor)
         }
     }
 }
