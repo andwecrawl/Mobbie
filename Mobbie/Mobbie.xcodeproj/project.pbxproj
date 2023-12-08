@@ -36,6 +36,7 @@
 		D1B2C5CC2B15C8BF0065B51F /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B2C5CB2B15C8BF0065B51F /* Design.swift */; };
 		D1B2C5CF2B15EF8F0065B51F /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = D1B2C5CE2B15EF8F0065B51F /* Lottie */; };
 		D1B2C5D12B15FACA0065B51F /* congratulations.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B2C5D02B15FACA0065B51F /* congratulations.json */; };
+		D1C452092B232B79003A3354 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C452082B232B79003A3354 /* DetailViewController.swift */; };
 		D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234C2AFCEB1000684175 /* AppDelegate.swift */; };
 		D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */; };
 		D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC23502AFCEB1000684175 /* LoginViewController.swift */; };
@@ -95,6 +96,7 @@
 		D1AD1C0C2B20D32800C4389C /* AddPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewModel.swift; sourceTree = "<group>"; };
 		D1B2C5CB2B15C8BF0065B51F /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		D1B2C5D02B15FACA0065B51F /* congratulations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = congratulations.json; sourceTree = "<group>"; };
+		D1C452082B232B79003A3354 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D1CC23492AFCEB1000684175 /* Mobbie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobbie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1CC234C2AFCEB1000684175 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1CC234E2AFCEB1000684175 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -230,6 +232,14 @@
 			path = Welcome;
 			sourceTree = "<group>";
 		};
+		D1AD1C132B223F7800C4389C /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				D1C452082B232B79003A3354 /* DetailViewController.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
 		D1CC23402AFCEB1000684175 = {
 			isa = PBXGroup;
 			children = (
@@ -255,6 +265,7 @@
 				D1CC23762AFCFF3700684175 /* Onboarding */,
 				D1CC23772AFCFF4A00684175 /* Login */,
 				D1D332FA2B1E3BF000852274 /* Setting */,
+				D1AD1C132B223F7800C4389C /* Detail */,
 				D12B91BF2AFE5A55006451FE /* Feed */,
 				D1D333012B1F322B00852274 /* AddPost */,
 				D1D332FE2B1EDE9200852274 /* Search */,
@@ -502,6 +513,7 @@
 				D1D332B02B19A3F300852274 /* SettingOutlet.swift in Sources */,
 				D1D332D12B1C963A00852274 /* BaseTableViewCell.swift in Sources */,
 				D1674CDC2B063FD2000697C2 /* LoginModel.swift in Sources */,
+				D1C452092B232B79003A3354 /* DetailViewController.swift in Sources */,
 				D12B91BE2AFE5A4E006451FE /* FeedViewController.swift in Sources */,
 				D1674D482B0B7479000697C2 /* UserInfo.swift in Sources */,
 				D1CC23732AFCF93700684175 /* UILabel+.swift in Sources */,
