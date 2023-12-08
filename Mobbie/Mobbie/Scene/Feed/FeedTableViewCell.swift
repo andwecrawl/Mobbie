@@ -60,12 +60,14 @@ final class FeedTableViewCell: BaseTableViewCell {
         return button
     }()
     
-//    lazy var photoCollectionView = {
-//        let view = UICollectionView(frame: .zero, collectionViewLayout: setCollectionViewLayout())
-//        view.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
-//        return view
-//    }()
+    lazy var photoCollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: setCollectionViewLayout())
+        view.backgroundColor = .yellow
+        view.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
+        return view
+    }()
     
+    let contentStackView = UIStackView()
     let buttonStackView = UIStackView()
     
     var post: Posts?
@@ -80,6 +82,13 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     
     override func configureHierarchy() {
+        
+        contentStackView.backgroundColor = .yellow
+        contentStackView.axis = .vertical
+        contentStackView.spacing = 4
+        contentStackView.distribution = .equalSpacing
+        contentStackView.AddArrangedSubviews([contentLabel, photoCollectionView])
+        
         buttonStackView.axis = .horizontal
         buttonStackView.spacing = 8
         buttonStackView.distribution = .equalSpacing
@@ -88,7 +97,7 @@ final class FeedTableViewCell: BaseTableViewCell {
         [
             userLabel,
             timeLabel,
-            contentLabel,
+            contentStackView,
             buttonStackView,
             detailButton
         ]
@@ -112,11 +121,20 @@ final class FeedTableViewCell: BaseTableViewCell {
             make.trailing.equalToSuperview().inset(12)
         }
         
-        contentLabel.snp.makeConstraints { make in
+        contentStackView.snp.makeConstraints { make in
             make.top.equalTo(userLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalToSuperview().inset(20)
         }
         
+        contentLabel.snp.makeConstraints { make in
+//            make.top.equalTo(userLabel.snp.bottom).offset(4)
+            make.horizontalEdges.equalToSuperview()
+        }
+        
+        photoCollectionView.snp.makeConstraints { make in
+//            make.top.equalTo(contentLabel.snp.bottom).offset(4)
+            make.horizontalEdges.equalTo(contentLabel)
+        }
         
         buttonStackView.snp.makeConstraints { make in
             make.top.equalTo(contentLabel.snp.bottom).offset(6)
