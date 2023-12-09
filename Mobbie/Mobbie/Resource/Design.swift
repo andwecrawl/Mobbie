@@ -8,6 +8,17 @@
 import UIKit
 
 enum Design {
+    enum Pic: String {
+        case gif
+        
+        var toImg: UIImage {
+            switch self {
+            case .gif:
+                return UIImage(named: self.rawValue)!
+            }
+        }
+    }
+    
     enum Color {
         case mint
         case orange

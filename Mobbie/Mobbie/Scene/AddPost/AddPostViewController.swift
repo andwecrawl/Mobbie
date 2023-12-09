@@ -14,7 +14,6 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
     
     let scrollView = {
         let view = UIScrollView()
-        view.indicatorStyle = .white
         return view
     }()
     
@@ -42,6 +41,8 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         return view
     }()
     
+    let emptyView = UIView()
+    
     let stackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -64,6 +65,40 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         return view
     }()
     
+    let pictureButton = {
+        let button = UIButton()
+        let imgConfig = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 16))
+        let photo = UIImage(systemName: "photo", withConfiguration: imgConfig)
+        button.setImage(photo, for: .normal)
+        button.tintColor = UIColor.highlightMint
+        button.snp.makeConstraints { make in
+            make.size.equalTo(30)
+        }
+        return button
+    }()
+    
+    let gifButton = {
+        let button = UIButton()
+        let imgConfig = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 16))
+        let photo = Design.Pic.gif.toImg.withRenderingMode(.alwaysTemplate)
+        button.setImage(photo, for: .normal)
+        button.setPreferredSymbolConfiguration(imgConfig, forImageIn: .normal)
+        button.tintColor = UIColor.highlightMint
+        button.snp.makeConstraints { make in
+            make.size.equalTo(22)
+        }
+        return button
+    }()
+    
+    let limitLabel = {
+        let label = UILabel()
+        label.font = Design.Font.preSemiBold.midFont
+        label.textColor = UIColor.highlightMint
+        label.text = "12/200"
+        return label
+    }()
+    
+    
     let viewModel = AddPostViewModel()
     
     let disposeBag = DisposeBag()
@@ -79,7 +114,7 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         super.configureHierarchy()
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
-        stackView.AddArrangedSubviews([placeholderView])
+        stackView.AddArrangedSubviews([placeholderView/*, emptyView*/])
         [placeholderLabel, textView].forEach { placeholderView.addSubview($0) }
         
     }
@@ -100,21 +135,43 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         placeholderView.snp.makeConstraints { make in
             let height = UIScreen.main.bounds.height
             make.height.greaterThanOrEqualTo(height - 150)
+            make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        placeholderView.backgroundColor = .green
+        textView.backgroundColor = .brown 
+        textView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
         }
         
-        textView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
+//        emptyView.backgroundColor = .green
+//        emptyView.snp.makeConstraints { make in
+//            make.horizontalEdges.equalToSuperview()
+//            make.height.equalTo(150)
+//        }
+//        
         placeholderLabel.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(textView).inset(8)
         }
-        
     }
+    
+    
     
     override func configureView() {
         textView.becomeFirstResponder()
+        
+        let toolbar = UIToolbar()
+
+        let pic = UIBarButtonItem(customView: pictureButton)
+        let gif = UIBarButtonItem(customView: gifButton)
+        let label = UIBarButtonItem(customView: limitLabel)
+        label.isEnabled = true
+//        let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.sizeToFit()
+        toolbar.setItems([pic, gif, flexibleSpaceButton, label], animated: false)
+        textView.inputAccessoryView = toolbar
+        
     }
     
     
@@ -147,6 +204,7 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
                 } else {
                     owner.placeholderLabel.isHidden = true
                 }
+                owner.textView.textColor = .white
             }
             .disposed(by: disposeBag)
     }
