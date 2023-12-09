@@ -135,13 +135,14 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         placeholderView.snp.makeConstraints { make in
             let height = UIScreen.main.bounds.height
             make.height.greaterThanOrEqualTo(height - 150)
-            make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.top.horizontalEdges.equalToSuperview()
         }
         
         placeholderView.backgroundColor = .green
         textView.backgroundColor = .brown 
         textView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
+            make.height.greaterThanOrEqualTo(300)
         }
         
 //        emptyView.backgroundColor = .green
