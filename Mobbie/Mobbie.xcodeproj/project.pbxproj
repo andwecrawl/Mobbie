@@ -10,6 +10,7 @@
 		D12B91BC2AFE4DB7006451FE /* RegexType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B91BB2AFE4DB7006451FE /* RegexType.swift */; };
 		D12B91BE2AFE5A4E006451FE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B91BD2AFE5A4E006451FE /* FeedViewController.swift */; };
 		D12B91C12AFE5DCE006451FE /* JoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B91C02AFE5DCE006451FE /* JoinViewModel.swift */; };
+		D139B67B2B24A57600504076 /* KeyboardToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D139B67A2B24A57600504076 /* KeyboardToolbarView.swift */; };
 		D1674CCD2B0546F9000697C2 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CCC2B0546F9000697C2 /* String+.swift */; };
 		D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CD62B060887000697C2 /* MoyaLSLPNetwork.swift */; };
 		D1674CDC2B063FD2000697C2 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CDB2B063FD2000697C2 /* LoginModel.swift */; };
@@ -74,6 +75,7 @@
 		D12B91BB2AFE4DB7006451FE /* RegexType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexType.swift; sourceTree = "<group>"; };
 		D12B91BD2AFE5A4E006451FE /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		D12B91C02AFE5DCE006451FE /* JoinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewModel.swift; sourceTree = "<group>"; };
+		D139B67A2B24A57600504076 /* KeyboardToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardToolbarView.swift; sourceTree = "<group>"; };
 		D1674CCC2B0546F9000697C2 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		D1674CD62B060887000697C2 /* MoyaLSLPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLSLPNetwork.swift; sourceTree = "<group>"; };
 		D1674CDB2B063FD2000697C2 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 			children = (
 				D1D333022B1F323E00852274 /* AddPostViewController.swift */,
 				D1AD1C0C2B20D32800C4389C /* AddPostViewModel.swift */,
+				D139B67A2B24A57600504076 /* KeyboardToolbarView.swift */,
 			);
 			path = AddPost;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				D1CC23632AFCEB8100684175 /* BaseViewController.swift in Sources */,
 				D12B91BC2AFE4DB7006451FE /* RegexType.swift in Sources */,
 				D1D333072B20BDC900852274 /* TimeHandler.swift in Sources */,
+				D139B67B2B24A57600504076 /* KeyboardToolbarView.swift in Sources */,
 				D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */,
 				D1674CEF2B078C9D000697C2 /* LoginResponse.swift in Sources */,
 				D1D332192B175A7F00852274 /* FeedTableViewCell.swift in Sources */,
