@@ -32,6 +32,9 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
         let textField = UITextField()
         textField.placeholder = "무언가를 입력해 주세요!"
         textField.font = .systemFont(ofSize: 18)
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
+        textField.spellCheckingType = .no
         return textField
     }()
     

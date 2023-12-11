@@ -23,6 +23,9 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
         view.borderStyle = .roundedRect
         view.placeholder = "아이디를 입력해 주세요."
         view.textAlignment = .center
+        view.autocapitalizationType = .none
+        view.autocorrectionType = .no
+        view.spellCheckingType = .no
         return view
     }()
     
@@ -31,6 +34,9 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
         view.borderStyle = .roundedRect
         view.placeholder = "비밀번호를 입력해 주세요."
         view.textAlignment = .center
+        view.autocapitalizationType = .none
+        view.autocorrectionType = .no
+        view.spellCheckingType = .no
         return view
     }()
     
