@@ -41,4 +41,13 @@ final class UserDefaultsHelper {
             userDefaults.set(newValue, forKey: "refreshToken")
         }
     }
+    
+    var userID: String {
+        get {
+            return userDefaults.string(forKey: "userID") ?? ""
+        }
+        set {
+            userDefaults.set(newValue, forKey: "userID")
+        }
+    }
 }
