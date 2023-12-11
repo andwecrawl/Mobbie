@@ -20,6 +20,7 @@ struct JoinResponse: Decodable {
 }
 
 struct LoginResponse: Decodable {
+    let _id: String
     let token: String
     let refreshToken: String
 }
