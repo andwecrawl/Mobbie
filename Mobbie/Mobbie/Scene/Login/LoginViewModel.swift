@@ -65,7 +65,6 @@ final class LoginViewModel: ViewModel {
             .withLatestFrom(canTryLogin)
             .filter { $0 }
             .flatMap { _ in
-                print("clicked")
                 let model = LoginData(email: self.model.email, password: self.model.password)
                 return MoyaAPIManager.shared.fetchInSignProgress(.login(model: model), type: LoginResponse.self)
             }
