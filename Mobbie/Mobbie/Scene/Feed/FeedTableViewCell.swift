@@ -78,6 +78,15 @@ final class FeedTableViewCell: BaseTableViewCell {
         userLabel.text = ""
         timeLabel.text = "20분 전"
         contentLabel.text = "밤은깊었는데잠은안오고늘어난두통과싸우고이리저리뒤척이다생각에잠겨또펜을붙잡고밤은깊었는데잠은안오고늘어난두통과싸우고이리저리뒤척이다생각에잠겨또펜을붙잡고밤은깊었는데"
+        likedButton.isSelected = false
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        userLabel.text = ""
+        timeLabel.text = "몇 시간 전"
+        contentLabel.text = "내용이에용"
+        likedButton.isSelected = false
     }
     
     
@@ -173,5 +182,11 @@ final class FeedTableViewCell: BaseTableViewCell {
         userLabel.text = post.creator.nick
         contentLabel.text = post.content ?? ""
         timeLabel.text = post.time.parsingToDate()
+        
+        if post.likes.contains(UserDefaultsHelper.shared.userID) {
+            likedButton.isSelected = true
+        } else {
+            likedButton.isSelected = false
+        }
     }
 }
