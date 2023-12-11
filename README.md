@@ -31,4 +31,37 @@
 <br>
 
 ## TroubleShooting
-### 1. 트러블슈팅첫번째
+### 1. 수정 중...
+- 문제 상황
+  - 더원 디자이얼
+- 해결 방법
+  - 웅냠냐
+
+```swift
+    func callRequestCodable(page: Int = 1, segment: Trends, completionHandler: @escaping (TMDB, [[String]]) -> ()) {
+        
+        if TMDBManager.movieGenre.isEmpty && TMDBManager.tvGenre.isEmpty {
+            
+            self.callMovieRequest(url: URL.getGenreURL(media: .movie)) {
+                self.callTvRequest(url: URL.getGenreURL(media: .tv)) {
+                    self.callRequest(page: page, segment: segment) { data, genre in
+                        completionHandler(data, genre)
+                    }
+                }
+            }
+            
+        } else {
+            
+            self.callRequest(page: page, segment: segment) { data, genre in
+                completionHandler(data, genre)
+            }
+        }
+    }
+```
+<br>
+
+### 2. 수정 중...
+- 문제 상황
+  - 
+- 해결 방법
+  - 
