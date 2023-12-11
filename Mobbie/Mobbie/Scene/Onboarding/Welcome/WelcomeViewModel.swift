@@ -38,6 +38,7 @@ final class WelcomeViewModel: ViewModel {
                     print("===== login Success!!: \(result.token), \(result.refreshToken)")
                     UserDefaultsHelper.shared.accessToken = result.token
                     UserDefaultsHelper.shared.refreshToken = result.refreshToken
+                    UserDefaultsHelper.shared.userID = result._id
                 case .failure(let error):
                     "======= error message: \(error.localizedDescription)"
                 }
