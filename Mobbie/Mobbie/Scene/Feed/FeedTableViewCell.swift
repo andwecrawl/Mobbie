@@ -24,7 +24,7 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     let contentLabel = {
         let label = UILabel()
-        label.font = Design.Font.preRegular.midFont
+        label.font = Design.Font.preRegular.getFonts(size: 15)
         label.numberOfLines = 0
         return label
     }()
@@ -51,7 +51,7 @@ final class FeedTableViewCell: BaseTableViewCell {
         return button
     }()
     
-    let detailButton = {
+    let settingButton = {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 14, weight: .medium)
         let image = UIImage(systemName: "ellipsis", withConfiguration: imageConfig)
@@ -61,9 +61,9 @@ final class FeedTableViewCell: BaseTableViewCell {
     }()
     
     lazy var photoCollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: setCollectionViewLayout())
-        view.backgroundColor = .yellow
+        let view = UICollectionView(frame: .zero, collectionViewLayout: fourPicCollectionViewLayout())
         view.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
+        view.dataSource = self
         return view
     }()
     
@@ -72,31 +72,22 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     var post: Posts?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        userLabel.text = ""
-        timeLabel.text = "20분 전"
-        contentLabel.text = "밤은깊었는데잠은안오고늘어난두통과싸우고이리저리뒤척이다생각에잠겨또펜을붙잡고밤은깊었는데잠은안오고늘어난두통과싸우고이리저리뒤척이다생각에잠겨또펜을붙잡고밤은깊었는데"
-        likedButton.isSelected = false
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         userLabel.text = ""
         timeLabel.text = "몇 시간 전"
         contentLabel.text = "내용이에용"
         likedButton.isSelected = false
+//        photoCollectionView.isHidden = false
     }
     
     
     override func configureHierarchy() {
         
-        contentStackView.backgroundColor = .yellow
-        contentStackView.axis = .vertical
-        contentStackView.spacing = 4
-        contentStackView.distribution = .equalSpacing
-        contentStackView.AddArrangedSubviews([contentLabel, photoCollectionView])
+//        contentStackView.axis = .vertical
+//        contentStackView.spacing = 4
+//        contentStackView.distribution = .equalSpacing
+//        contentStackView.AddArrangedSubviews([contentLabel, photoCollectionView])
         
         buttonStackView.axis = .horizontal
         buttonStackView.spacing = 8
@@ -106,9 +97,11 @@ final class FeedTableViewCell: BaseTableViewCell {
         [
             userLabel,
             timeLabel,
-            contentStackView,
+            contentLabel,
+//            contentStackView,
+            photoCollectionView,
             buttonStackView,
-            detailButton
+            settingButton
         ]
             .forEach { contentView.addSubview($0) }
     }
@@ -125,28 +118,26 @@ final class FeedTableViewCell: BaseTableViewCell {
             make.leading.equalTo(userLabel.snp.trailing).offset(6)
         }
         
-        detailButton.snp.makeConstraints { make in
+        settingButton.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(12)
             make.trailing.equalToSuperview().inset(12)
         }
         
-        contentStackView.snp.makeConstraints { make in
-            make.top.equalTo(userLabel.snp.bottom).offset(4)
+        contentLabel.snp.makeConstraints { make in
+            make.top.equalTo(userLabel.snp.bottom).offset(2)
             make.horizontalEdges.equalToSuperview().inset(20)
         }
         
-        contentLabel.snp.makeConstraints { make in
-//            make.top.equalTo(userLabel.snp.bottom).offset(4)
-            make.horizontalEdges.equalToSuperview()
-        }
-        
+        photoCollectionView.backgroundColor = .green
         photoCollectionView.snp.makeConstraints { make in
-//            make.top.equalTo(contentLabel.snp.bottom).offset(4)
+            make.top.equalTo(contentLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalTo(contentLabel)
+            make.height.equalTo(200)
+            
         }
         
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(contentLabel.snp.bottom).offset(6)
+            make.top.equalTo(photoCollectionView.snp.bottom).offset(4)
             make.leading.equalTo(contentLabel)
             make.width.equalTo(80)
             make.height.equalTo(35)
@@ -162,7 +153,7 @@ final class FeedTableViewCell: BaseTableViewCell {
     }
     
     func setCollectionViewLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
                                              heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
@@ -178,6 +169,30 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     func configureCell() {
         guard let post else { return }
+        photoCollectionView.snp.updateConstraints { make in
+            make.height.equalTo(250)
+        }
+        photoCollectionView.isHidden = false
+        print(post.image.count)
+        print(post.creator.nick, post.content, post.image)
+        switch post.image.count {
+        case 1:
+            photoCollectionView.collectionViewLayout = onePicCollectionViewLayout()
+        case 2:
+            photoCollectionView.collectionViewLayout = twoPicCollectionViewLayout()
+        case 3:
+            photoCollectionView.collectionViewLayout = threePicCollectionViewLayout()
+        case 4:
+            photoCollectionView.collectionViewLayout = fourPicCollectionViewLayout()
+        default:
+            photoCollectionView.isHidden = true
+            photoCollectionView.snp.remakeConstraints{ make in
+                make.top.equalTo(contentLabel.snp.bottom).offset(4)
+                make.horizontalEdges.equalTo(contentLabel)
+                make.height.equalTo(0)
+            }
+        }
+        photoCollectionView.reloadData()
         
         userLabel.text = post.creator.nick
         contentLabel.text = post.content ?? ""
@@ -190,6 +205,120 @@ final class FeedTableViewCell: BaseTableViewCell {
         }
     }
 }
+
+
+extension FeedTableViewCell {
+    
+    func onePicCollectionViewLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+
+            let leadingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .fractionalHeight(1.0)))
+            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+            
+            let nestedGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .fractionalHeight(1.0)),
+                subitems: [leadingItem])
+            let section = NSCollectionLayoutSection(group: nestedGroup)
+            return section
+        }
+        return layout
+    }
+    
+    func twoPicCollectionViewLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+
+            let leadingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+                                                  heightDimension: .fractionalHeight(1.0)))
+            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+
+            let trailingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+                                                   heightDimension: .fractionalHeight(1.0)))
+            trailingItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+
+            let nestedGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .fractionalHeight(1.0)),
+                subitems: [leadingItem, trailingItem])
+            let section = NSCollectionLayoutSection(group: nestedGroup)
+            return section
+
+        }
+        return layout
+    }
+    
+    func threePicCollectionViewLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+
+            let leadingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+                                                  heightDimension: .fractionalHeight(1.0)))
+            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+
+            let trailingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                  heightDimension: .fractionalHeight(0.3)))
+            trailingItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+            let trailingGroup = NSCollectionLayoutGroup.vertical(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+                                                  heightDimension: .fractionalHeight(1.0)),
+                repeatingSubitem: trailingItem, count: 2)
+
+            let nestedGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .fractionalHeight(1.0)),
+                subitems: [leadingItem, trailingGroup])
+            let section = NSCollectionLayoutSection(group: nestedGroup)
+            return section
+
+        }
+        return layout
+    }
+    
+    func fourPicCollectionViewLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+
+            let leadingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                  heightDimension: .fractionalHeight(0.3)))
+            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+            let leadingGroup = NSCollectionLayoutGroup.vertical(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+                                                  heightDimension: .fractionalHeight(1.0)),
+                repeatingSubitem: leadingItem, count: 2)
+            
+
+            let trailingItem = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                  heightDimension: .fractionalHeight(0.3)))
+            trailingItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+            let trailingGroup = NSCollectionLayoutGroup.vertical(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+                                                  heightDimension: .fractionalHeight(1.0)),
+                repeatingSubitem: trailingItem, count: 2)
+
+            let nestedGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .fractionalHeight(1.0)),
+                subitems: [leadingGroup, trailingGroup])
+            let section = NSCollectionLayoutSection(group: nestedGroup)
+            return section
+
+        }
+        return layout
+    }
+    
+}
+
+
 extension FeedTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let post else { return 0 }
