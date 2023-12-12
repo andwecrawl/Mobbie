@@ -190,3 +190,23 @@ final class FeedTableViewCell: BaseTableViewCell {
         }
     }
 }
+extension FeedTableViewCell: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let post else { return 0 }
+        if post.image.count > 4 {
+            return 0
+        }
+        return post.image.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as? PhotoCollectionViewCell else { return UICollectionViewCell() }
+        guard let post else { return UICollectionViewCell() }
+        
+        cell.imagePath = post.image[indexPath.item]
+        cell.configureCell()
+        
+        return cell
+    }
+    
+}

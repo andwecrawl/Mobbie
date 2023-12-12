@@ -28,6 +28,7 @@
 		D1674D4A2B0B7957000697C2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674D492B0B7957000697C2 /* LoginViewModel.swift */; };
 		D1674D4C2B0B7978000697C2 /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */; };
 		D1850D2C2B2847EE00E01516 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D1850D2B2B2847EE00E01516 /* Kingfisher */; };
+		D1850D2E2B287D5700E01516 /* AddPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1850D2D2B287D5700E01516 /* AddPhotoCollectionViewCell.swift */; };
 		D185310D2B13619300EACDAA /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D185310C2B13619300EACDAA /* RxCocoa */; };
 		D185310F2B13619300EACDAA /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D185310E2B13619300EACDAA /* RxSwift */; };
 		D18531222B14F09E00EACDAA /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18531212B14F09E00EACDAA /* WelcomeViewController.swift */; };
@@ -92,6 +93,7 @@
 		D1674D472B0B7478000697C2 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		D1674D492B0B7957000697C2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D1674D4B2B0B7978000697C2 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
+		D1850D2D2B287D5700E01516 /* AddPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		D18531212B14F09E00EACDAA /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		D18531262B14FF5200EACDAA /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		D1AD1C0C2B20D32800C4389C /* AddPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewModel.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 			children = (
 				D1D333022B1F323E00852274 /* AddPostViewController.swift */,
 				D1AD1C0C2B20D32800C4389C /* AddPostViewModel.swift */,
+				D1850D2D2B287D5700E01516 /* AddPhotoCollectionViewCell.swift */,
 			);
 			path = AddPost;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */,
 				D1D332FC2B1E3BFE00852274 /* SettingViewController.swift in Sources */,
 				D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */,
+				D1850D2E2B287D5700E01516 /* AddPhotoCollectionViewCell.swift in Sources */,
 				D1D332B02B19A3F300852274 /* SettingOutlet.swift in Sources */,
 				D1D332D12B1C963A00852274 /* BaseTableViewCell.swift in Sources */,
 				D1674CDC2B063FD2000697C2 /* LoginModel.swift in Sources */,
