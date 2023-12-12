@@ -16,7 +16,7 @@ final class FeedViewController: BaseViewController, TransitionProtocol {
         let view = UITableView(frame: .zero)
         view.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
         view.rowHeight = UITableView.automaticDimension
-        view.estimatedRowHeight = 100
+        view.estimatedRowHeight = 150
         view.delegate = self
         view.dataSource = self
         view.prefetchDataSource = self
