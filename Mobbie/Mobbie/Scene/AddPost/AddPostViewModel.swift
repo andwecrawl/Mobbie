@@ -11,7 +11,21 @@ import RxCocoa
 
 class AddPostViewModel: ViewModel {
     
+    var images: [UIImage] = []
+    var imageCount: Int = 0
     var disposeBag = DisposeBag()
+    
+    var add: Int {
+        return imageCount >= 4 ? 0 : 1
+    }
+    
+    var calImg: Int {
+        return imageCount < 5 ? imageCount : 4
+    }
+    
+    var numberOfItems: Int {
+        return add + calImg
+    }
     
     struct Input {
         let addButtonTapped: ControlEvent<Void>
