@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Toast
+import PhotosUI
 
 class AddPostViewController: BaseViewController, TransitionProtocol {
     
@@ -65,6 +66,18 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         return view
     }()
     
+    let cameraButton = {
+        let button = UIButton()
+        let imgConfig = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 16))
+        let photo = UIImage(systemName: "camera", withConfiguration: imgConfig)
+        button.setImage(photo, for: .normal)
+        button.tintColor = UIColor.highlightMint
+        button.snp.makeConstraints { make in
+            make.width.equalTo(30)
+        }
+        return button
+    }()
+    
     let pictureButton = {
         let button = UIButton()
         let imgConfig = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 16))
@@ -72,20 +85,7 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         button.setImage(photo, for: .normal)
         button.tintColor = UIColor.highlightMint
         button.snp.makeConstraints { make in
-            make.size.equalTo(30)
-        }
-        return button
-    }()
-    
-    let gifButton = {
-        let button = UIButton()
-        let imgConfig = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 16))
-        let photo = Design.Pic.gif.toImg.withRenderingMode(.alwaysTemplate)
-        button.setImage(photo, for: .normal)
-        button.setPreferredSymbolConfiguration(imgConfig, forImageIn: .normal)
-        button.tintColor = UIColor.highlightMint
-        button.snp.makeConstraints { make in
-            make.size.equalTo(22)
+            make.width.equalTo(30)
         }
         return button
     }()
@@ -95,12 +95,24 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         label.font = Design.Font.preSemiBold.midFont
         label.textColor = UIColor.highlightMint
         label.text = "12/200"
+        label.snp.makeConstraints { make in
+            make.width.equalTo(66)
+        }
         return label
+    }()
+    
+    lazy var photoCollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: self.setCollectionViewLayout())
+        view.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
+        view.register(AddPhotoCollectionViewCell.self, forCellWithReuseIdentifier: AddPhotoCollectionViewCell.identifier)
+        view.delegate = self
+        view.dataSource = self
+        view.backgroundColor = .yellow
+        return view
     }()
     
     
     let viewModel = AddPostViewModel()
-    
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -114,7 +126,7 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         super.configureHierarchy()
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
-        stackView.AddArrangedSubviews([placeholderView/*, emptyView*/])
+        stackView.AddArrangedSubviews([placeholderView, photoCollectionView, emptyView])
         [placeholderLabel, textView].forEach { placeholderView.addSubview($0) }
         
     }
@@ -125,32 +137,40 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
-        stackView.distribution = .fill
+        stackView.spacing = 8
+        stackView.backgroundColor = .brown
+        stackView.distribution = .equalSpacing
+        stackView.axis = .vertical
+        stackView.alignment = .center
         stackView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(12)
+            make.verticalEdges.equalToSuperview().inset(12)
             make.horizontalEdges.equalToSuperview().inset(12)
             make.centerX.equalToSuperview()
         }
         
+        placeholderView.backgroundColor = .cyan
         placeholderView.snp.makeConstraints { make in
-            let height = UIScreen.main.bounds.height
-            make.height.greaterThanOrEqualTo(height - 150)
+            make.height.greaterThanOrEqualTo(200)
             make.top.horizontalEdges.equalToSuperview()
         }
         
-        placeholderView.backgroundColor = .green
-        textView.backgroundColor = .brown 
+        textView.backgroundColor = .blue
         textView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
-            make.height.greaterThanOrEqualTo(300)
+            make.height.equalToSuperview()
         }
         
-//        emptyView.backgroundColor = .green
-//        emptyView.snp.makeConstraints { make in
-//            make.horizontalEdges.equalToSuperview()
-//            make.height.equalTo(150)
-//        }
-//        
+        photoCollectionView.snp.makeConstraints { make in
+            make.height.equalTo(150)
+            make.horizontalEdges.equalToSuperview()
+        }
+        
+        emptyView.backgroundColor = .green
+        emptyView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(150)
+        }
+        
         placeholderLabel.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(textView).inset(8)
         }
@@ -164,13 +184,14 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         let toolbar = UIToolbar()
 
         let pic = UIBarButtonItem(customView: pictureButton)
-        let gif = UIBarButtonItem(customView: gifButton)
+        pictureButton.addTarget(self, action: #selector(openPhotoAlbum), for: .touchUpInside)
+        let camera = UIBarButtonItem(customView: cameraButton)
+        cameraButton.addTarget(self, action: #selector(takePhoto), for: .touchUpInside)
         let label = UIBarButtonItem(customView: limitLabel)
         label.isEnabled = true
-//        let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([camera, pic, flexibleSpaceButton, label], animated: false)
         toolbar.sizeToFit()
-        toolbar.setItems([pic, gif, flexibleSpaceButton, label], animated: false)
         textView.inputAccessoryView = toolbar
         
     }
@@ -206,6 +227,7 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
                     owner.placeholderLabel.isHidden = true
                 }
                 owner.textView.textColor = .white
+                owner.limitLabel.text = "\(str.count)/200"
             }
             .disposed(by: disposeBag)
     }
@@ -231,4 +253,145 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         // post code
         navigationController?.dismiss(animated: true)
     }
+}
+
+
+extension AddPostViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.numberOfItems
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let add = viewModel.add
+        let images = viewModel.calImg
+        if add == 1 && indexPath.item == 0 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCollectionViewCell.identifier, for: indexPath) as? AddPhotoCollectionViewCell else { return UICollectionViewCell() }
+            
+            // 더 추가할 수 있는 경우
+            cell.delegate = self
+            
+            return cell
+        } else {
+            guard images != 0 else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as? PhotoCollectionViewCell else { return UICollectionViewCell() }
+            
+            let row = indexPath.item - add
+            cell.image = viewModel.images[row]
+            cell.configureUserImage()
+            return cell
+            
+        }
+    }
+    
+    func setCollectionViewLayout() -> UICollectionViewLayout {
+        
+        let layout = UICollectionViewFlowLayout()
+        let space: CGFloat = 12
+        
+        // 여백을 제외한 content 전체의 가로 길이
+        // 이런 식으로 가로를 잡아주면 각 핸드폰의 가로 길이를 바탕으로 Content의 가로를 잡아주므로 확장성이 좋아짐!
+        let width = UIScreen.main.bounds.width / 3
+        
+        // itemSize를 여백에 맞춰 만들어 주기
+        layout.itemSize = CGSize(width: width, height: width * 1.3)
+        
+        // 위아래 양옆 여백
+        layout.sectionInset = UIEdgeInsets(top: 0, left: space, bottom: 4, right: space)
+        
+        // 사이 여백
+        layout.minimumLineSpacing = space
+        layout.minimumInteritemSpacing = space
+        layout.scrollDirection = .horizontal
+        
+        return layout
+        
+    }
+    
+}
+
+
+extension AddPostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, AddDelegate {
+    
+    @objc func takePhoto() {
+        // 추후 권한 설정 추가할 것
+        let camera = UIImagePickerController()
+        camera.sourceType = .camera
+        camera.allowsEditing = false
+        camera.cameraDevice = .rear
+        camera.cameraCaptureMode = .photo
+        camera.delegate = self
+        present(camera, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            viewModel.images.append(image)
+            viewModel.imageCount += 1
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+
+// 앨범에서 가져오깅
+extension AddPostViewController: PHPickerViewControllerDelegate {
+    
+    @objc func openPhotoAlbum() {
+        var config = PHPickerConfiguration()
+        
+        config.filter = .images
+        config.selectionLimit = 4 - viewModel.imageCount
+        config.selection = .ordered
+        
+        let imagePicker = PHPickerViewController(configuration: config)
+        imagePicker.delegate = self
+        
+        self.present(imagePicker, animated: true)
+    }
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        
+        let dispatchGroup = DispatchGroup()
+        
+        var images = [UIImage]()
+        
+        for result in results {
+            dispatchGroup.enter()
+            let itemProvider = result.itemProvider
+            if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                let type: NSItemProviderReading.Type = UIImage.self
+                itemProvider.loadObject(ofClass: type) { [weak self](image, error) in
+                    guard let self = self else { return }
+                    if let image = image as? UIImage {
+                        images.append(image)
+                        dispatchGroup.leave()
+                    } else {
+                        // 다시 시도 Alert
+                        print(error?.localizedDescription)
+                        self.sendOneSideAlert(title: "이미지를 가져올 수 없습니다.", message: "다시 시도해 주세요!")
+                    }
+                }
+            }
+        }
+        
+        dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
+            guard let self = self else { return }
+            if viewModel.images.count + images.count > 5 {
+                self.sendOneSideAlert(title: "이미지는 4개까지 추가할 수 있어요!", message: "")
+                return
+            } else {
+                viewModel.imageCount += images.count
+                viewModel.images.append(contentsOf: images)
+            }
+        }
+    }
+    
 }
