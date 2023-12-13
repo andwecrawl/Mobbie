@@ -11,16 +11,16 @@ import RxCocoa
 import Toast
 import PhotosUI
 
-class AddPostViewController: BaseViewController, TransitionProtocol {
+final class AddPostViewController: BaseViewController, TransitionProtocol {
     
-    let scrollView = {
+    private let scrollView = {
         let view = UIScrollView()
         return view
     }()
     
-    let placeholderView = UIView()
+    private let placeholderView = UIView()
     
-    let placeholderLabel = {
+    private let placeholderLabel = {
         let label = UILabel()
         label.text = "무슨 일이 일어나고 있나요?"
         label.textColor = .gray.withAlphaComponent(0.6)
@@ -28,7 +28,7 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         return label
     }()
     
-    let textView = {
+    private let textView = {
         let view = UITextView()
         view.backgroundColor = .clear
         view.returnKeyType = .default
@@ -42,9 +42,9 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         return view
     }()
     
-    let emptyView = UIView()
+    private let emptyView = UIView()
     
-    let stackView = {
+    private let stackView = {
         let view = UIStackView()
         view.axis = .vertical
         view.distribution = .fill
@@ -52,7 +52,7 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         return view
     }()
     
-    let addButton = {
+    private let addButton = {
         let view = UIButton()
         var config = UIButton.Configuration.filled()
         config.cornerStyle = .capsule
@@ -66,7 +66,7 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         return view
     }()
     
-    let cameraButton = {
+    private let cameraButton = {
         let button = UIButton()
         let imgConfig = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 16))
         let photo = UIImage(systemName: "camera", withConfiguration: imgConfig)
@@ -78,7 +78,7 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         return button
     }()
     
-    let pictureButton = {
+    private let pictureButton = {
         let button = UIButton()
         let imgConfig = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 16))
         let photo = UIImage(systemName: "photo", withConfiguration: imgConfig)
@@ -90,7 +90,7 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         return button
     }()
     
-    let limitLabel = {
+    private let limitLabel = {
         let label = UILabel()
         label.font = Design.Font.preSemiBold.midFont
         label.textColor = UIColor.highlightMint
@@ -101,19 +101,18 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         return label
     }()
     
-    lazy var photoCollectionView = {
+    private lazy var photoCollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: self.setCollectionViewLayout())
-        view.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
         view.register(AddPhotoCollectionViewCell.self, forCellWithReuseIdentifier: AddPhotoCollectionViewCell.identifier)
+        view.register(AddButtonCollectionViewCell.self, forCellWithReuseIdentifier: AddButtonCollectionViewCell.identifier)
         view.delegate = self
         view.dataSource = self
-        view.backgroundColor = .yellow
         return view
     }()
     
-    
-    let viewModel = AddPostViewModel()
-    let disposeBag = DisposeBag()
+    private var images: [UIImage] = []
+    private let viewModel = AddPostViewModel()
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,7 +137,6 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         }
         
         stackView.spacing = 8
-        stackView.backgroundColor = .brown
         stackView.distribution = .equalSpacing
         stackView.axis = .vertical
         stackView.alignment = .center
@@ -148,13 +146,11 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
             make.centerX.equalToSuperview()
         }
         
-        placeholderView.backgroundColor = .cyan
         placeholderView.snp.makeConstraints { make in
             make.height.greaterThanOrEqualTo(200)
             make.top.horizontalEdges.equalToSuperview()
         }
         
-        textView.backgroundColor = .blue
         textView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
             make.height.equalToSuperview()
@@ -165,7 +161,6 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
             make.horizontalEdges.equalToSuperview()
         }
         
-        emptyView.backgroundColor = .green
         emptyView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
             make.height.equalTo(150)
@@ -197,7 +192,7 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
     }
     
     
-    func bind() {
+    private func bind() {
         viewModel.alert = sendOneSideAlert(title:message:)
         viewModel.transition = self
         
@@ -212,7 +207,7 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
             .bind(with: self) { owner, value in
                 if value.0 { // saved
                     owner.view.makeToast("저장되었습니다.", position: .center)
-                    owner.addButtonTapped()
+                    owner.navigationController?.dismiss(animated: true)
                 } else {
                     owner.sendOneSideAlert(title: value.1, message: "다시 시도해 주세요!")
                 }
@@ -221,13 +216,25 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         
         output.text
             .bind(with: self) { owner, str in
-                if str.isEmpty {
-                    owner.placeholderLabel.isHidden = false
-                } else {
-                    owner.placeholderLabel.isHidden = true
-                }
-                owner.textView.textColor = .white
+                let canSaved = str.count > 0 && str.count < 201 && !str.replacingOccurrences(of: " ", with: "").isEmpty
+                owner.addButton.isEnabled = canSaved ? true : false
+                owner.placeholderLabel.isHidden = str.isEmpty ? false : true
+                owner.limitLabel.textColor = str.count > 200 ? .red : UIColor.highlightMint
                 owner.limitLabel.text = "\(str.count)/200"
+            }
+            .disposed(by: disposeBag)
+        
+        output.images
+            .bind(with: self) { owner, images in
+                owner.images = images
+                owner.photoCollectionView.reloadData()
+                if images.count >= 4 {
+                    owner.pictureButton.isEnabled = false
+                    owner.cameraButton.isEnabled = false
+                } else {
+                    owner.pictureButton.isEnabled = true
+                    owner.cameraButton.isEnabled = true
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -249,10 +256,6 @@ class AddPostViewController: BaseViewController, TransitionProtocol {
         navigationController?.dismiss(animated: true)
     }
     
-    @objc func addButtonTapped() {
-        // post code
-        navigationController?.dismiss(animated: true)
-    }
 }
 
 
@@ -265,7 +268,7 @@ extension AddPostViewController: UICollectionViewDelegate, UICollectionViewDataS
         let add = viewModel.add
         let images = viewModel.calImg
         if add == 1 && indexPath.item == 0 {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCollectionViewCell.identifier, for: indexPath) as? AddPhotoCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddButtonCollectionViewCell.identifier, for: indexPath) as? AddButtonCollectionViewCell else { return UICollectionViewCell() }
             
             // 더 추가할 수 있는 경우
             cell.delegate = self
@@ -273,34 +276,24 @@ extension AddPostViewController: UICollectionViewDelegate, UICollectionViewDataS
             return cell
         } else {
             guard images != 0 else { return UICollectionViewCell() }
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as? PhotoCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCollectionViewCell.identifier, for: indexPath) as? AddPhotoCollectionViewCell else { return UICollectionViewCell() }
             
             let row = indexPath.item - add
-            cell.image = viewModel.images[row]
+            cell.delegate = self
+            cell.image = self.images[row]
             cell.configureUserImage()
             return cell
             
         }
     }
     
-    func setCollectionViewLayout() -> UICollectionViewLayout {
+    private func setCollectionViewLayout() -> UICollectionViewLayout {
         
         let layout = UICollectionViewFlowLayout()
-        let space: CGFloat = 12
+        let width = UIScreen.main.bounds.width / 3.3
         
-        // 여백을 제외한 content 전체의 가로 길이
-        // 이런 식으로 가로를 잡아주면 각 핸드폰의 가로 길이를 바탕으로 Content의 가로를 잡아주므로 확장성이 좋아짐!
-        let width = UIScreen.main.bounds.width / 3
-        
-        // itemSize를 여백에 맞춰 만들어 주기
-        layout.itemSize = CGSize(width: width, height: width * 1.3)
-        
-        // 위아래 양옆 여백
-        layout.sectionInset = UIEdgeInsets(top: 0, left: space, bottom: 4, right: space)
-        
-        // 사이 여백
-        layout.minimumLineSpacing = space
-        layout.minimumInteritemSpacing = space
+        layout.itemSize = CGSize(width: width, height: 130)
+        layout.sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
         layout.scrollDirection = .horizontal
         
         return layout
@@ -313,7 +306,6 @@ extension AddPostViewController: UICollectionViewDelegate, UICollectionViewDataS
 extension AddPostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, AddDelegate {
     
     @objc func takePhoto() {
-        // 추후 권한 설정 추가할 것
         let camera = UIImagePickerController()
         camera.sourceType = .camera
         camera.allowsEditing = false
@@ -370,11 +362,13 @@ extension AddPostViewController: PHPickerViewControllerDelegate {
                 let type: NSItemProviderReading.Type = UIImage.self
                 itemProvider.loadObject(ofClass: type) { [weak self](image, error) in
                     guard let self = self else { return }
+                    
                     if let image = image as? UIImage {
                         images.append(image)
                         dispatchGroup.leave()
+                        
                     } else {
-                        // 다시 시도 Alert
+                        
                         print(error?.localizedDescription)
                         self.sendOneSideAlert(title: "이미지를 가져올 수 없습니다.", message: "다시 시도해 주세요!")
                     }
@@ -384,14 +378,25 @@ extension AddPostViewController: PHPickerViewControllerDelegate {
         
         dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
             guard let self = self else { return }
-            if viewModel.images.count + images.count > 5 {
+            if viewModel.imageCount + images.count > 5 {
                 self.sendOneSideAlert(title: "이미지는 4개까지 추가할 수 있어요!", message: "")
                 return
             } else {
-                viewModel.imageCount += images.count
                 viewModel.images.append(contentsOf: images)
+                viewModel.imageCount += images.count
             }
         }
     }
     
+}
+
+
+extension AddPostViewController: DeleteDelegate {
+    
+    func deleteImages(image: UIImage) {
+        if let firstIndex = self.images.firstIndex(of: image) {
+            viewModel.images.remove(at: firstIndex)
+            viewModel.imageCount -= 1
+        }
+    }
 }
