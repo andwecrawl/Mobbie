@@ -39,7 +39,8 @@ class AddButtonCollectionViewCell: BaseCollectionViewCell {
     override func setConstraints() {
         button.snp.makeConstraints { make in
             make.size.equalTo(90)
-            make.center.equalToSuperview()
+            make.leading.equalToSuperview().inset(8)
+            make.centerY.equalToSuperview()
         }
     }
     
