@@ -18,8 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-//        let vc = UserDefaultsHelper.shared.haveBeenBefore ? LoginViewController() : IntroViewController()
-        let vc = FeedViewController()
+        let vc = UserDefaultsHelper.shared.haveBeenBefore ? LoginViewController() : IntroViewController()
         window?.rootViewController = UINavigationController(rootViewController: vc)
         window?.makeKeyAndVisible()
     }
