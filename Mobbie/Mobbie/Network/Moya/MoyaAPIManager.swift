@@ -31,21 +31,17 @@ final class MoyaAPIManager {
     
     
     func fetchInSignProgress<T: Decodable>(_ api: MoyaNetwork, type: T.Type) -> Observable<Result<T, Error>> {
-        print("hi")
+        
         return Observable.create { observer in
-            print("hello")
             self.provider.request(api) { response in
                 
                 switch response {
                 case .success(let response):
-                    print("============ response: \(response)")
-                    print(String(data: response.data, encoding: .utf8))
                     let statusCode = response.statusCode
                     
                     if response.statusCode == 200 {
                         
                         guard let result = self.handleDecodingError(type: T.self, data: response.data) else { return }
-                        print("============ success result: \(result)")
                         observer.onNext(.success(result))
                         
                     } else {

@@ -11,12 +11,7 @@ import RxCocoa
 
 class FeedViewModel: ViewModel {
     
-    var posts: [Posts] = [] {
-        didSet {
-            print("=============== posts ===================")
-            print(self)
-        }
-    }
+    var posts: [Posts] = []
     var cursor = PublishSubject<String>()
     var disposeBag = DisposeBag()
     
