@@ -12,7 +12,13 @@ import RxCocoa
 class AddPostViewModel: ViewModel {
     
     var images: [UIImage] = []
-    var imageCount: Int = 0
+    var observeImg = PublishRelay<[UIImage]>()
+    
+    var imageCount: Int = 0 {
+        didSet {
+            observeImg.accept(images)
+        }
+    }
     var disposeBag = DisposeBag()
     
     var add: Int {
@@ -40,17 +46,20 @@ class AddPostViewModel: ViewModel {
         let text: ControlProperty<String>
         let isSaved: PublishRelay<Bool>
         let errorMessage: BehaviorRelay<String>
+        let images: PublishRelay<[UIImage]>
     }
     
     func transform(input: Input) -> Output? {
         
         let isSaved = PublishRelay<Bool>()
         let errorMessage = BehaviorRelay(value: "")
-
+        
+        
         input.addButtonTapped
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .withLatestFrom(input.text)
             .filter { !$0.replacingOccurrences(of: " ", with: "").isEmpty }
+            .filter { $0.count < 200 }
             .flatMap { str in
                 MoyaAPIManager.shared.fetchInSignProgress(.writePost(model: PostModel(content: str, product_id: "")), type: Posts.self)
             }
@@ -76,7 +85,8 @@ class AddPostViewModel: ViewModel {
             addButtonTapped: input.addButtonTapped,
             text: input.text,
             isSaved: isSaved,
-            errorMessage: errorMessage
+            errorMessage: errorMessage,
+            images: observeImg
         )
     }
 }
