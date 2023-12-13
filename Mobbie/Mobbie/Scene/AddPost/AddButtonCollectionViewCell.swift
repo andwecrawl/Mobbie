@@ -62,9 +62,9 @@ class AddButtonCollectionViewCell: BaseCollectionViewCell {
     func configureAddButton(imagesCount: Int) {
         var config = UIButton.Configuration.plain()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 16)
-        config.image = UIImage(systemName: "camera", withConfiguration: imageConfig)
+        config.image = UIImage(systemName: "plus", withConfiguration: imageConfig)
         config.imagePlacement = .top
-        config.imagePadding = 4
+        config.imagePadding = 4 
         var titleContainer = AttributeContainer()
         titleContainer.font = Design.Font.preRegular.midFont
         titleContainer.foregroundColor = UIColor.systemGray
