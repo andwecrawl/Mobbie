@@ -61,7 +61,13 @@ class AddPostViewModel: ViewModel {
             .filter { !$0.replacingOccurrences(of: " ", with: "").isEmpty }
             .filter { $0.count < 200 }
             .flatMap { str in
-                MoyaAPIManager.shared.fetchInSignProgress(.writePost(model: PostModel(content: str, product_id: "")), type: Posts.self)
+                if self.images.isEmpty {
+                    return MoyaAPIManager.shared.fetchInSignProgress(.writePost(model: PostModel(content: str)), type: Posts.self)
+                } else {
+                    var data: [Data] = []
+                    self.images.forEach { data.append($0.jpegData(compressionQuality: 0.5)!) }
+                    return MoyaAPIManager.shared.fetchInSignProgress(.writePost(model: PostModel(content: str, file: data)), type: Posts.self)
+                }
             }
             .subscribe(with: self) { owner, response in
                 switch response {

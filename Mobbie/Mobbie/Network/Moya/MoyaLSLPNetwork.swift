@@ -82,21 +82,34 @@ extension MoyaNetwork: TargetType {
             
         case .emailValidation(let model):
             return .requestJSONEncodable(model)
+            
+            // refresh token
         case .refreshAccessToken:
             return .requestPlain
+            
+            // 포스트 작성
         case .writePost(let model), .modifiyPost(_, let model):
-            let image = MultipartFormData(provider: .data(model.file ?? Data()), name: "file", fileName: "\(model.file).jpg", mimeType: "image/jpg")
             let productID = MultipartFormData(provider: .data(model.product_id.data(using: .utf8)!), name: "product_id")
             let content = MultipartFormData(provider: .data(model.content.data(using: .utf8)!), name: "content")
-            let multipartData: [MultipartFormData] = [image, productID, content]
+            
+            var multipartData: [MultipartFormData] = [productID, content]
+            
+            if let images = model.file {
+                var data: [MultipartFormData] = []
+                images.forEach { data.append(MultipartFormData(provider: .data($0 ?? Data()), name: "file", fileName: "\($0).jpg", mimeType: "image/jpg")) }
+                multipartData.append(contentsOf: data)
+            }
+            
             return .uploadMultipart(multipartData)
+            
         case .fetchPost(let cursor):
-            var params: [String: String] = [
+            let params: [String: String] = [
                 "next": cursor,
                 "limit": "20",
-                "product_id": "" // 추후 작성 ...
+                "product_id": "MobbieFeed"
             ]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString )
+            
         default: return .requestPlain
 //        case .deletePost:
 //            
