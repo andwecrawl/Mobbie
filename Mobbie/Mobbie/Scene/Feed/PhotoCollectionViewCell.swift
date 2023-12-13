@@ -47,11 +47,10 @@ class PhotoCollectionViewCell: BaseCollectionViewCell {
         let url = URL(string: APIKeyURL.baseURL.rawValue + imagePath)
         
         imageView.kf.setImage(with: url, options: [
-            .processor(DownsamplingImageProcessor(size: CGSize(width: imageView.frame.width, height: imageView.frame.height))),
+//            .processor(DownsamplingImageProcessor(size: CGSize(width: imageView.frame.width, height: imageView.frame.height))),
             .requestModifier(modifier),
             .progressiveJPEG(.init(isBlur: true, isFastestScan: true, scanInterval: 0.1))
         ])
-        
         
     }
 }
