@@ -78,16 +78,10 @@ final class FeedTableViewCell: BaseTableViewCell {
         timeLabel.text = "몇 시간 전"
         contentLabel.text = "내용이에용"
         likedButton.isSelected = false
-//        photoCollectionView.isHidden = false
     }
     
     
     override func configureHierarchy() {
-        
-//        contentStackView.axis = .vertical
-//        contentStackView.spacing = 4
-//        contentStackView.distribution = .equalSpacing
-//        contentStackView.AddArrangedSubviews([contentLabel, photoCollectionView])
         
         buttonStackView.axis = .horizontal
         buttonStackView.spacing = 8
@@ -98,7 +92,6 @@ final class FeedTableViewCell: BaseTableViewCell {
             userLabel,
             timeLabel,
             contentLabel,
-//            contentStackView,
             photoCollectionView,
             buttonStackView,
             settingButton
@@ -148,7 +141,7 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     override func configureView() {
         timeLabel.text = "20분 전"
-        contentLabel.text = "밤은깊었는데잠은안오고늘어난두통과싸우고이리저리뒤척이다생각에잠겨또펜을붙잡고밤은깊었는데잠은안오고늘어난두통과싸우고이리저리뒤척이다생각에잠겨또펜을붙잡고밤은깊었는데잠은안오고늘어난두통과싸우고이리저리뒤척이다생각에잠겨또펜을붙잡고밤은깊었는데잠은안오고늘어난두통과싸우고이리저리뒤척이다생각에잠겨또펜을붙잡고"
+        contentLabel.text = "내용이에용"
         contentLabel.setLineSpacing(lineSpacing: 4)
     }
     
@@ -173,8 +166,6 @@ final class FeedTableViewCell: BaseTableViewCell {
             make.height.equalTo(250)
         }
         photoCollectionView.isHidden = false
-        print(post.image.count)
-        print(post.creator.nick, post.content, post.image)
         switch post.image.count {
         case 1:
             photoCollectionView.collectionViewLayout = onePicCollectionViewLayout()
