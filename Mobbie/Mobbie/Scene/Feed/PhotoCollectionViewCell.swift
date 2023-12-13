@@ -28,7 +28,8 @@ class PhotoCollectionViewCell: BaseCollectionViewCell {
     
     override func configureView() {
         imageView.contentMode = .scaleAspectFill
-        contentView.layer.cornerRadius = 8
+        imageView.layer.cornerRadius = 8
+        imageView.backgroundColor = .yellow
     }
     
     func configureCell() {
@@ -52,11 +53,5 @@ class PhotoCollectionViewCell: BaseCollectionViewCell {
         ])
         
         
-    }
-    
-    func configureUserImage() {
-        guard let image else { return }
-        
-        imageView.image = image
     }
 }

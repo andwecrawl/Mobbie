@@ -7,68 +7,72 @@
 
 import UIKit
 
-protocol AddDelegate {
-    func openPhotoAlbum()
-    func takePhoto()
-}
-
-protocol DeleteDelegate {
-    func deleteImages(image: UIImage)
-}
-
-
-class AddPhotoCollectionViewCell: BaseCollectionViewCell {
+final class AddPhotoCollectionViewCell: BaseCollectionViewCell {
     
-    let button = {
+    let imageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    let deleteButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.layer.cornerRadius = 8
-        button.layer.borderWidth = 3
-        button.layer.borderColor = UIColor.highlightOrange.cgColor
-        button.backgroundColor = .clear
-        button.tintColor = UIColor.highlightOrange
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 9)
+        let image = UIImage(systemName: "xmark", withConfiguration: imageConfig)
+        button.setImage(image, for: .normal)
+        button.tintColor = .darkGray
+        button.backgroundColor = .gray
+        button.layer.cornerRadius = 10
+        button.snp.makeConstraints { make in
+            make.width.equalTo(20)
+            make.height.equalTo(button.snp.width)
+        }
         return button
     }()
     
-    var delegate: AddDelegate?
+    var delegate: DeleteDelegate?
+    
+    var image: UIImage?
     
     override func configureHierarchy() {
-        contentView.addSubview(button)
+        super.configureHierarchy()
+        
+        [
+            imageView,
+            deleteButton
+        ]
+            .forEach { contentView.addSubview($0) }
+        
+        imageView.layer.cornerRadius = 16
+        deleteButton.addTarget(self, action: #selector(deleteButtonClicked), for: .touchUpInside)
+        
     }
     
     override func setConstraints() {
-        button.snp.makeConstraints { make in
-            make.size.equalTo(100)
-            make.center.equalToSuperview()
+        imageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        deleteButton.snp.makeConstraints { make in
+            make.top.equalTo(imageView).inset(6)
+            make.trailing.equalTo(imageView).inset(6)
         }
     }
     
     override func configureView() {
-        let menuElement: [UIMenuElement] = [
-            UIAction(title: "사진 보관함", image: UIImage(systemName: "photo"), handler: { _ in
-                self.delegate?.openPhotoAlbum()
-            }),
-            UIAction(title: "사진 찍기", image: UIImage(systemName: "camera"), handler: { _ in
-                self.delegate?.takePhoto()
-            })
-        ]
-        button.menu = UIMenu(children: menuElement)
-        button.showsMenuAsPrimaryAction = true
+        contentView.layer.cornerRadius = 12
+    }
+    
+    @objc func deleteButtonClicked() {
+        guard let image = imageView.image else { return }
+        delegate?.deleteImages(image: image)
+    }
+    
+    func configureUserImage() {
+        guard let image else { return }
         
-        configureAddButton(imagesCount: 0)
+        imageView.image = image
     }
-    
-    func configureAddButton(imagesCount: Int) {
-        var config = UIButton.Configuration.plain()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 16)
-        config.image = UIImage(systemName: "camera", withConfiguration: imageConfig)
-        config.imagePlacement = .top
-        config.imagePadding = 4
-        var titleContainer = AttributeContainer()
-        titleContainer.font = Design.Font.preRegular.midFont
-        titleContainer.foregroundColor = .darkGray
-        config.attributedTitle = AttributedString("\(imagesCount)/4", attributes: titleContainer)
-        button.configuration = config
-    }
-    
 }
+
