@@ -11,7 +11,7 @@ import RxCocoa
 
 final class LoginViewModel: ViewModel {
     
-    var model = LoginData(email: "", password: "")
+    private var model = LoginData(email: "", password: "")
     var disposeBag = DisposeBag()
     
     struct Input {
@@ -68,7 +68,7 @@ final class LoginViewModel: ViewModel {
                 let model = LoginData(email: self.model.email, password: self.model.password)
                 return MoyaAPIManager.shared.fetchInSignProgress(.login(model: model), type: LoginResponse.self)
             }
-            .subscribe(with: self) { owner, response in
+            .bind(with: self) { owner, response in
                 switch response {
                 case .success(let result):
                     print("===== login Success!!: \(result.token), \(result.refreshToken)")
