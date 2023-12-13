@@ -33,6 +33,7 @@ final class FeedViewController: BaseViewController, TransitionProtocol {
         return button
     }()
     
+    
     var cursor: String = ""
     
     let viewModel = FeedViewModel()
@@ -85,7 +86,26 @@ final class FeedViewController: BaseViewController, TransitionProtocol {
     
     override func configureView() {
         
+        setRefreshControl()
+        
     }
+    
+    func setRefreshControl() {
+        let refresh = UIRefreshControl()
+        tableView.refreshControl = refresh
+        tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+    }
+    
+    @objc func handleRefreshControl() {
+        
+        viewModel.posts = []
+        viewModel.cursor.onNext("")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+            self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
     
     func bind() {
         
@@ -160,7 +180,7 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         let isEnd = indexPaths.contains { $0.row == viewModel.posts.count - 2 }
         
-        if isEnd {
+        if isEnd && cursor != "0" {
             viewModel.cursor.onNext(cursor)
         }
     }
