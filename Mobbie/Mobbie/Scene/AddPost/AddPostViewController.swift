@@ -158,7 +158,7 @@ final class AddPostViewController: BaseViewController, TransitionProtocol {
         
         photoCollectionView.snp.makeConstraints { make in
             make.height.equalTo(150)
-            make.horizontalEdges.equalToSuperview()
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
         }
         
         emptyView.snp.makeConstraints { make in
@@ -272,6 +272,7 @@ extension AddPostViewController: UICollectionViewDelegate, UICollectionViewDataS
             
             // 더 추가할 수 있는 경우
             cell.delegate = self
+            cell.configureAddButton(imagesCount: images)
             
             return cell
         } else {
@@ -290,7 +291,7 @@ extension AddPostViewController: UICollectionViewDelegate, UICollectionViewDataS
     private func setCollectionViewLayout() -> UICollectionViewLayout {
         
         let layout = UICollectionViewFlowLayout()
-        let width = UIScreen.main.bounds.width / 3.3
+        let width = UIScreen.main.bounds.width / 3.6
         
         layout.itemSize = CGSize(width: width, height: 130)
         layout.sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
