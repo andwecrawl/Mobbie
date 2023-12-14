@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class PhotoCollectionViewCell: BaseCollectionViewCell {
+final class PhotoCollectionViewCell: BaseCollectionViewCell {
     
     let imageView = UIImageView()
     var image: UIImage?
