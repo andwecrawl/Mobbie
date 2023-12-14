@@ -6,48 +6,84 @@
 //
 
 import UIKit
+import RxSwift
+
+protocol feedDelegate {
+    func like(tag: Int, result: Bool)
+    func delete(tag: Int, postID: String)
+    func modifiy()
+}
 
 final class FeedTableViewCell: BaseTableViewCell {
     
-    let userLabel = {
+    private let userLabel = {
         let label = UILabel()
         label.font = Design.Font.preSemiBold.midFont
         return label
     }()
     
-    let timeLabel = {
+    private let timeLabel = {
         let label = UILabel()
         label.textColor = .gray.withAlphaComponent(0.9)
         label.font = Design.Font.preRegular.smallFont
         return label
     }()
     
-    let contentLabel = {
+    private let contentLabel = {
         let label = UILabel()
         label.font = Design.Font.preRegular.getFonts(size: 15)
         label.numberOfLines = 0
         return label
     }()
     
-    let commentButton = {
+    private let commentButton = {
         let button = UIButton()
-        button.titleLabel?.font = Design.Font.preLight.largeFont
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 14, weight: .medium)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
         let image = UIImage(systemName: "bubble.left", withConfiguration: imageConfig)
-        button.setImage(image, for: .normal)
-        button.tintColor = .gray.withAlphaComponent(0.9)
+        var config = UIButton.Configuration.plain()
+        var titleContainer = AttributeContainer()
+        titleContainer.font = Design.Font.preLight.smallFont
+        titleContainer.foregroundColor = .gray.withAlphaComponent(0.9)
+        config.attributedTitle = AttributedString("10", attributes: titleContainer)
+        config.image = image
+        config.imagePlacement = .leading
+        config.imagePadding = 4
+        button.configuration = config
+        button.tintColor = .gray.withAlphaComponent(0.8)
         return button
     }()
     
     let likedButton = {
         let button = UIButton()
-        button.titleLabel?.font = Design.Font.preLight.largeFont
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 14, weight: .medium)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
         let heartImage = UIImage(systemName: "heart", withConfiguration: imageConfig)
-        let filledHeartImage = UIImage(systemName: "heart.fill", withConfiguration: imageConfig)
+        let filledHeart = UIImage(systemName: "heart.fill", withConfiguration: imageConfig)
         button.setImage(heartImage, for: .normal)
-        button.setImage(filledHeartImage, for: .selected)
-        button.tintColor = .gray.withAlphaComponent(0.9)
+        button.setImage(filledHeart, for: .selected)
+        var config = UIButton.Configuration.plain()
+        var titleContainer = AttributeContainer()
+        titleContainer.font = Design.Font.preLight.smallFont
+        titleContainer.foregroundColor = .gray.withAlphaComponent(0.9)
+        config.attributedTitle = AttributedString("10", attributes: titleContainer)
+        config.imagePlacement = .leading
+        config.imagePadding = 5
+        config.baseBackgroundColor = .clear
+        button.configuration = config
+        button.tintColor = .gray.withAlphaComponent(0.8)
+        return button
+    }()
+    
+    let shareButton = {
+        let button = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
+        let image = UIImage(systemName: "square.and.arrow.up", withConfiguration: imageConfig)
+        var config = UIButton.Configuration.plain()
+        config.image = image
+        config.imagePlacement = .leading
+        config.imagePadding = 4
+        config.baseBackgroundColor = .clear
+        button.configuration = config
+        button.tintColor = .gray.withAlphaComponent(0.8)
         return button
     }()
     
@@ -69,8 +105,11 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     let contentStackView = UIStackView()
     let buttonStackView = UIStackView()
+    let disposeBag = DisposeBag()
     
+    var pushed: Bool?
     var post: Posts?
+    var delegate: feedDelegate?
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -78,6 +117,7 @@ final class FeedTableViewCell: BaseTableViewCell {
         timeLabel.text = "몇 시간 전"
         contentLabel.text = "내용이에용"
         likedButton.isSelected = false
+        settingButton.isHidden = false
     }
     
     
@@ -86,7 +126,7 @@ final class FeedTableViewCell: BaseTableViewCell {
         buttonStackView.axis = .horizontal
         buttonStackView.spacing = 8
         buttonStackView.distribution = .equalSpacing
-        buttonStackView.AddArrangedSubviews([commentButton, likedButton])
+        buttonStackView.AddArrangedSubviews([commentButton, likedButton, shareButton])
         
         [
             userLabel,
@@ -115,13 +155,11 @@ final class FeedTableViewCell: BaseTableViewCell {
             make.top.equalToSuperview().inset(12)
             make.trailing.equalToSuperview().inset(12)
         }
-        
         contentLabel.snp.makeConstraints { make in
             make.top.equalTo(userLabel.snp.bottom).offset(2)
             make.horizontalEdges.equalToSuperview().inset(20)
         }
         
-        photoCollectionView.backgroundColor = .green
         photoCollectionView.snp.makeConstraints { make in
             make.top.equalTo(contentLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalTo(contentLabel)
@@ -129,14 +167,22 @@ final class FeedTableViewCell: BaseTableViewCell {
             
         }
         
+        buttonStackView.spacing = 10
+        buttonStackView.distribution = .equalSpacing
+        buttonStackView.alignment = .leading
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(photoCollectionView.snp.bottom).offset(4)
+            make.top.equalTo(photoCollectionView.snp.bottom)
             make.leading.equalTo(contentLabel)
-            make.width.equalTo(80)
+            make.trailing.equalTo(photoCollectionView).inset(100)
             make.height.equalTo(35)
             make.bottom.equalToSuperview().inset(4)
         }
         
+        [commentButton, likedButton, shareButton].forEach { button in
+            button.snp.makeConstraints { make in
+                make.width.equalTo(button.snp.height).multipliedBy(1.25)
+            }
+        }
     }
     
     override func configureView() {
@@ -145,26 +191,67 @@ final class FeedTableViewCell: BaseTableViewCell {
         contentLabel.setLineSpacing(lineSpacing: 4)
     }
     
-    func setCollectionViewLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
-                                             heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(1.0))
+    func configureButton() {
+        guard let post else { return }
+        likedButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-        let section = NSCollectionLayoutSection(group: group)
-
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        return layout
+        let menuElement: [UIMenuElement] = [
+            UIAction(title: "수정하기", image: UIImage(systemName: "pencil.line"), handler: { _ in
+                self.delegate?.modifiy()
+            }),
+            UIAction(title: "삭제하기", image: UIImage(systemName: "trash.fill"), handler: { _ in
+                self.deleteButtonTapped()
+            })
+        ]
+        settingButton.menu = UIMenu(children: menuElement)
+        settingButton.showsMenuAsPrimaryAction = true
+        
+        
+        settingButton.isHidden = post.creator._id == UserDefaultsHelper.shared.userID ? false : true
     }
+    
+    @objc func likeButtonTapped() {
+        guard let post else { return }
+        MoyaAPIManager.shared.fetchInSignProgress(.liked(postID: post._id), type: likedResponse.self)
+            .subscribe(with: self) { owner, response in
+                switch response {
+                case .success(let result):
+                    DispatchQueue.main.async {
+                        owner.delegate?.like(tag: owner.likedButton.tag, result: result.isSuccess)
+                    }
+                    print(result)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
+            
+    }
+    
+    @objc func deleteButtonTapped() {
+        guard let post else { return }
+        MoyaAPIManager.shared.fetchInSignProgress(.deletePost(postID: post._id), type: DeletePostResponse.self)
+            .subscribe(with: self) { owner, response in
+                switch response {
+                case .success(let result):
+                    DispatchQueue.main.async {
+                        owner.delegate?.delete(tag: owner.settingButton.tag, postID: result._id)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    
+
     
     func configureCell() {
         guard let post else { return }
         photoCollectionView.snp.updateConstraints { make in
             make.height.equalTo(250)
         }
+        
         photoCollectionView.isHidden = false
         switch post.image.count {
         case 1:
@@ -190,15 +277,29 @@ final class FeedTableViewCell: BaseTableViewCell {
         timeLabel.text = post.time.parsingToDate()
         
         if post.likes.contains(UserDefaultsHelper.shared.userID) {
+            likedButton.tintColor = .systemRed
             likedButton.isSelected = true
         } else {
+            likedButton.tintColor = .gray.withAlphaComponent(0.9)
             likedButton.isSelected = false
         }
         
-        cell.imagePath = post.image[indexPath.item]
-        cell.configureCell()
+        var titleContainer = AttributeContainer()
+        titleContainer.font = Design.Font.preLight.smallFont
+        titleContainer.foregroundColor = .gray.withAlphaComponent(0.9)
         
-        return cell
+        var likeConfig = likedButton.configuration
+        var likeCount = post.likes.count
+        likeConfig?.attributedTitle = likeCount == 0 ? AttributedString("  ", attributes: titleContainer) : AttributedString("\(likeCount)", attributes: titleContainer)
+        likedButton.configuration = likeConfig
+        
+        var commentConfig = commentButton.configuration
+        let commentCount = post.comments.count
+        commentConfig?.attributedTitle = commentCount == 0 ? AttributedString("  ", attributes: titleContainer) : AttributedString("\(commentCount)", attributes: titleContainer)
+        commentButton.configuration = commentConfig
+        
+        
+        configureButton()
     }
-    
 }
+
