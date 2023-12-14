@@ -176,6 +176,10 @@ final class AddPostViewController: BaseViewController, TransitionProtocol {
     override func configureView() {
         textView.becomeFirstResponder()
         
+        configureToolbar()
+    }
+    
+    func configureToolbar() {
         let toolbar = UIToolbar()
 
         let pic = UIBarButtonItem(customView: pictureButton)
@@ -188,7 +192,6 @@ final class AddPostViewController: BaseViewController, TransitionProtocol {
         toolbar.setItems([camera, pic, flexibleSpaceButton, label], animated: false)
         toolbar.sizeToFit()
         textView.inputAccessoryView = toolbar
-        
     }
     
     
