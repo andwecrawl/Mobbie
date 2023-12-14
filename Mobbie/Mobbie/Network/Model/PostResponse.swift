@@ -45,3 +45,11 @@ struct User: Decodable {
 struct DeletePostResponse {
     var _id: String
 }
+
+struct likedResponse: Decodable {
+    var isSuccess: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case isSuccess = "like_status"
+    }
+}
