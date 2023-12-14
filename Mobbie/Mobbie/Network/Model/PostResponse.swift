@@ -17,7 +17,6 @@ struct PostResponse: Decodable {
     }
 }
 
-
 struct Posts: Decodable {
     var _id: String
     var creator: User
@@ -42,7 +41,7 @@ struct User: Decodable {
     var nick: String
 }
 
-struct DeletePostResponse {
+struct DeletePostResponse: Decodable {
     var _id: String
 }
 
