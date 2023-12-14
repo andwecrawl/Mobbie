@@ -103,7 +103,6 @@ final class FeedTableViewCell: BaseTableViewCell {
         return view
     }()
     
-    let contentStackView = UIStackView()
     let buttonStackView = UIStackView()
     let disposeBag = DisposeBag()
     
@@ -191,63 +190,9 @@ final class FeedTableViewCell: BaseTableViewCell {
         contentLabel.setLineSpacing(lineSpacing: 4)
     }
     
-    func configureButton() {
-        guard let post else { return }
-        likedButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
-        
-        let menuElement: [UIMenuElement] = [
-            UIAction(title: "수정하기", image: UIImage(systemName: "pencil.line"), handler: { _ in
-                self.delegate?.modifiy()
-            }),
-            UIAction(title: "삭제하기", image: UIImage(systemName: "trash.fill"), handler: { _ in
-                self.deleteButtonTapped()
-            })
-        ]
-        settingButton.menu = UIMenu(children: menuElement)
-        settingButton.showsMenuAsPrimaryAction = true
-        
-        
-        settingButton.isHidden = post.creator._id == UserDefaultsHelper.shared.userID ? false : true
-    }
-    
-    @objc func likeButtonTapped() {
-        guard let post else { return }
-        MoyaAPIManager.shared.fetchInSignProgress(.liked(postID: post._id), type: likedResponse.self)
-            .subscribe(with: self) { owner, response in
-                switch response {
-                case .success(let result):
-                    DispatchQueue.main.async {
-                        owner.delegate?.like(tag: owner.likedButton.tag, result: result.isSuccess)
-                    }
-                    print(result)
-                case .failure(let error):
-                    print(error)
-                }
-            }
-            .disposed(by: disposeBag)
-            
-    }
-    
-    @objc func deleteButtonTapped() {
-        guard let post else { return }
-        MoyaAPIManager.shared.fetchInSignProgress(.deletePost(postID: post._id), type: DeletePostResponse.self)
-            .subscribe(with: self) { owner, response in
-                switch response {
-                case .success(let result):
-                    DispatchQueue.main.async {
-                        owner.delegate?.delete(tag: owner.settingButton.tag, postID: result._id)
-                    }
-                case .failure(let error):
-                    print(error)
-                }
-            }
-            .disposed(by: disposeBag)
-    }
-    
-
-    
     func configureCell() {
         guard let post else { return }
+        
         photoCollectionView.snp.updateConstraints { make in
             make.height.equalTo(250)
         }
@@ -289,7 +234,7 @@ final class FeedTableViewCell: BaseTableViewCell {
         titleContainer.foregroundColor = .gray.withAlphaComponent(0.9)
         
         var likeConfig = likedButton.configuration
-        var likeCount = post.likes.count
+        let likeCount = post.likes.count
         likeConfig?.attributedTitle = likeCount == 0 ? AttributedString("  ", attributes: titleContainer) : AttributedString("\(likeCount)", attributes: titleContainer)
         likedButton.configuration = likeConfig
         
@@ -300,6 +245,59 @@ final class FeedTableViewCell: BaseTableViewCell {
         
         
         configureButton()
+    }
+    
+    func configureButton() {
+        guard let post else { return }
+        likedButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        
+        let menuElement: [UIMenuElement] = [
+            UIAction(title: "수정하기", image: UIImage(systemName: "pencil.line"), handler: { _ in
+                self.delegate?.modifiy()
+            }),
+            UIAction(title: "삭제하기", image: UIImage(systemName: "trash.fill"), handler: { _ in
+                self.deleteButtonTapped()
+            })
+        ]
+        settingButton.menu = UIMenu(children: menuElement)
+        settingButton.showsMenuAsPrimaryAction = true
+        
+        
+        settingButton.isHidden = post.creator._id == UserDefaultsHelper.shared.userID ? false : true
+    }
+    
+    @objc func likeButtonTapped() {
+        guard let post else { return }
+        MoyaAPIManager.shared.fetchInSignProgress(.liked(postID: post._id), type: likedResponse.self)
+            .subscribe(with: self) { owner, response in
+                switch response {
+                case .success(let result):
+                    DispatchQueue.main.async {
+                        owner.delegate?.like(tag: self.tag, result: result.isSuccess)
+                    }
+                    print(result)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
+            
+    }
+    
+    @objc func deleteButtonTapped() {
+        guard let post else { return }
+        MoyaAPIManager.shared.fetchInSignProgress(.deletePost(postID: post._id), type: DeletePostResponse.self)
+            .subscribe(with: self) { owner, response in
+                switch response {
+                case .success(let result):
+                    DispatchQueue.main.async {
+                        owner.delegate?.delete(tag: self.tag, postID: result._id)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 
