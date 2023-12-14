@@ -170,8 +170,7 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource, UITabl
         
         cell.post = post
         cell.delegate = self
-        cell.likedButton.tag = row
-        cell.settingButton.tag = row
+        cell.tag = row
         cell.configureCell()
         
         return cell
@@ -227,5 +226,11 @@ extension FeedViewController: feedDelegate {
     
     func modifiy() {
         
+    }
+    
+    func moveComment(tag: Int) {
+        let vc = DetailViewController()
+        vc.post = viewModel.posts[tag]
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

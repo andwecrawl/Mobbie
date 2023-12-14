@@ -12,6 +12,7 @@ protocol feedDelegate {
     func like(tag: Int, result: Bool)
     func delete(tag: Int, postID: String)
     func modifiy()
+    func moveComment(tag: Int)
 }
 
 final class FeedTableViewCell: BaseTableViewCell {
@@ -249,6 +250,7 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     func configureButton() {
         guard let post else { return }
+        commentButton.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
         likedButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         
         let menuElement: [UIMenuElement] = [
@@ -264,6 +266,10 @@ final class FeedTableViewCell: BaseTableViewCell {
         
         
         settingButton.isHidden = post.creator._id == UserDefaultsHelper.shared.userID ? false : true
+    }
+    
+    @objc func commentButtonTapped() {
+        delegate?.moveComment(tag: self.tag)
     }
     
     @objc func likeButtonTapped() {
