@@ -163,7 +163,7 @@ final class FeedTableViewCell: BaseTableViewCell {
         photoCollectionView.snp.makeConstraints { make in
             make.top.equalTo(contentLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalTo(contentLabel)
-            make.height.equalTo(200)
+            make.height.equalTo(180)
             
         }
         
@@ -195,7 +195,7 @@ final class FeedTableViewCell: BaseTableViewCell {
         guard let post else { return }
         
         photoCollectionView.snp.updateConstraints { make in
-            make.height.equalTo(250)
+            make.height.equalTo(220)
         }
         
         photoCollectionView.isHidden = false

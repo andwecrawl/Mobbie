@@ -30,6 +30,7 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 8
         imageView.backgroundColor = .yellow
+        imageView.clipsToBounds = true
     }
     
     func configureCell() {
@@ -47,10 +48,8 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         let url = URL(string: APIKeyURL.baseURL.rawValue + imagePath)
         
         imageView.kf.setImage(with: url, options: [
-//            .processor(DownsamplingImageProcessor(size: CGSize(width: imageView.frame.width, height: imageView.frame.height))),
             .requestModifier(modifier),
             .progressiveJPEG(.init(isBlur: true, isFastestScan: true, scanInterval: 0.1))
         ])
-        
     }
 }
