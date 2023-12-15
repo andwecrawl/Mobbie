@@ -192,7 +192,7 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource, UITabl
     }
 }
 
-extension FeedViewController: feedDelegate {
+extension FeedViewController: FeedDelegate {
     func like(tag: Int, result: Bool) {
         if result {
             viewModel.posts[tag].likes.append(UserDefaultsHelper.shared.userID)
@@ -207,18 +207,7 @@ extension FeedViewController: feedDelegate {
     func delete(tag: Int, postID: String) {
         if viewModel.posts[tag]._id == postID {
             viewModel.posts.remove(at: tag)
-            tableView.reloadData()
-            
-            var index = tag
-            if tag >= viewModel.posts.count {
-                index -= 1
-            } else if tag < 0 {
-                index += 1
-            }
-            
-            if viewModel.posts.count != 0 {
-                tableView.moveRow(at: IndexPath(row: 0, section: 0), to: IndexPath(row: index, section: 0))
-            }
+            tableView.deleteRows(at: [IndexPath(row: tag, section: 0)], with: .automatic)
         } else {
             sendOneSideAlert(title: "포스트를 찾을 수 없습니다!", message: "")
         }
@@ -230,6 +219,7 @@ extension FeedViewController: feedDelegate {
     
     func moveComment(tag: Int) {
         let vc = DetailViewController()
+            // 여기서 index 오류남 고쳐야댐
         vc.post = viewModel.posts[tag]
         navigationController?.pushViewController(vc, animated: true)
     }
