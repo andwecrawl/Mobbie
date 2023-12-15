@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class FeedViewModel: ViewModel {
+final class FeedViewModel: ViewModel {
     
     var posts: [Posts] = []
     var cursor = PublishSubject<String>()
