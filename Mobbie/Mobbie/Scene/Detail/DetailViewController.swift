@@ -20,10 +20,34 @@ final class DetailViewController: BaseViewController {
         return view
     }()
     
+    let userInputView = CommentInputView()
+    
     var post: Posts?
     
     
+    override func configureHierarchy() {
+        
+        [
+            tableView,
+            userInputView
+        ]
+            .forEach { view.addSubview($0) }
+    }
     
+    override func setConstraints() {
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        userInputView.snp.makeConstraints { make in
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    
+    override func configureView() {
+        
+    }
     
     
     
