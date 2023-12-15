@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 
-protocol feedDelegate {
+protocol FeedDelegate {
     func like(tag: Int, result: Bool)
     func delete(tag: Int, postID: String)
     func modifiy()
@@ -109,7 +109,9 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     var pushed: Bool?
     var post: Posts?
-    var delegate: feedDelegate?
+    var delegate: FeedDelegate?
+    
+    
     
     override func prepareForReuse() {
         super.prepareForReuse()
