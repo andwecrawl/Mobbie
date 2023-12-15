@@ -111,8 +111,7 @@ extension MoyaNetwork: TargetType {
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString )
             
         default: return .requestPlain
-//        case .deletePost:
-//            
+            
 //        case .writeComment(_, let content), .modifiyComment(_, _, let content):
 //            return .requestJSONEncodable(content)
         }
