@@ -74,6 +74,7 @@
 		D1F11B972B2AB8B90001DC4D /* heart.json in Resources */ = {isa = PBXBuildFile; fileRef = D1F11B962B2AB8B80001DC4D /* heart.json */; };
 		D1F11B992B2AC3F00001DC4D /* FeedTableViewCell+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11B982B2AC3F00001DC4D /* FeedTableViewCell+CollectionView.swift */; };
 		D1F11B9B2B2AE71D0001DC4D /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11B9A2B2AE71D0001DC4D /* CommentTableViewCell.swift */; };
+		D1F11BA72B2C8BA00001DC4D /* CommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11BA62B2C8BA00001DC4D /* CommentInputView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -137,6 +138,7 @@
 		D1F11B962B2AB8B80001DC4D /* heart.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = heart.json; sourceTree = "<group>"; };
 		D1F11B982B2AC3F00001DC4D /* FeedTableViewCell+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedTableViewCell+CollectionView.swift"; sourceTree = "<group>"; };
 		D1F11B9A2B2AE71D0001DC4D /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		D1F11BA62B2C8BA00001DC4D /* CommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInputView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				D1C452082B232B79003A3354 /* DetailViewController.swift */,
+				D1F11BA62B2C8BA00001DC4D /* CommentInputView.swift */,
 				D1F11B9A2B2AE71D0001DC4D /* CommentTableViewCell.swift */,
 			);
 			path = Detail;
@@ -547,6 +550,7 @@
 				D12B91BE2AFE5A4E006451FE /* FeedViewController.swift in Sources */,
 				D1674D482B0B7479000697C2 /* UserInfo.swift in Sources */,
 				D1CC23732AFCF93700684175 /* UILabel+.swift in Sources */,
+				D1F11BA72B2C8BA00001DC4D /* CommentInputView.swift in Sources */,
 				D18531272B14FF5200EACDAA /* WelcomeViewModel.swift in Sources */,
 				D1CC23612AFCEB6C00684175 /* IntroViewController.swift in Sources */,
 				D1F11B9B2B2AE71D0001DC4D /* CommentTableViewCell.swift in Sources */,
