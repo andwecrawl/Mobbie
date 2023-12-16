@@ -26,7 +26,6 @@ enum MoyaNetwork {
     
     // 댓글
     case writeComment(postID: String, content: String)
-    case modifiyComment(postID: String, commentID: String, content: String)
     
     // 좋아요
     case liked(postID: String)
@@ -55,8 +54,6 @@ extension MoyaNetwork: TargetType {
             return "post/\(postID)"
         case .writeComment(let postID, _):
             return "post/\(postID)/comment"
-        case .modifiyComment(let postID, let commentID, _):
-            return "post/\(postID)/comment/\(commentID)"
         case .liked(postID: let postID):
             return "post/like/\(postID)"
         }
@@ -68,7 +65,7 @@ extension MoyaNetwork: TargetType {
             return .post
         case .refreshAccessToken, .fetchPost, .fetchSpecificPost:
             return .get
-        case .modifiyPost, .modifiyComment:
+        case .modifiyPost:
             return .put
         case .deletePost:
             return .delete
@@ -86,9 +83,11 @@ extension MoyaNetwork: TargetType {
         case .emailValidation(let model):
             return .requestJSONEncodable(model)
             
+            
             // refresh token
         case .refreshAccessToken:
             return .requestPlain
+            
             
             // 포스트 작성
         case .writePost(let model), .modifiyPost(_, let model):
@@ -113,15 +112,16 @@ extension MoyaNetwork: TargetType {
             ]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString )
             
+            
+            // comment
         case .writeComment(_, let content):
             let model = CommentModel(content: content)
             return .requestJSONEncodable(model)
-        default: return .requestPlain
             
-//        case .modifiyComment(_, _, let content):
-//            return .requestJSONEncodable(content)
+        default: return .requestPlain
         }
     }
+    
     
     var headers: [String : String]? {
         switch self {
@@ -147,7 +147,7 @@ extension MoyaNetwork: TargetType {
                 "Authorization": UserDefaultsHelper.shared.accessToken,
                 "SesacKey": APIKeyURL.APIKey.rawValue
             ]
-        case .writeComment, .modifiyComment:
+        case .writeComment:
             [
                 "Authorization": UserDefaultsHelper.shared.accessToken,
                 "Content-Type": "application/json",
