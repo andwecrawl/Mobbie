@@ -113,6 +113,7 @@ final class WelcomeViewController: BaseViewController, TransitionProtocol {
         output.tap
             .bind(with: self, onNext: { owner, _ in
                 
+                UserDefaultsHelper.shared.nickname = Nickname.shared.makeNewNickname()
                 self.transitionTo(FeedViewController())
                 
             })
