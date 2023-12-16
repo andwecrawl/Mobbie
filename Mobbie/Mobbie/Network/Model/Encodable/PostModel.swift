@@ -21,3 +21,7 @@ struct PostModel: Encodable {
         case nickname = "content1"
     }
 }
+
+struct CommentModel: Encodable {
+    let content: String
+}
