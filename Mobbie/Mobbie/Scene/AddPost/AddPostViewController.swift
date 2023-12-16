@@ -98,6 +98,7 @@ final class AddPostViewController: BaseViewController, TransitionProtocol {
         label.snp.makeConstraints { make in
             make.width.equalTo(66)
         }
+        label.textAlignment = .right
         return label
     }()
     
