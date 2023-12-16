@@ -8,7 +8,7 @@
 import Foundation
 
 enum LSLPError: Int, Error {
-    case worngRequest = 400 // 잘못된 요청 (요청 확인...)
+    case wrongRequest = 400 // 잘못된 요청 (요청 확인...)
     case unauthenticatedToken = 401 // 미가입 혹은 비번 틀림 / 인증되지 않은 token
     case forbidden = 403 // 접근 권한 X
     case unusableAccount = 409 // 이미 가입된 유저
@@ -24,7 +24,7 @@ enum LSLPError: Int, Error {
 extension LSLPError: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case .worngRequest:
+        case .wrongRequest:
             return "필수값을 채워주세요."
         case .unauthenticatedToken:
             return "비밀번호가 틀렸거나 가입되지 않은 회원입니다."
