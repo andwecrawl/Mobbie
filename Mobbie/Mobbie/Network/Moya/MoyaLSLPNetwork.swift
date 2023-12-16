@@ -20,6 +20,7 @@ enum MoyaNetwork {
     // 게시글
     case writePost(model: PostModel)
     case fetchPost(nextCursor: String)
+    case fetchSpecificPost(postID: String)
     case modifiyPost(postID: String, model: PostModel)
     case deletePost(postID: String)
     
@@ -48,6 +49,8 @@ extension MoyaNetwork: TargetType {
             return "refresh"
         case .writePost, .fetchPost:
             return "post"
+        case .fetchSpecificPost(let postID):
+            return "post/\(postID)"
         case .modifiyPost(let postID, _), .deletePost(let postID):
             return "post/\(postID)"
         case .writeComment(let postID, _):
@@ -63,7 +66,7 @@ extension MoyaNetwork: TargetType {
         switch self {
         case .signUp, .login, .emailValidation, .writePost, .writeComment, .liked:
             return .post
-        case .refreshAccessToken, .fetchPost:
+        case .refreshAccessToken, .fetchPost, .fetchSpecificPost:
             return .get
         case .modifiyPost, .modifiyComment:
             return .put
@@ -139,7 +142,7 @@ extension MoyaNetwork: TargetType {
                 "Content-Type": "multipart/form-data",
                 "SesacKey": APIKeyURL.APIKey.rawValue
             ]
-        case .fetchPost, .deletePost, .liked:
+        case .fetchPost, .fetchSpecificPost, .deletePost, .liked:
             [
                 "Authorization": UserDefaultsHelper.shared.accessToken,
                 "SesacKey": APIKeyURL.APIKey.rawValue
