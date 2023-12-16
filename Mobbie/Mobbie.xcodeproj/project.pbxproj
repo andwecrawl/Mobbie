@@ -75,6 +75,7 @@
 		D1F11B992B2AC3F00001DC4D /* FeedTableViewCell+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11B982B2AC3F00001DC4D /* FeedTableViewCell+CollectionView.swift */; };
 		D1F11B9B2B2AE71D0001DC4D /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11B9A2B2AE71D0001DC4D /* CommentTableViewCell.swift */; };
 		D1F11BA72B2C8BA00001DC4D /* CommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11BA62B2C8BA00001DC4D /* CommentInputView.swift */; };
+		D1F11BA92B2CAAE00001DC4D /* NicknameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11BA82B2CAAE00001DC4D /* NicknameData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -139,6 +140,7 @@
 		D1F11B982B2AC3F00001DC4D /* FeedTableViewCell+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedTableViewCell+CollectionView.swift"; sourceTree = "<group>"; };
 		D1F11B9A2B2AE71D0001DC4D /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		D1F11BA62B2C8BA00001DC4D /* CommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInputView.swift; sourceTree = "<group>"; };
+		D1F11BA82B2CAAE00001DC4D /* NicknameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +209,7 @@
 				D1F11B962B2AB8B80001DC4D /* heart.json */,
 				D1B2C5D02B15FACA0065B51F /* congratulations.json */,
 				D1CC23552AFCEB1200684175 /* Assets.xcassets */,
+				D1F11BA82B2CAAE00001DC4D /* NicknameData.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -264,9 +267,9 @@
 				D1CC23642AFCEB8500684175 /* Base */,
 				D1CC23762AFCFF3700684175 /* Onboarding */,
 				D1CC23772AFCFF4A00684175 /* Login */,
-				D1D332FA2B1E3BF000852274 /* Setting */,
 				D1AD1C132B223F7800C4389C /* Detail */,
 				D12B91BF2AFE5A55006451FE /* Feed */,
+				D1D332FA2B1E3BF000852274 /* Setting */,
 				D1D333012B1F322B00852274 /* AddPost */,
 				D1D332FE2B1EDE9200852274 /* Search */,
 			);
@@ -546,6 +549,7 @@
 				D1D332B02B19A3F300852274 /* SettingOutlet.swift in Sources */,
 				D1D332D12B1C963A00852274 /* BaseTableViewCell.swift in Sources */,
 				D1674CDC2B063FD2000697C2 /* LoginModel.swift in Sources */,
+				D1F11BA92B2CAAE00001DC4D /* NicknameData.swift in Sources */,
 				D1C452092B232B79003A3354 /* DetailViewController.swift in Sources */,
 				D12B91BE2AFE5A4E006451FE /* FeedViewController.swift in Sources */,
 				D1674D482B0B7479000697C2 /* UserInfo.swift in Sources */,
