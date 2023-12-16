@@ -272,7 +272,7 @@ final class FeedTableViewCell: BaseTableViewCell {
                 self.delegate?.modifiy()
             }),
             UIAction(title: "삭제하기", image: UIImage(systemName: "trash.fill"), handler: { _ in
-                self.deleteButtonTapped()
+                self.delegate?.delete(tag: self.tag, postID: post._id)
             })
         ]
         settingButton.menu = UIMenu(children: menuElement)
@@ -302,22 +302,6 @@ final class FeedTableViewCell: BaseTableViewCell {
             }
             .disposed(by: disposeBag)
             
-    }
-    
-    @objc func deleteButtonTapped() {
-        guard let post else { return }
-        MoyaAPIManager.shared.fetchInSignProgress(.deletePost(postID: post._id), type: DeletePostResponse.self)
-            .subscribe(with: self) { owner, response in
-                switch response {
-                case .success(let result):
-                    DispatchQueue.main.async {
-                        owner.delegate?.delete(tag: self.tag, postID: result._id)
-                    }
-                case .failure(let error):
-                    print(error)
-                }
-            }
-            .disposed(by: disposeBag)
     }
 }
 
