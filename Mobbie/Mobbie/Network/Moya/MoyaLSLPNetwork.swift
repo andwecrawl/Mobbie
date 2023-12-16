@@ -89,7 +89,7 @@ extension MoyaNetwork: TargetType {
             
             // 포스트 작성
         case .writePost(let model), .modifiyPost(_, let model):
-            let productID = MultipartFormData(provider: .data(model.product_id.data(using: .utf8)!), name: "product_id")
+            let productID = MultipartFormData(provider: .data(model.productID.data(using: .utf8)!), name: "product_id")
             let content = MultipartFormData(provider: .data(model.content.data(using: .utf8)!), name: "content")
             
             var multipartData: [MultipartFormData] = [productID, content]

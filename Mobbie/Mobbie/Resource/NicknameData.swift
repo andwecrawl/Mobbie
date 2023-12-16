@@ -9,7 +9,7 @@ import Foundation
 
 class Nickname {
     
-    var shared = Nickname()
+    static let shared = Nickname()
     
     private init() { }
     

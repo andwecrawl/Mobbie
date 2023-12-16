@@ -50,4 +50,13 @@ final class UserDefaultsHelper {
             userDefaults.set(newValue, forKey: "userID")
         }
     }
+    
+    var nickname: String {
+        get {
+            return userDefaults.string(forKey: "nickname") ?? ""
+        }
+        set {
+            userDefaults.set(newValue, forKey: "nickname")
+        }
+    }
 }

@@ -26,7 +26,14 @@ struct Posts: Decodable {
     var image: [String]
     var hashTags: [String]
     var comments: [Comment]
-    var product_id: String?
+    var productID: String?
+    var nickname: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case _id, creator, time, content, likes, image
+        case hashTags, comments, productID
+        case nickname = "content1"
+    }
 }
 
 struct Comment: Decodable {
