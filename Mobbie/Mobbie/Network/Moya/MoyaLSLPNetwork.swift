@@ -110,9 +110,12 @@ extension MoyaNetwork: TargetType {
             ]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString )
             
+        case .writeComment(_, let content):
+            let model = CommentModel(content: content)
+            return .requestJSONEncodable(model)
         default: return .requestPlain
             
-//        case .writeComment(_, let content), .modifiyComment(_, _, let content):
+//        case .modifiyComment(_, _, let content):
 //            return .requestJSONEncodable(content)
         }
     }
