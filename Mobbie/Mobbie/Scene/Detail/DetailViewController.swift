@@ -108,6 +108,25 @@ final class DetailViewController: BaseViewController {
     
     @objc func addButtonTapped() {
         
+        guard let post else { return }
+        guard let text = userInputView.textView.text else { return }
+        
+        MoyaAPIManager.shared.fetchInSignProgress(.writeComment(postID: post._id, content: text), type: Comment.self)
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let comment):
+                    print(comment)
+                    owner.post?.comments.append(comment)
+                    let index = post.comments.count
+                    DispatchQueue.main.async {
+                        owner.tableView.reloadData()
+                        owner.tableView.moveRow(at: IndexPath(row: NSNotFound, section: 0), to: IndexPath(row: index, section: 0))
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     @objc func keyboardUp(notification:NSNotification) {
