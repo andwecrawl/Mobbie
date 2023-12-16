@@ -96,7 +96,7 @@ extension MoyaNetwork: TargetType {
             
             if let images = model.file {
                 var data: [MultipartFormData] = []
-                images.forEach { data.append(MultipartFormData(provider: .data($0 ?? Data()), name: "file", fileName: "\($0).jpg", mimeType: "image/jpg")) }
+                images.forEach { data.append(MultipartFormData(provider: .data($0), name: "file", fileName: "\($0).jpg", mimeType: "image/jpg")) }
                 multipartData.append(contentsOf: data)
             }
             
