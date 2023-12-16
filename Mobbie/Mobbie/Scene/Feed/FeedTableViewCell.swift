@@ -114,7 +114,7 @@ final class FeedTableViewCell: BaseTableViewCell {
     let disposeBag = DisposeBag()
     
     var pushed: Bool?
-    var post: Posts?
+    var post: Post?
     var delegate: FeedDelegate?
     
     var type: FeedTableViewCellType?

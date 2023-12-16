@@ -11,7 +11,7 @@ import RxCocoa
 
 final class FeedViewModel: ViewModel {
     
-    var posts: [Posts] = []
+    var posts: [Post] = []
     var cursor = PublishSubject<String>()
     var disposeBag = DisposeBag()
     

@@ -8,7 +8,7 @@
 import Foundation
 
 struct PostResponse: Decodable {
-    let data: [Posts]
+    let data: [Post]
     let nextCursor: String
 
     enum CodingKeys: String, CodingKey {
@@ -17,7 +17,7 @@ struct PostResponse: Decodable {
     }
 }
 
-struct Posts: Decodable {
+struct Post: Decodable {
     var _id: String
     var creator: User
     var time: String
