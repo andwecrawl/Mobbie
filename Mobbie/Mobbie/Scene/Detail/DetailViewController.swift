@@ -15,6 +15,8 @@ final class DetailViewController: BaseViewController {
         view.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
         view.register(CommentTableViewCell.self, forCellReuseIdentifier: CommentTableViewCell.identifier)
         view.rowHeight = UITableView.automaticDimension
+        view.scrollsToTop = true
+        view.keyboardDismissMode = .onDrag
         view.estimatedRowHeight = 100
         view.delegate = self
         view.dataSource = self
@@ -49,8 +51,9 @@ final class DetailViewController: BaseViewController {
     
     
     let userInputView = CommentInputView()
+    var post: Post?
+    
     let disposeBag = DisposeBag()
-    var post: Posts?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -58,9 +61,6 @@ final class DetailViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-    
-    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -186,13 +186,17 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension DetailViewController: FeedDelegate {
     func like(tag: Int, result: Bool) {
+        if result {
+            post?.likes.append(UserDefaultsHelper.shared.userID)
+        } else {
+            guard let index = post?.likes.firstIndex(of: UserDefaultsHelper.shared.userID) else { return }
+            post?.likes.remove(at: index)
+        }
         
-        
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
     }
     
     func delete(tag: Int, postID: String) {
-        
-        guard let post else { return }
         
         sendInteractiveAlert(title: "삭제하시겠습니까?", choices: [
             UIAlertAction(title: "취소", style: .default, handler: { _ in return }),
@@ -219,7 +223,7 @@ extension DetailViewController: FeedDelegate {
     }
     
     func moveComment(tag: Int) {
-        sendOneSideAlert(title: "현재 댓글창에 있어요!", message: "")
+        sendOneSideAlert(title: "현재 댓글창에 있어요!")
     }
 }
 
