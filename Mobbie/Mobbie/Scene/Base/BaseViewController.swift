@@ -38,10 +38,19 @@ class BaseViewController: UIViewController {
 }
 
 extension BaseViewController {
-    func sendOneSideAlert(title: String, message: String) {
+    func sendOneSideAlert(title: String, message: String = "") {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okay = UIAlertAction(title: "okay", style: .default, handler: nil)
         alert.addAction(okay)
+        present(alert, animated: true)
+    }
+    
+    func sendInteractiveAlert(title: String, choices: [UIAlertAction]) {
+        let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        
+        choices
+            .forEach { alert.addAction($0) }
+        
         present(alert, animated: true)
     }
 }
