@@ -140,7 +140,10 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier) as? FeedTableViewCell else { return UITableViewCell() }
             
+            cell.tag = 0
+            cell.type = .detail
             cell.post = post
+            cell.delegate = self
             cell.configureCell()
             
             return cell
@@ -150,6 +153,8 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             let index = indexPath.row - 1
             let comment = post.comments
             
+            cell.tag = indexPath.row - 1
+            cell.delegate = self
             cell.postID = post._id
             cell.comment = comment[index]
             
@@ -168,6 +173,25 @@ extension DetailViewController: FeedDelegate {
     
     func delete(tag: Int, postID: String) {
         
+        guard let post else { return }
+        
+        sendInteractiveAlert(title: "삭제하시겠습니까?", choices: [
+            UIAlertAction(title: "취소", style: .default, handler: { _ in return }),
+            UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+                MoyaAPIManager.shared.fetchInSignProgress(.deletePost(postID: postID), type: DeletePostResponse.self)
+                    .subscribe(with: self) { owner, response in
+                        switch response {
+                        case .success(_):
+                            DispatchQueue.main.async {
+                                owner.navigationController?.popViewController(animated: true)
+                            }
+                        case .failure(let error):
+                            print(error)
+                        }
+                    }
+                    .disposed(by: self.disposeBag)
+            })
+        ])
         
     }
     
@@ -180,3 +204,32 @@ extension DetailViewController: FeedDelegate {
     }
 }
 
+
+extension DetailViewController: CommentDelegate {
+    func delete(tag: Int, postID: String, commentID: String) {
+        guard let post else { return }
+        
+        // comment로 고쳐야 함
+        sendInteractiveAlert(title: "삭제하시겠습니까?", choices: [
+            UIAlertAction(title: "취소", style: .default, handler: { _ in return }),
+            UIAlertAction(title: "삭제", style: .cancel, handler: { _ in
+                MoyaAPIManager.shared.fetchInSignProgress(.deletePost(postID: postID), type: DeletePostResponse.self)
+                    .subscribe(with: self) { owner, response in
+                        switch response {
+                        case .success(let result):
+                            if post.comments[tag]._id == result._id {
+                                self.post?.comments.remove(at: tag)
+                                self.tableView.deleteRows(at: [IndexPath(row: tag, section: 0)], with: .automatic)
+                            } else {
+                                self.sendOneSideAlert(title: "댓글을 찾을 수 없습니다!")
+                            }
+                        case .failure(let error):
+                            print(error)
+                        }
+                    }
+                    .disposed(by: self.disposeBag)
+            })
+        ])
+    }
+    
+}
