@@ -28,10 +28,10 @@ struct Post: Decodable {
     var comments: [Comment]
     var productID: String?
     var nickname: String?
-    var commentUser: String
+    var commentUser: String?
     
     var commentNicknames: [String] {
-        commentUser.components(separatedBy: ", ")
+        commentUser?.components(separatedBy: ", ") ?? []
     }
     
     enum CodingKeys: String, CodingKey {
