@@ -17,6 +17,12 @@ protocol FeedDelegate {
 
 final class FeedTableViewCell: BaseTableViewCell {
     
+    enum FeedTableViewCellType {
+        case feed
+        case detail
+    }
+
+    
     private let userLabel = {
         let label = UILabel()
         label.font = Design.Font.preSemiBold.midFont
@@ -111,7 +117,7 @@ final class FeedTableViewCell: BaseTableViewCell {
     var post: Posts?
     var delegate: FeedDelegate?
     
-    
+    var type: FeedTableViewCellType?
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -188,6 +194,12 @@ final class FeedTableViewCell: BaseTableViewCell {
     }
     
     override func configureView() {
+        guard let type else { return }
+        if type == .detail {
+            contentLabel.font = Design.Font.preRegular.getFonts(size: 18)
+        } else {
+            contentLabel.font = Design.Font.preRegular.largeFont
+        }
         timeLabel.text = "20분 전"
         contentLabel.text = "내용이에용"
         contentLabel.setLineSpacing(lineSpacing: 4)
