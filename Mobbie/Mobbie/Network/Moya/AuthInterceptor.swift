@@ -29,7 +29,9 @@ final class AuthInterceptor: RequestInterceptor, TransitionProtocol {
            }
         
         if response.statusCode == 418 {
-            transitionTo(LoginViewController())
+            DispatchQueue.main.async {
+                self.transitionTo(LoginViewController())
+            }
         }
         
         let task = Observable.just(())
