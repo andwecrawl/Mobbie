@@ -28,11 +28,17 @@ struct Post: Decodable {
     var comments: [Comment]
     var productID: String?
     var nickname: String?
+    var commentUser: String
+    
+    var commentNicknames: [String] {
+        commentUser.components(separatedBy: ", ")
+    }
     
     enum CodingKeys: String, CodingKey {
         case _id, creator, time, content, likes, image
         case hashTags, comments, productID
         case nickname = "content1"
+        case commentUser = "content2"
     }
 }
 
