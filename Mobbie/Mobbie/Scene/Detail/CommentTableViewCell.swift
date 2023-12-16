@@ -29,7 +29,7 @@ final class CommentTableViewCell: BaseTableViewCell {
     
     private let contentLabel = {
         let label = UILabel()
-        label.font = Design.Font.preRegular.largeFont
+        label.font = Design.Font.preRegular.midFont
         label.numberOfLines = 0
         return label
     }()
@@ -45,6 +45,8 @@ final class CommentTableViewCell: BaseTableViewCell {
     
     var postID: String?
     var comment: Comment?
+    
+    var delegate: CommentDelegate?
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -68,7 +70,7 @@ final class CommentTableViewCell: BaseTableViewCell {
     
     override func setConstraints() {
         userLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaInsets).inset(16)
+            make.top.equalToSuperview().inset(8)
             make.leading.equalToSuperview().inset(20)
             make.height.equalTo(30)
         }
@@ -85,6 +87,7 @@ final class CommentTableViewCell: BaseTableViewCell {
         contentLabel.snp.makeConstraints { make in
             make.top.equalTo(userLabel.snp.bottom).offset(2)
             make.horizontalEdges.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().inset(12)
         }
         
     }
@@ -93,6 +96,28 @@ final class CommentTableViewCell: BaseTableViewCell {
         timeLabel.text = "20분 전"
         contentLabel.text = "내용이에용"
         contentLabel.setLineSpacing(lineSpacing: 4)
+        
+        configureSettingButton()
+    }
+    
+    
+    func configureSettingButton() {
+        
+        guard let postID else { return }
+        guard let comment else { return }
+        
+        let menuElement: [UIMenuElement] = [
+            UIAction(title: "수정하기", image: UIImage(systemName: "pencil.line"), handler: { _ in
+                // 수정하기 딜리게이트
+                self.delegate?.modifiy()
+            }),
+            UIAction(title: "삭제하기", image: UIImage(systemName: "trash.fill"), handler: { _ in
+                // 삭제하기 딜리게이트
+                self.delegate?.delete(tag: self.tag, postID: postID, commentID: comment._id)
+            })
+        ]
+        settingButton.menu = UIMenu(children: menuElement)
+        settingButton.showsMenuAsPrimaryAction = true
     }
     
     
