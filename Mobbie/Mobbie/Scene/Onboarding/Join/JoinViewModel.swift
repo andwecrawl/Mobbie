@@ -22,12 +22,14 @@ final class JoinViewModel: ViewModel {
         let userInput: ControlProperty<String>
         var userInfo: UserInfo
         let tap: ControlEvent<Void>
+        let validationButtonTap: ControlEvent<Void>
+        let validationButtonIsEnabled: Binder<Bool>
         var nextButtonIsEnabled: Binder<Bool>
     }
     
     struct Output {
-        
         let isValid: BehaviorSubject<Bool>
+        let isValidToNext: BehaviorSubject<Bool>
         let tap: ControlEvent<Void>
         let userInfo: BehaviorSubject<UserInfo>
         let text: BehaviorSubject<String>
@@ -37,13 +39,23 @@ final class JoinViewModel: ViewModel {
         
         guard let joinType else { return nil }
         
-        let isValid = BehaviorSubject(value: false)
+        let isValidText = BehaviorSubject(value: false)
+        let isValidToNext = BehaviorSubject(value: false)
         let isFilled = BehaviorSubject(value: false)
         let text = BehaviorSubject<String>(value: "")
         let subjectInfo = BehaviorSubject(value: input.userInfo)
         
+        isValidText
+            .bind(with: self, onNext: { owner, value in
+                if owner.joinType == .email {
+                    input.validationButtonIsEnabled.onNext(value)
+                } else {
+                    isValidToNext.onNext(value)
+                }
+            })
+            .disposed(by: disposeBag)
         
-        isValid
+        isValidToNext
             .bind(with: self) { owenr, value in
                 input.nextButtonIsEnabled.onNext(value)
             }
@@ -83,7 +95,7 @@ final class JoinViewModel: ViewModel {
                     return false
                 }
             }
-            .bind(to: isValid)
+            .bind(to: isValidText)
             .disposed(by: disposeBag)
         
         
@@ -91,17 +103,12 @@ final class JoinViewModel: ViewModel {
             .onNext(newInfo)
         newInfo = input.userInfo
         
+        
         if joinType == .email {
-            input.userInput
-                .debounce(.seconds(1), scheduler: MainScheduler.instance)
-                .withLatestFrom(isValid, resultSelector: { str, bool in
-                    if bool {
-                        return str
-                    } else {
-                        return ""
-                    }
-                })
-                .filter { !$0.isEmpty }
+            
+            input.validationButtonTap
+                .throttle(.seconds(1), scheduler: MainScheduler.instance)
+                .withLatestFrom(text)
                 .flatMap { str in
                     let model = ValidationData(email: str)
                     return MoyaAPIManager.shared.fetchInSignProgress(.emailValidation(model: model), type: ValidationResponse.self)
@@ -110,15 +117,16 @@ final class JoinViewModel: ViewModel {
                     switch response {
                     case .success(let result):
                         print("===== success message: \(result.message)")
-                        isValid.onNext(true)
+                        isValidToNext.onNext(true)
                     case .failure(let error):
                         print("======= error message: \(error.localizedDescription)")
-                        isValid.onNext(false)
+                        isValidToNext.onNext(false)
                         input.userInput.onNext("")
                         self.completionHandler?(error.localizedDescription)
                     }
                 }
                 .disposed(by: disposeBag)
+            
         } else if joinType == .phoneNumber {
             input.tap
                 .throttle(.seconds(1), scheduler: MainScheduler.instance)
@@ -137,9 +145,10 @@ final class JoinViewModel: ViewModel {
                 }
                 .disposed(by: disposeBag)
         }
-            
+        
         return Output(
-            isValid: isValid,
+            isValid: isValidText,
+            isValidToNext: isValidToNext,
             tap: input.tap,
             userInfo: subjectInfo,
             text: text

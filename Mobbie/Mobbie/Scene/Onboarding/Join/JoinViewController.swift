@@ -20,6 +20,15 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
         return label
     }()
     
+    private let validationButton = {
+        let button = UIButton()
+        button.setTitle("이메일 확인", for: .normal)
+        button.backgroundColor = UIColor.highlightOrange
+        button.layer.cornerRadius = 4
+        button.titleLabel?.font = Design.Font.preRegular.smallFont
+        return button
+    }()
+    
     private let descriptionLabel = {
         let label = UILabel()
         label.text = "몇 자 이상 입력해 주세요!"
@@ -71,6 +80,7 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
             descriptionLabel,
             inputTextField,
             lineView,
+            validationButton,
             nextButton
         ]
             .forEach({ view.addSubview($0) })
@@ -115,8 +125,24 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
         inputTextField.placeholder = joinType?.placeholder
         if joinType == .password {
             inputTextField.isSecureTextEntry = true
+        } else if joinType == .email {
+            remakeConstraintsForValidation()
         }
         lineView.backgroundColor = .gray
+    }
+    
+    func remakeConstraintsForValidation() {
+        inputTextField.snp.remakeConstraints { make in
+            make.horizontalEdges.equalTo(informationLabel)
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(44)
+        }
+        
+        validationButton.snp.makeConstraints { make in
+            make.top.equalTo(inputTextField.snp.bottom).offset(16)
+            make.trailing.equalTo(informationLabel)
+            make.height.equalTo(30)
+            make.width.equalTo(80)
+        }
     }
     
     func bind() {
@@ -130,17 +156,26 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
             userInput: inputTextField.rx.text.orEmpty,
             userInfo: userInfo ?? UserInfo(id: "", password: "", phoneNumber: ""), 
             tap: nextButton.rx.tap,
+            validationButtonTap: validationButton.rx.tap,
+            validationButtonIsEnabled: validationButton.rx.isEnabled,
             nextButtonIsEnabled: nextButton.rx.isEnabled
             
         )
         
         guard let output = viewModel.transform(input: input) else { return }
         
-        Observable.combineLatest(output.isValid, output.text)
+        output.isValid
+            .bind(with: self) { owner, isValid in
+                owner.validationButton.backgroundColor = isValid ? .highlightOrange : .gray
+                owner.validationButton.backgroundColor = isValid ? .highlightOrange : .gray
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(output.isValidToNext, output.text)
             .bind(with: self) { owner, tuple in
-                if !tuple.1.isEmpty {
                     owner.nextButton.backgroundColor = tuple.0 ? .highlightOrange : .gray
-                    
+                
+                if !tuple.1.isEmpty {
                     owner.lineView.backgroundColor = tuple.0 ? .highlightOrange : .systemRed
                 }
             }
