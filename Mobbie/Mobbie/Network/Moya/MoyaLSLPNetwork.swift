@@ -13,6 +13,7 @@ enum MoyaNetwork {
     case signUp(model: SignUpData)
     case login(model: LoginData)
     case emailValidation(model: ValidationData)
+    case withdraw
     
     // refresh
     case refreshAccessToken
@@ -44,6 +45,8 @@ extension MoyaNetwork: TargetType {
             return "login"
         case .emailValidation(_):
             return "validation/email"
+        case .withdraw:
+            return "withdraw"
         case .refreshAccessToken:
             return "refresh"
         case .writePost, .fetchPost:
@@ -63,7 +66,7 @@ extension MoyaNetwork: TargetType {
         switch self {
         case .signUp, .login, .emailValidation, .writePost, .writeComment, .liked:
             return .post
-        case .refreshAccessToken, .fetchPost, .fetchSpecificPost:
+        case .withdraw, .refreshAccessToken, .fetchPost, .fetchSpecificPost:
             return .get
         case .modifiyPost:
             return .put
@@ -149,7 +152,7 @@ extension MoyaNetwork: TargetType {
                 "Content-Type": "multipart/form-data",
                 "SesacKey": APIKeyURL.APIKey.rawValue
             ]
-        case .fetchPost, .fetchSpecificPost, .deletePost, .liked:
+        case .withdraw, .fetchPost, .fetchSpecificPost, .deletePost, .liked:
             [
                 "Authorization": UserDefaultsHelper.shared.accessToken,
                 "SesacKey": APIKeyURL.APIKey.rawValue
@@ -165,7 +168,7 @@ extension MoyaNetwork: TargetType {
     
     var validationType: ValidationType {
         switch self {
-        case .signUp, .login, .emailValidation:
+        case .signUp, .login, .emailValidation, .withdraw:
             return .none
         default:
             return .successCodes
