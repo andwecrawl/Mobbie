@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 
 
-
 final class JoinViewController: BaseViewController, TransitionProtocol {
     
     private let informationLabel = {
@@ -32,7 +31,8 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
     private let descriptionLabel = {
         let label = UILabel()
         label.text = "몇 자 이상 입력해 주세요!"
-        label.font = Design.Font.preMedium.midFont
+        label.font = Design.Font.preRegular.midFont
+        label.numberOfLines = 0
         label.textColor = .systemGray2
         return label
     }()
@@ -65,6 +65,13 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
     var userInfo: UserInfo?
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,6 +81,13 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
             self.present(vc, animated: true)
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     
     override func configureHierarchy() {
         super.configureHierarchy()
@@ -223,5 +237,22 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    @objc func keyboardUp(notification:NSNotification) {
+        if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+           let keyboardRectangle = keyboardFrame.cgRectValue
+       
+            UIView.animate(
+                withDuration: 0.3
+                , animations: {
+                    self.nextButton.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height + self.view.safeAreaInsets.bottom)
+                }
+            )
+        }
+    }
+    
+    @objc func keyboardDown() {
+        self.nextButton.transform = .identity
     }
 }
