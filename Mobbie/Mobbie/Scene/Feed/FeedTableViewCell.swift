@@ -195,9 +195,9 @@ final class FeedTableViewCell: BaseTableViewCell {
     override func configureView() {
         guard let type else { return }
         if type == .detail {
-            contentLabel.font = Design.Font.preRegular.getFonts(size: 18)
+            contentLabel.font = Design.Font.preRegular.getFonts(size: 17)
         } else {
-            contentLabel.font = Design.Font.preRegular.largeFont
+            contentLabel.font = Design.Font.preRegular.getFonts(size: 16)
         }
         timeLabel.text = "20분 전"
         contentLabel.text = "내용이에용"
@@ -208,9 +208,9 @@ final class FeedTableViewCell: BaseTableViewCell {
         guard let post else { return }
         
         if type == .detail {
-            contentLabel.font = Design.Font.preRegular.getFonts(size: 18)
+            contentLabel.font = Design.Font.preRegular.getFonts(size: 17)
         } else {
-            contentLabel.font = Design.Font.preRegular.largeFont
+            contentLabel.font = Design.Font.preRegular.getFonts(size: 16)
         }
         
         photoCollectionView.snp.updateConstraints { make in
@@ -273,11 +273,11 @@ final class FeedTableViewCell: BaseTableViewCell {
         likedButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         
         let menuElement: [UIMenuElement] = [
-            UIAction(title: "수정하기", image: UIImage(systemName: "pencil.line"), handler: { _ in
-                self.delegate?.modifiy()
-            }),
             UIAction(title: "삭제하기", image: UIImage(systemName: "trash.fill"), handler: { _ in
                 self.delegate?.delete(tag: self.tag, postID: post._id)
+            }),
+            UIAction(title: "공유하기", image: UIImage(systemName: "square.and.arrow.up"), handler: { _ in
+                // 공유하깅
             })
         ]
         settingButton.menu = UIMenu(children: menuElement)
