@@ -205,16 +205,26 @@ extension FeedViewController: FeedDelegate {
     }
     
     func delete(tag: Int, postID: String) {
-        if viewModel.posts[tag]._id == postID {
-            viewModel.posts.remove(at: tag)
-            tableView.deleteRows(at: [IndexPath(row: tag, section: 0)], with: .automatic)
-        } else {
-            sendOneSideAlert(title: "포스트를 찾을 수 없습니다!", message: "")
-        }
-    }
-    
-    func modifiy() {
-        
+        sendInteractiveAlert(title: "삭제하시겠습니까?", choices: [
+            UIAlertAction(title: "취소", style: .default, handler: { _ in return }),
+            UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+                MoyaAPIManager.shared.fetchInSignProgress(.deletePost(postID: postID), type: DeletePostResponse.self)
+                    .subscribe(with: self) { owner, response in
+                        switch response {
+                        case .success(let result):
+                            if self.viewModel.posts[tag]._id == result._id {
+                                self.viewModel.posts.remove(at: tag)
+                                self.tableView.deleteRows(at: [IndexPath(row: tag, section: 0)], with: .automatic)
+                            } else {
+                                self.sendOneSideAlert(title: "포스트를 찾을 수 없습니다!")
+                            }
+                        case .failure(let error):
+                            print(error)
+                        }
+                    }
+                    .disposed(by: self.disposeBag)
+            })
+        ])
     }
     
     func moveComment(tag: Int) {
