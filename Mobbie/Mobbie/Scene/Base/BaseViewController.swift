@@ -45,8 +45,8 @@ extension BaseViewController {
         present(alert, animated: true)
     }
     
-    func sendInteractiveAlert(title: String, choices: [UIAlertAction]) {
-        let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
+    func sendInteractiveAlert(title: String, message: String = "", choices: [UIAlertAction]) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         choices
             .forEach { alert.addAction($0) }
