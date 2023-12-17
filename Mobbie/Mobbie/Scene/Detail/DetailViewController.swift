@@ -51,7 +51,12 @@ final class DetailViewController: BaseViewController {
     
     
     let userInputView = CommentInputView()
-    var post: Post?
+    var post: Post? {
+        didSet {
+            comments = post?.comments.reversed() ?? []
+        }
+    }
+    var comments: [Comment] = []
     var commentUsers: [String] = []
     
     let disposeBag = DisposeBag()
@@ -61,6 +66,14 @@ final class DetailViewController: BaseViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        NetworkCheck.shared.completion = { vc in
+            self.present(vc, animated: true)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,7 +93,9 @@ final class DetailViewController: BaseViewController {
     
     override func setConstraints() {
         tableView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.equalTo(userInputView)
+            make.bottom.equalTo(userInputView.snp.top).offset(4)
         }
         
         userInputView.sizeToFit()
@@ -96,6 +111,48 @@ final class DetailViewController: BaseViewController {
         guard let post else { return }
         commentUsers = post.commentUser?.components(separatedBy: ", ") ?? []
         
+        setToolBar()
+        setRefreshControl()
+        userInputView.textView.delegate = self
+        
+    }
+    
+    
+    func setRefreshControl() {
+        let refresh = UIRefreshControl()
+        tableView.refreshControl = refresh
+        tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+    }
+    
+    
+    @objc func handleRefreshControl() {
+        
+        guard let post else { return }
+        
+        MoyaAPIManager.shared.fetchInSignProgress(.fetchSpecificPost(postID: post._id), type: Post.self)
+            .subscribe(with: self) { owner, response in
+                switch response {
+                case .success(let result):
+                    DispatchQueue.main.async {
+                        owner.post = result
+                        owner.tableView.reloadData()
+                    }
+                case .failure(let error):
+                    self.sendOneSideAlert(title: "새로고침에 실패했습니다.", message: "다시 시도해 주세요!")
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+            self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    
+    func setToolBar() {
+        
         let toolbar = UIToolbar()
 
         let postButton = UIBarButtonItem(customView: addButton)
@@ -106,8 +163,8 @@ final class DetailViewController: BaseViewController {
         let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         toolbar.setItems([flexibleSpaceButton, label, fixedSpace, postButton], animated: false)
         toolbar.sizeToFit()
+        
         userInputView.textView.inputAccessoryView = toolbar
-        userInputView.textView.delegate = self
     }
     
     @objc func addButtonTapped() {
@@ -115,22 +172,44 @@ final class DetailViewController: BaseViewController {
         guard let post else { return }
         guard let text = userInputView.textView.text else { return }
         
+        let commentGroup = DispatchGroup()
+        
+        print(UserDefaultsHelper.shared.nickname)
+        commentUsers.append(UserDefaultsHelper.shared.nickname)
+        
+        commentGroup.enter()
         MoyaAPIManager.shared.fetchInSignProgress(.writeComment(postID: post._id, content: text), type: Comment.self)
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let comment):
-                    print(comment)
-                    owner.post?.comments.append(comment)
-                    let index = post.comments.count
-                    DispatchQueue.main.async {
-                        owner.tableView.reloadData()
-                        owner.tableView.moveRow(at: IndexPath(row: NSNotFound, section: 0), to: IndexPath(row: index, section: 0))
-                    }
+                    commentGroup.leave()
                 case .failure(let error):
                     print(error)
                 }
             }
             .disposed(by: disposeBag)
+        
+        commentGroup.enter()
+        MoyaAPIManager.shared.fetchInSignProgress(.modifiyPost(postID: post._id, commentUsers: commentUsers.joined(separator: ", ")), type: Post.self)
+            .subscribe(with: self) { owner, response in
+                switch response {
+                case .success(let result):
+                    owner.post = result
+                    owner.commentUsers = result.commentNicknames
+                    
+                    commentGroup.leave()
+                case .failure(let error):
+                    print(error)
+                    owner.commentUsers.popLast()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
+        commentGroup.notify(queue: DispatchQueue.main) {
+            self.tableView.reloadData()
+            self.tableView.reloadRows(at: [IndexPath(row: self.comments.count-1, section: 0)], with: .none)
+        }
     }
     
     @objc func keyboardUp(notification:NSNotification) {
@@ -147,6 +226,7 @@ final class DetailViewController: BaseViewController {
                     self.userInputView.snp.updateConstraints { make in
                         make.height.equalTo(100)
                     }
+                    self.tableView.updateConstraints()
                 }
             )
         }
@@ -161,6 +241,7 @@ final class DetailViewController: BaseViewController {
             self.userInputView.snp.updateConstraints { make in
                 make.height.equalTo(50)
             }
+            self.tableView.updateConstraints()
         }
     }
     
@@ -217,13 +298,12 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentTableViewCell.identifier) as? CommentTableViewCell else { return UITableViewCell() }
             guard let post else { return UITableViewCell() }
             let index = indexPath.row - 1
-            let comment = post.comments
             
             cell.tag = index
             cell.delegate = self
             cell.postID = post._id
-//            cell.commentUser = commentUsers[index]
-            cell.comment = comment[index]
+            cell.commentUser = commentUsers[index]
+            cell.comment = self.comments[index]
             cell.configureCell()
             
             return cell
