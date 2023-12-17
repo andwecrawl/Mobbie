@@ -64,6 +64,10 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NetworkCheck.shared.completion = { vc in
+            self.present(vc, animated: true)
+        }
     }
     
     override func configureHierarchy() {

@@ -69,6 +69,10 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
         super.viewDidLoad()
         
         bind()
+        
+        NetworkCheck.shared.completion = { vc in
+            self.present(vc, animated: true)
+        }
         print("\(userInfo?.id), \(userInfo?.password), \(userInfo?.phoneNumber)")
     }
     
