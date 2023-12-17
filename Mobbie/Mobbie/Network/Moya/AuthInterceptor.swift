@@ -32,6 +32,7 @@ final class AuthInterceptor: RequestInterceptor, TransitionProtocol {
             DispatchQueue.main.async {
                 self.transitionTo(LoginViewController())
             }
+            return
         }
         
         let task = Observable.just(())
