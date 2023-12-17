@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 final class SettingViewController: BaseViewController, TransitionProtocol {
     
@@ -28,6 +29,8 @@ final class SettingViewController: BaseViewController, TransitionProtocol {
         view.delegate = self
         return view
     }()
+    
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +100,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             sendOneSideAlert(title: "아직 준비되지 않았어요!", message: "ㅠㅠ 열심히 만들어 볼게요")
         case 2:
-            sendInteractiveAlert(title: "Mobbie에서 로그아웃하시겠어요?", choices:
+            sendInteractiveAlert(title: UserDefaultsHelper.shared.nickname, message: "Mobbie에서 로그아웃하시겠어요?", choices:
             [
                 UIAlertAction(title: "취소", style: .default),
                 UIAlertAction(title: "로그아웃", style: .destructive, handler: { _ in
@@ -109,7 +112,21 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             [
                 UIAlertAction(title: "취소", style: .default),
                 UIAlertAction(title: "탈퇴하기", style: .destructive, handler: { _ in
-                    self.transitionTo(LoginViewController())
+                    MoyaAPIManager.shared.fetchInSignProgress(.withdraw, type: withdrawResponse.self)
+                        .subscribe(with: self) { owner, response in
+                            switch response {
+                            case .success(_):
+                                owner.sendInteractiveAlert(title: "Mobbie", message: "다음에 또 만나요!", choices: [
+                                    UIAlertAction(title: "확인", style: .default, handler: { _ in
+                                        owner.transitionTo(LoginViewController())
+                                    })
+                                ])
+                            case .failure(let error):
+                                owner.sendOneSideAlert(title: "오류가 발생했어요!", message: "다시 시도해 주세용...")
+                                print(error)
+                            }
+                        }
+                        .disposed(by: self.disposeBag)
                 })
             ])
         default:
