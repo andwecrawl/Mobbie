@@ -25,6 +25,12 @@ struct LoginResponse: Decodable {
     let refreshToken: String
 }
 
+struct withdrawResponse: Decodable {
+    let _id: String
+    let email: String
+    let nick: String
+}
+
 struct TokenResponse: Decodable {
     let token: String
 }
