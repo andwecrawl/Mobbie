@@ -85,7 +85,6 @@ final class IntroViewController: BaseViewController {
     
     func bind() {
         
-        print("bind")
         nextButton.rx.tap
             .bind { _ in
                 let vc = JoinViewController()

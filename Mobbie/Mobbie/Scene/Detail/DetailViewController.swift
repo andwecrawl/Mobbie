@@ -174,7 +174,6 @@ final class DetailViewController: BaseViewController {
         
         let commentGroup = DispatchGroup()
         
-        print(UserDefaultsHelper.shared.nickname)
         commentUsers.append(UserDefaultsHelper.shared.nickname)
         
         commentGroup.enter()
@@ -185,6 +184,7 @@ final class DetailViewController: BaseViewController {
                     commentGroup.leave()
                 case .failure(let error):
                     print(error)
+                    owner.commentUsers.popLast()
                 }
             }
             .disposed(by: disposeBag)

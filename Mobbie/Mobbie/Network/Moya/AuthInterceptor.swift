@@ -44,11 +44,8 @@ final class AuthInterceptor: RequestInterceptor, TransitionProtocol {
                 switch response {
                 case .success(let result):
                     // 토큰 재발급 성공 -> 갈아끼우기
-                    print(UserDefaultsHelper.shared.accessToken)
-                    print(result.token)
                     UserDefaultsHelper.shared.accessToken = result.token
                     
-                    print(UserDefaultsHelper.shared.accessToken)
                     completion(.retry)
                 case .failure(let error):
                     // 갱신 실패 -> 로그인 화면으로 전환

@@ -73,7 +73,6 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
         NetworkCheck.shared.completion = { vc in
             self.present(vc, animated: true)
         }
-        print("\(userInfo?.id), \(userInfo?.password), \(userInfo?.phoneNumber)")
     }
     
     override func configureHierarchy() {
