@@ -26,4 +26,44 @@ class Nickname {
         let MainNickname = [fruits, animals, things]
         return adjectives.randomElement()! + " " + MainNickname.randomElement()!.randomElement()!
     }
+    
+    
+    let lastExecutionKey = "lastExecution"
+    
+    func setNicknameRefresher() {
+        var timer: Timer?
+        let timerInterval: TimeInterval = 24 * 60 * 60 // 24시간
+        let lastExecutionTime = UserDefaults.standard.double(forKey: lastExecutionKey)
+        
+        let calendar = Calendar.current
+        let now = Date()
+        
+        // 현재 날짜의 정오(12시)로 설정
+        var components = calendar.dateComponents([.year, .month, .day], from: now)
+        components.hour = 12
+        components.minute = 0
+        components.second = 0
+        
+        guard let targetDate = calendar.date(from: components) else {
+            return
+        }
+        
+        // 현재와 목표 시간 간의 시간 간격 계산
+        let elapsedTime = now.timeIntervalSince(targetDate)
+        let initialDelay = elapsedTime >= 0 ? timerInterval : -elapsedTime
+        
+        // 타이머 설정
+        timer = Timer.scheduledTimer(withTimeInterval: initialDelay, repeats: false) { [weak self] _ in
+            self?.timerFired()
+        }
+        
+    }
+    
+    func timerFired() {
+        UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: lastExecutionKey)
+        
+        UserDefaultsHelper.shared.nickname = makeNewNickname()
+        
+        setNicknameRefresher() // 다음 타이머 시작
+    }
 }
