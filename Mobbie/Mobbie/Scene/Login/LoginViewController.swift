@@ -53,7 +53,7 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
         button.setTitle("새로운 계정 만들기", for: .normal)
         button.titleLabel?.font = Design.Font.preRegular.smallFont
         button.backgroundColor = .clear
-        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitleColor(UIColor.highlightOrange.withAlphaComponent(0.8), for: .normal)
         return button
     }()
     
