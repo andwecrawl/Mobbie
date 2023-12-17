@@ -21,7 +21,7 @@ enum MoyaNetwork {
     case writePost(model: PostModel)
     case fetchPost(nextCursor: String)
     case fetchSpecificPost(postID: String)
-    case modifiyPost(postID: String, model: PostModel)
+    case modifiyPost(postID: String, commentUsers: String)
     case deletePost(postID: String)
     
     // 댓글
@@ -90,11 +90,13 @@ extension MoyaNetwork: TargetType {
             
             
             // 포스트 작성
-        case .writePost(let model), .modifiyPost(_, let model):
+        case .writePost(let model):
             let productID = MultipartFormData(provider: .data(model.productID.data(using: .utf8)!), name: "product_id")
-            let content = MultipartFormData(provider: .data(model.content.data(using: .utf8)!), name: "content")
             
-            var multipartData: [MultipartFormData] = [productID, content]
+            let content = MultipartFormData(provider: .data(model.content.data(using: .utf8)!), name: "content")
+            let content1 = MultipartFormData(provider: .data(model.nickname.data(using: .utf8)!), name: "content1")
+            
+            var multipartData: [MultipartFormData] = [productID, content, content1]
             
             if let images = model.file {
                 var data: [MultipartFormData] = []
@@ -102,6 +104,11 @@ extension MoyaNetwork: TargetType {
                 multipartData.append(contentsOf: data)
             }
             
+            return .uploadMultipart(multipartData)
+            
+        case .modifiyPost(_, let commentUsers):
+            let content2 = MultipartFormData(provider: .data(commentUsers.data(using: .utf8)!), name: "content2")
+            var multipartData: [MultipartFormData] = [content2]
             return .uploadMultipart(multipartData)
             
         case .fetchPost(let cursor):
