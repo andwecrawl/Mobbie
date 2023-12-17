@@ -108,13 +108,12 @@ final class CommentTableViewCell: BaseTableViewCell {
         guard let comment else { return }
         
         let menuElement: [UIMenuElement] = [
-            UIAction(title: "수정하기", image: UIImage(systemName: "pencil.line"), handler: { _ in
-                // 수정하기 딜리게이트
-                self.delegate?.modifiy()
-            }),
             UIAction(title: "삭제하기", image: UIImage(systemName: "trash.fill"), handler: { _ in
                 // 삭제하기 딜리게이트
                 self.delegate?.delete(tag: self.tag, postID: postID, commentID: comment._id)
+            }),
+            UIAction(title: "공유하기", image: UIImage(systemName: "square.and.arrow.up"), handler: { _ in
+                // 공유하깅
             })
         ]
         settingButton.menu = UIMenu(children: menuElement)
