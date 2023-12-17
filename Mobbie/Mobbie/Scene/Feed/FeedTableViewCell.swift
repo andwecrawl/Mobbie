@@ -11,7 +11,6 @@ import RxSwift
 protocol FeedDelegate {
     func like(tag: Int, result: Bool)
     func delete(tag: Int, postID: String)
-    func modifiy()
     func moveComment(tag: Int)
 }
 
@@ -208,6 +207,12 @@ final class FeedTableViewCell: BaseTableViewCell {
     func configureCell() {
         guard let post else { return }
         
+        if type == .detail {
+            contentLabel.font = Design.Font.preRegular.getFonts(size: 18)
+        } else {
+            contentLabel.font = Design.Font.preRegular.largeFont
+        }
+        
         photoCollectionView.snp.updateConstraints { make in
             make.height.equalTo(220)
         }
@@ -232,7 +237,7 @@ final class FeedTableViewCell: BaseTableViewCell {
         }
         photoCollectionView.reloadData()
         
-        userLabel.text = post.creator.nick
+        userLabel.text = post.nickname ?? "앗! 닉네임 오류!"
         contentLabel.text = post.content ?? ""
         timeLabel.text = post.time.parsingToDate()
         
