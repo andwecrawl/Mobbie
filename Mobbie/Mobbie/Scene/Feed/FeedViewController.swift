@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxMoya
+import SideMenu
 import Toast
 
 final class FeedViewController: BaseViewController, TransitionProtocol {
@@ -17,6 +18,7 @@ final class FeedViewController: BaseViewController, TransitionProtocol {
         view.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
         view.rowHeight = UITableView.automaticDimension
         view.estimatedRowHeight = 150
+        view.scrollsToTop = true
         view.delegate = self
         view.dataSource = self
         view.prefetchDataSource = self
@@ -44,6 +46,10 @@ final class FeedViewController: BaseViewController, TransitionProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NetworkCheck.shared.completion = { vc in
+            self.present(vc, animated: true)
+        }
+        
         bind()
     }
     
@@ -58,7 +64,17 @@ final class FeedViewController: BaseViewController, TransitionProtocol {
             .font: Design.Font.chab.getFonts(size: 26),
             .foregroundColor: UIColor.highlightMint
         ]
+        
         title = "Mobbie"
+        
+        let settingButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .plain, target: self, action: #selector(settingButtonTapped))
+        navigationItem.rightBarButtonItem = settingButton
+    }
+    
+    @objc func settingButtonTapped() {
+        let menu = SideMenuNavigationController(rootViewController: SettingViewController())
+        menu.menuWidth = self.view.frame.width * 0.8
+        present(menu, animated: true)
     }
     
     override func configureHierarchy() {
@@ -142,16 +158,6 @@ final class FeedViewController: BaseViewController, TransitionProtocol {
             
     }
     
-    /// Show the loading empty state
-    private func showLoading() {
-        
-        var config = UIContentUnavailableConfiguration.loading()
-        config.text = "Fetching content. Please wait..."
-        config.textProperties.font = Design.Font.preSemiBold.largeFont
-        
-        self.contentUnavailableConfiguration = config
-    }
-    
     
 }
 
@@ -168,6 +174,7 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource, UITabl
         let row = indexPath.row
         let post = viewModel.posts[row]
         
+        cell.type = .feed
         cell.post = post
         cell.delegate = self
         cell.tag = row
