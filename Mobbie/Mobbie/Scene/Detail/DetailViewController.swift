@@ -52,6 +52,7 @@ final class DetailViewController: BaseViewController {
     
     let userInputView = CommentInputView()
     var post: Post?
+    var commentUsers: [String] = []
     
     let disposeBag = DisposeBag()
     
@@ -85,25 +86,28 @@ final class DetailViewController: BaseViewController {
         userInputView.sizeToFit()
         userInputView.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.height.lessThanOrEqualTo(150)
-            make.height.greaterThanOrEqualTo(50)
+            make.height.equalTo(50)
         }
-        userInputView.backgroundColor = .green
     }
     
     
     override func configureView() {
+        
+        guard let post else { return }
+        commentUsers = post.commentUser?.components(separatedBy: ", ") ?? []
+        
         let toolbar = UIToolbar()
 
-        let post = UIBarButtonItem(customView: addButton)
+        let postButton = UIBarButtonItem(customView: addButton)
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         let label = UIBarButtonItem(customView: limitLabel)
         label.isEnabled = true
         let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpaceButton, label, fixedSpace, post], animated: false)
+        toolbar.setItems([flexibleSpaceButton, label, fixedSpace, postButton], animated: false)
         toolbar.sizeToFit()
         userInputView.textView.inputAccessoryView = toolbar
+        userInputView.textView.delegate = self
     }
     
     @objc func addButtonTapped() {
@@ -137,6 +141,12 @@ final class DetailViewController: BaseViewController {
                 withDuration: 0.3
                 , animations: {
                     self.userInputView.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height + self.view.safeAreaInsets.bottom)
+                    self.userInputView.userLabel.snp.updateConstraints { make in
+                        make.height.equalTo(30)
+                    }
+                    self.userInputView.snp.updateConstraints { make in
+                        make.height.equalTo(100)
+                    }
                 }
             )
         }
@@ -144,9 +154,46 @@ final class DetailViewController: BaseViewController {
     
     @objc func keyboardDown() {
         self.userInputView.transform = .identity
+        if userInputView.textView.text.isEmpty {
+            self.userInputView.userLabel.snp.updateConstraints { make in
+                make.height.equalTo(0)
+            }
+            self.userInputView.snp.updateConstraints { make in
+                make.height.equalTo(50)
+            }
+        }
     }
     
 }
+
+
+extension DetailViewController: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        
+        let size = CGSize(width: view.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        
+        textView.constraints.forEach { (constraint) in
+            
+            if estimatedSize.height <= 150 {
+            }
+            else {
+                if constraint.firstAttribute == .height {
+                    constraint.constant = estimatedSize.height
+                }
+            }
+        }
+        
+        userInputView.placeholderLabel.isHidden = textView.text.isEmpty ? false : true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        userInputView.placeholderLabel.isHidden = textView.text.isEmpty ? false : true
+    }
+}
+
+
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -172,10 +219,12 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             let index = indexPath.row - 1
             let comment = post.comments
             
-            cell.tag = indexPath.row - 1
+            cell.tag = index
             cell.delegate = self
             cell.postID = post._id
+//            cell.commentUser = commentUsers[index]
             cell.comment = comment[index]
+            cell.configureCell()
             
             return cell
         }
@@ -215,10 +264,6 @@ extension DetailViewController: FeedDelegate {
                     .disposed(by: self.disposeBag)
             })
         ])
-        
-    }
-    
-    func modifiy() {
         
     }
     
