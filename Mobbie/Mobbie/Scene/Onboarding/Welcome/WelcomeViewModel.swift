@@ -21,10 +21,13 @@ final class WelcomeViewModel: ViewModel {
     
     struct Output {
         let tap: ControlEvent<Void>
+        var canEnter: BehaviorRelay<Bool>
     }
     
     func transform(input: Input) -> Output? {
         newInfo.onNext(input.userInfo)
+        
+        let canEnter = BehaviorRelay(value: false)
         
         input.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
@@ -39,6 +42,7 @@ final class WelcomeViewModel: ViewModel {
                     UserDefaultsHelper.shared.accessToken = result.token
                     UserDefaultsHelper.shared.refreshToken = result.refreshToken
                     UserDefaultsHelper.shared.userID = result._id
+                    canEnter.accept(true)
                 case .failure(let error):
                     "======= error message: \(error.localizedDescription)"
                 }
@@ -47,7 +51,8 @@ final class WelcomeViewModel: ViewModel {
         
         
         return Output(
-            tap: input.tap
+            tap: input.tap,
+            canEnter: canEnter
         )
     }
 }

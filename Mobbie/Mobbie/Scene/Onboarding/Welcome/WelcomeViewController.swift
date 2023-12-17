@@ -110,11 +110,14 @@ final class WelcomeViewController: BaseViewController, TransitionProtocol {
         )
         guard let output = viewModel.transform(input: input) else { return }
         
-        output.tap
+        Observable.combineLatest(output.tap, output.canEnter)
+            .filter { $0.1 == true }
             .bind(with: self, onNext: { owner, _ in
                 
                 UserDefaultsHelper.shared.nickname = Nickname.shared.makeNewNickname()
                 self.transitionTo(FeedViewController())
+                
+                Nickname.shared.setNicknameRefresher()
                 
             })
             .disposed(by: disposeBag)
