@@ -16,7 +16,7 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
     private let informationLabel = {
         let label = UILabel()
         label.text = "이메일을 입력해 주세요."
-        label.font = .systemFont(ofSize: 28, weight: .semibold)
+        label.font = Design.Font.preSemiBold.exlargeFont
         return label
     }()
     
@@ -32,7 +32,7 @@ final class JoinViewController: BaseViewController, TransitionProtocol {
     private let descriptionLabel = {
         let label = UILabel()
         label.text = "몇 자 이상 입력해 주세요!"
-        label.font = .systemFont(ofSize: 15, weight: .light)
+        label.font = Design.Font.preMedium.midFont
         label.textColor = .systemGray2
         return label
     }()

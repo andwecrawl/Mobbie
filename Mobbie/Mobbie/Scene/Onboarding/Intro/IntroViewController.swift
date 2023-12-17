@@ -15,7 +15,7 @@ final class IntroViewController: BaseViewController {
     private let informationLabel = {
         let label = UILabel()
         label.text = "새싹 동료들과의 소통,\n모두 Mobbie에서"
-        label.font = Design.Font.preBold.exlargeFont
+        label.font = Design.Font.preSemiBold.exlargeFont
         return label
     }()
     

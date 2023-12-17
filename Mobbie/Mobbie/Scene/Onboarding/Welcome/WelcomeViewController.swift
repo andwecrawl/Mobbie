@@ -21,14 +21,14 @@ final class WelcomeViewController: BaseViewController, TransitionProtocol {
     private let informationLabel = {
         let label = UILabel()
         label.text = "환영합니다!"
-        label.font = .systemFont(ofSize: 33, weight: .semibold)
+        label.font = Design.Font.preSemiBold.exlargeFont
         return label
     }()
     
     private let descriptionLabel = {
         let label = UILabel()
         label.text = "Mobbie와 함께\n즐거운 시간 보내세요!"
-        label.font = .systemFont(ofSize: 16, weight: .light)
+        label.font = Design.Font.preMedium.midFont
         label.textColor = .systemGray2
         return label
     }()
