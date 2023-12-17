@@ -12,7 +12,7 @@ struct PostModel: Encodable {
     var file: [Data]? = nil
     let productID: String = "MobbieFeed"
     let nickname: String = UserDefaultsHelper.shared.nickname
-    let commentUsers: String = ""
+    var commentUsers: String = ""
     // 이외에도 content1/2/3/4/5
     
     enum CodingKeys: String, CodingKey {
