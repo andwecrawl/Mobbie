@@ -9,7 +9,6 @@ import UIKit
 
 protocol CommentDelegate {
     func delete(tag: Int, postID: String, commentID: String)
-    func modifiy()
 }
 
 final class CommentTableViewCell: BaseTableViewCell {
@@ -44,6 +43,7 @@ final class CommentTableViewCell: BaseTableViewCell {
     }()
     
     var postID: String?
+    var commentUser: String?
     var comment: Comment?
     
     var delegate: CommentDelegate?
@@ -87,12 +87,13 @@ final class CommentTableViewCell: BaseTableViewCell {
         contentLabel.snp.makeConstraints { make in
             make.top.equalTo(userLabel.snp.bottom).offset(2)
             make.horizontalEdges.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().inset(12)
+            make.bottom.equalToSuperview().inset(22)
         }
         
     }
     
     override func configureView() {
+        userLabel.text = "웅냐?"
         timeLabel.text = "20분 전"
         contentLabel.text = "내용이에용"
         contentLabel.setLineSpacing(lineSpacing: 4)
@@ -120,6 +121,14 @@ final class CommentTableViewCell: BaseTableViewCell {
         settingButton.showsMenuAsPrimaryAction = true
     }
     
-    
+    func configureCell() {
+        
+        guard let commentUser else { return }
+        guard let comment else { return }
+        
+        userLabel.text = commentUser
+        timeLabel.text = comment.time.parsingToDate()
+        contentLabel.text = comment.content
+    }
     
 }
