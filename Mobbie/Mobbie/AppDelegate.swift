@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = UIColor.highlightOrange
         UIButton.appearance().tintColor = UIColor.highlightOrange
 
+        NetworkCheck.shared.startMonitoring()
         return true
     }
 
