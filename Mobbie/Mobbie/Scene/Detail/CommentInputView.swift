@@ -91,6 +91,7 @@ final class CommentInputView: UIView {
     }
     
     func configureView() {
+        self.backgroundColor = .background
         userLabel.text = UserDefaultsHelper.shared.nickname
         userLabel.isHidden = true
     }
