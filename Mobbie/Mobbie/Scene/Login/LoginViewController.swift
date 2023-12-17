@@ -164,7 +164,3 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
         
     }
 }
-
-#Preview("LoginViewController") {
-    LoginViewController()
-}
