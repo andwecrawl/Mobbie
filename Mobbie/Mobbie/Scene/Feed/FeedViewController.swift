@@ -69,6 +69,8 @@ final class FeedViewController: BaseViewController, TransitionProtocol {
         
         let settingButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .plain, target: self, action: #selector(settingButtonTapped))
         navigationItem.rightBarButtonItem = settingButton
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     @objc func settingButtonTapped() {
