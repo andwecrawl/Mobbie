@@ -1,4 +1,6 @@
 # Mobbie
+![mobbie 001 001](https://github.com/andwecrawl/OMOBO/assets/120160532/6c27cdce-8d01-43ad-9d6f-26079ce6f52a)
+
 <br>
 
 ## 앱 소개
