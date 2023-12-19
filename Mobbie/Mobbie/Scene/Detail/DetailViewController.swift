@@ -172,44 +172,32 @@ final class DetailViewController: BaseViewController {
         guard let post else { return }
         guard let text = userInputView.textView.text else { return }
         
-        let commentGroup = DispatchGroup()
-        
-        commentUsers.append(UserDefaultsHelper.shared.nickname)
-        
-        commentGroup.enter()
         MoyaAPIManager.shared.fetchInSignProgress(.writeComment(postID: post._id, content: text), type: Comment.self)
             .bind(with: self) { owner, result in
                 switch result {
-                case .success(let comment):
-                    commentGroup.leave()
-                case .failure(let error):
-                    print(error)
-                    owner.commentUsers.popLast()
-                }
-            }
-            .disposed(by: disposeBag)
-        
-        commentGroup.enter()
-        MoyaAPIManager.shared.fetchInSignProgress(.modifiyPost(postID: post._id, commentUsers: commentUsers.joined(separator: ", ")), type: Post.self)
-            .subscribe(with: self) { owner, response in
-                switch response {
-                case .success(let result):
-                    owner.post = result
-                    owner.commentUsers = result.commentNicknames
+                case .success(_):
                     
-                    commentGroup.leave()
+                    MoyaAPIManager.shared.fetchInSignProgress(.modifiyPost(postID: post._id, commentUsers: owner.commentUsers.joined(separator: ", ")), type: Post.self)
+                        .subscribe(with: self) { owner, response in
+                            switch response {
+                            case .success(let result):
+                                owner.post = result
+                                owner.commentUsers = result.commentNicknames
+                                
+                                self.tableView.reloadData()
+                            case .failure(let error):
+                                print(error)
+                                _ = owner.commentUsers.popLast()
+                            }
+                        }
+                        .disposed(by: owner.disposeBag)
+                    
                 case .failure(let error):
                     print(error)
-                    owner.commentUsers.popLast()
+                    _ = owner.commentUsers.popLast()
                 }
             }
             .disposed(by: disposeBag)
-        
-        
-        commentGroup.notify(queue: DispatchQueue.main) {
-            self.tableView.reloadData()
-            self.tableView.reloadRows(at: [IndexPath(row: self.comments.count-1, section: 0)], with: .none)
-        }
     }
     
     @objc func keyboardUp(notification:NSNotification) {
