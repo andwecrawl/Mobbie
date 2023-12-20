@@ -31,6 +31,8 @@ enum MoyaNetwork {
     
     // 좋아요
     case liked(postID: String)
+    
+    case profile
 }
 
 extension MoyaNetwork: TargetType {
@@ -62,6 +64,8 @@ extension MoyaNetwork: TargetType {
             return "post/\(postID)/comment/\(commentID)"
         case .liked(postID: let postID):
             return "post/like/\(postID)"
+        case .profile:
+            return "profile/me"
         }
     }
     
@@ -69,7 +73,7 @@ extension MoyaNetwork: TargetType {
         switch self {
         case .signUp, .login, .emailValidation, .writePost, .writeComment, .liked:
             return .post
-        case .withdraw, .refreshAccessToken, .fetchPost, .fetchSpecificPost:
+        case .withdraw, .refreshAccessToken, .fetchPost, .fetchSpecificPost, .profile:
             return .get
         case .modifiyPost:
             return .put
@@ -155,7 +159,7 @@ extension MoyaNetwork: TargetType {
                 "Content-Type": "multipart/form-data",
                 "SesacKey": APIKeyURL.APIKey.rawValue
             ]
-        case .withdraw, .fetchPost, .fetchSpecificPost, .deletePost, .deleteComment, .liked:
+        case .withdraw, .fetchPost, .fetchSpecificPost, .deletePost, .deleteComment, .liked, .profile:
             [
                 "Authorization": UserDefaultsHelper.shared.accessToken,
                 "SesacKey": APIKeyURL.APIKey.rawValue
