@@ -97,8 +97,6 @@ final class CommentTableViewCell: BaseTableViewCell {
         timeLabel.text = "20분 전"
         contentLabel.text = "내용이에용"
         contentLabel.setLineSpacing(lineSpacing: 4)
-        
-        configureSettingButton()
     }
     
     
@@ -118,6 +116,8 @@ final class CommentTableViewCell: BaseTableViewCell {
         ]
         settingButton.menu = UIMenu(children: menuElement)
         settingButton.showsMenuAsPrimaryAction = true
+        
+        settingButton.isHidden = comment.creator._id == UserDefaultsHelper.shared.userID ? false : true
     }
     
     func configureCell() {
@@ -128,6 +128,7 @@ final class CommentTableViewCell: BaseTableViewCell {
         userLabel.text = commentUser
         timeLabel.text = comment.time.parsingToDate()
         contentLabel.text = comment.content
+        configureSettingButton()
     }
     
 }
