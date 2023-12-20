@@ -115,9 +115,11 @@ final class WelcomeViewController: BaseViewController, TransitionProtocol {
             .bind(with: self, onNext: { owner, _ in
                 
                 UserDefaultsHelper.shared.nickname = Nickname.shared.makeNewNickname()
-                self.transitionTo(FeedViewController())
-                
                 Nickname.shared.setNicknameRefresher()
+                
+                let vc = FeedViewController()
+                vc.feedType = .mainFeed
+                self.transitionTo(vc)
                 
             })
             .disposed(by: disposeBag)

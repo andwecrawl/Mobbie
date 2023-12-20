@@ -13,6 +13,7 @@ final class FeedViewModel: ViewModel {
     
     var posts: [Post] = []
     var cursor = PublishSubject<String>()
+    var feedType: FeedType?
     var disposeBag = DisposeBag()
     
     

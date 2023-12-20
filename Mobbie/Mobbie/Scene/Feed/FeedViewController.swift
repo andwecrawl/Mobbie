@@ -11,6 +11,12 @@ import RxMoya
 import SideMenu
 import Toast
 
+enum FeedType {
+    case mainFeed
+    case profileFeed
+    case likedFeed
+}
+
 final class FeedViewController: BaseViewController, TransitionProtocol {
     
     private lazy var tableView = {
@@ -37,6 +43,8 @@ final class FeedViewController: BaseViewController, TransitionProtocol {
     
     
     var cursor: String = ""
+    
+    var feedType: FeedType?
     
     let viewModel = FeedViewModel()
     
@@ -126,7 +134,7 @@ final class FeedViewController: BaseViewController, TransitionProtocol {
     
     
     func bind() {
-        
+        viewModel.feedType = feedType
         let input = FeedViewModel.Input(
             addButtonTapped: writeButton.rx.tap
         )

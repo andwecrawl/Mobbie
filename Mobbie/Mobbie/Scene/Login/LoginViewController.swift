@@ -166,7 +166,9 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
                 owner.activityIndicator.stopAnimating()
                 owner.activityIndicator.isHidden = true
                 if login {
-                    self.transitionTo(FeedViewController())
+                    let vc = FeedViewController()
+                    vc.feedType = .mainFeed
+                    self.transitionTo(vc)
                     
                 } else {
                     self.sendOneSideAlert(title: "계정을 확인해 주세요!", message: "아직 가입하지 않았거나 비밀번호가 맞지 않아요.")
