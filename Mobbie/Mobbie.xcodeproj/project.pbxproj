@@ -19,6 +19,7 @@
 		D12D88F82B335988007A05EA /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88F72B335988007A05EA /* UserResponse.swift */; };
 		D12D88FA2B33599F007A05EA /* CommentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88F92B33599F007A05EA /* CommentResponse.swift */; };
 		D12D88FC2B335A67007A05EA /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88FB2B335A67007A05EA /* NicknameView.swift */; };
+		D12D88FF2B335C4B007A05EA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88FE2B335C4B007A05EA /* ProfileViewController.swift */; };
 		D1674CCD2B0546F9000697C2 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CCC2B0546F9000697C2 /* String+.swift */; };
 		D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CD62B060887000697C2 /* MoyaLSLPNetwork.swift */; };
 		D1674CDC2B063FD2000697C2 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CDB2B063FD2000697C2 /* LoginModel.swift */; };
@@ -99,6 +100,7 @@
 		D12D88F72B335988007A05EA /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
 		D12D88F92B33599F007A05EA /* CommentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentResponse.swift; sourceTree = "<group>"; };
 		D12D88FB2B335A67007A05EA /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
+		D12D88FE2B335C4B007A05EA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D1674CCC2B0546F9000697C2 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		D1674CD62B060887000697C2 /* MoyaLSLPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLSLPNetwork.swift; sourceTree = "<group>"; };
 		D1674CDB2B063FD2000697C2 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -200,6 +202,14 @@
 			path = NetworkCheck;
 			sourceTree = "<group>";
 		};
+		D12D88FD2B335C36007A05EA /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				D12D88FE2B335C4B007A05EA /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		D1674CD52B06084E000697C2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +308,7 @@
 				D12B91BF2AFE5A55006451FE /* Feed */,
 				D1D332FA2B1E3BF000852274 /* Setting */,
 				D1D333012B1F322B00852274 /* AddPost */,
+				D12D88FD2B335C36007A05EA /* Profile */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -588,6 +599,7 @@
 				D1F11BA72B2C8BA00001DC4D /* CommentInputView.swift in Sources */,
 				D18531272B14FF5200EACDAA /* WelcomeViewModel.swift in Sources */,
 				D1CC23612AFCEB6C00684175 /* IntroViewController.swift in Sources */,
+				D12D88FF2B335C4B007A05EA /* ProfileViewController.swift in Sources */,
 				D1F11B9B2B2AE71D0001DC4D /* CommentTableViewCell.swift in Sources */,
 				D1674D4C2B0B7978000697C2 /* ViewModelProtocol.swift in Sources */,
 				D1D333052B1F3F8B00852274 /* FeedViewModel.swift in Sources */,
