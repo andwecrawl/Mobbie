@@ -13,7 +13,7 @@ class SettingList {
     private init() { }
     
     var settingList: [String] = [
-    "프로필 보기",
+    "내 글 모아보기",
     "좋아한 글 모아보기",
     "로그아웃",
     "회원 탈퇴"
