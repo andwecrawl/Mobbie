@@ -42,24 +42,8 @@ struct Post: Decodable {
     }
 }
 
-struct Comment: Decodable {
-    var _id: String
-    var creator: User
-    var time: String
-    var content: String
-}
-
-struct User: Decodable {
-    var _id: String
-    var nick: String
-}
-
 struct DeletePostResponse: Decodable {
     var _id: String
-}
-
-struct DeleteCommentResponse: Decodable {
-    var postID: String
 }
 
 struct likedResponse: Decodable {
