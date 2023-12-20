@@ -317,7 +317,11 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             cell.tag = index
             cell.delegate = self
             cell.postID = post._id
-            cell.commentUser = commentUsers[index]
+            if index >= commentUsers.count {
+                cell.commentUser = "앗! 닉네임 오류예요!"
+            } else {
+                cell.commentUser = commentUsers[index]
+            }
             cell.comment = self.comments[index]
             cell.configureCell()
             
