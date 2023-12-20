@@ -11,8 +11,3 @@ struct User: Decodable {
     var _id: String
     var nick: String
 }
-
-struct Profile: Decodable {
-    var posts: [String]
-    var _id: String
-}
