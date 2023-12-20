@@ -15,6 +15,7 @@
 		D12D88BA2B2F2601007A05EA /* SettingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88B92B2F2601007A05EA /* SettingList.swift */; };
 		D12D88F22B32FFA4007A05EA /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88F12B32FFA4007A05EA /* UIView+.swift */; };
 		D12D88F42B330567007A05EA /* ShareActvityItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88F32B330567007A05EA /* ShareActvityItems.swift */; };
+		D12D88F62B330858007A05EA /* KingfisherHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88F52B330858007A05EA /* KingfisherHelper.swift */; };
 		D1674CCD2B0546F9000697C2 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CCC2B0546F9000697C2 /* String+.swift */; };
 		D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CD62B060887000697C2 /* MoyaLSLPNetwork.swift */; };
 		D1674CDC2B063FD2000697C2 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CDB2B063FD2000697C2 /* LoginModel.swift */; };
@@ -91,6 +92,7 @@
 		D12D88B92B2F2601007A05EA /* SettingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingList.swift; sourceTree = "<group>"; };
 		D12D88F12B32FFA4007A05EA /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		D12D88F32B330567007A05EA /* ShareActvityItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareActvityItems.swift; sourceTree = "<group>"; };
+		D12D88F52B330858007A05EA /* KingfisherHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherHelper.swift; sourceTree = "<group>"; };
 		D1674CCC2B0546F9000697C2 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		D1674CD62B060887000697C2 /* MoyaLSLPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLSLPNetwork.swift; sourceTree = "<group>"; };
 		D1674CDB2B063FD2000697C2 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				D18530D92B110AB600EACDAA /* Moya */,
 				D12D88B62B2F23D6007A05EA /* NetworkCheck */,
 				D1674CE32B064551000697C2 /* APIKey+URL.swift */,
+				D12D88F52B330858007A05EA /* KingfisherHelper.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 				D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */,
 				D12D88B52B2F2324007A05EA /* NetworkCheck.swift in Sources */,
 				D1D332FC2B1E3BFE00852274 /* SettingViewController.swift in Sources */,
+				D12D88F62B330858007A05EA /* KingfisherHelper.swift in Sources */,
 				D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */,
 				D1850D2E2B287D5700E01516 /* AddButtonCollectionViewCell.swift in Sources */,
 				D1D332B02B19A3F300852274 /* SettingOutlet.swift in Sources */,
