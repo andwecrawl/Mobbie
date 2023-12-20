@@ -85,6 +85,8 @@
 		D1F11B9B2B2AE71D0001DC4D /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11B9A2B2AE71D0001DC4D /* CommentTableViewCell.swift */; };
 		D1F11BA72B2C8BA00001DC4D /* CommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11BA62B2C8BA00001DC4D /* CommentInputView.swift */; };
 		D1F11BA92B2CAAE00001DC4D /* NicknameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11BA82B2CAAE00001DC4D /* NicknameData.swift */; };
+		D1FD2DA82B33618E004B8CFC /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD2DA72B33618E004B8CFC /* UnderlineSegmentedControl.swift */; };
+		D1FD2DAA2B336336004B8CFC /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD2DA92B336336004B8CFC /* MediaViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -159,6 +161,8 @@
 		D1F11B9A2B2AE71D0001DC4D /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		D1F11BA62B2C8BA00001DC4D /* CommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInputView.swift; sourceTree = "<group>"; };
 		D1F11BA82B2CAAE00001DC4D /* NicknameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameData.swift; sourceTree = "<group>"; };
+		D1FD2DA72B33618E004B8CFC /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
+		D1FD2DA92B336336004B8CFC /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				D12D88FE2B335C4B007A05EA /* ProfileViewController.swift */,
+				D1FD2DA92B336336004B8CFC /* MediaViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -352,6 +357,7 @@
 				D1D3321A2B175A9E00852274 /* BaseCollectionViewCell.swift */,
 				D1D332D52B1C9C9000852274 /* Protocol */,
 				D1D332AF2B19A3F300852274 /* SettingOutlet.swift */,
+				D1FD2DA72B33618E004B8CFC /* UnderlineSegmentedControl.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -575,6 +581,7 @@
 				D1CC23512AFCEB1000684175 /* LoginViewController.swift in Sources */,
 				D1674CEF2B078C9D000697C2 /* LoginResponse.swift in Sources */,
 				D1D332192B175A7F00852274 /* FeedTableViewCell.swift in Sources */,
+				D1FD2DA82B33618E004B8CFC /* UnderlineSegmentedControl.swift in Sources */,
 				D18531222B14F09E00EACDAA /* WelcomeViewController.swift in Sources */,
 				D1674CE42B064551000697C2 /* APIKey+URL.swift in Sources */,
 				D1D332F42B1CA87700852274 /* StackView+.swift in Sources */,
@@ -587,6 +594,7 @@
 				D12D88FC2B335A67007A05EA /* NicknameView.swift in Sources */,
 				D12D88F62B330858007A05EA /* KingfisherHelper.swift in Sources */,
 				D1CC234F2AFCEB1000684175 /* SceneDelegate.swift in Sources */,
+				D1FD2DAA2B336336004B8CFC /* MediaViewController.swift in Sources */,
 				D1850D2E2B287D5700E01516 /* AddButtonCollectionViewCell.swift in Sources */,
 				D1D332B02B19A3F300852274 /* SettingOutlet.swift in Sources */,
 				D1D332D12B1C963A00852274 /* BaseTableViewCell.swift in Sources */,
