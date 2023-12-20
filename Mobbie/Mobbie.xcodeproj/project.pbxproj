@@ -13,6 +13,8 @@
 		D12D88B52B2F2324007A05EA /* NetworkCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88B42B2F2324007A05EA /* NetworkCheck.swift */; };
 		D12D88B82B2F23E8007A05EA /* NetworkAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88B72B2F23E8007A05EA /* NetworkAlertViewController.swift */; };
 		D12D88BA2B2F2601007A05EA /* SettingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88B92B2F2601007A05EA /* SettingList.swift */; };
+		D12D88F22B32FFA4007A05EA /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88F12B32FFA4007A05EA /* UIView+.swift */; };
+		D12D88F42B330567007A05EA /* ShareActvityItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D88F32B330567007A05EA /* ShareActvityItems.swift */; };
 		D1674CCD2B0546F9000697C2 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CCC2B0546F9000697C2 /* String+.swift */; };
 		D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CD62B060887000697C2 /* MoyaLSLPNetwork.swift */; };
 		D1674CDC2B063FD2000697C2 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1674CDB2B063FD2000697C2 /* LoginModel.swift */; };
@@ -87,6 +89,8 @@
 		D12D88B42B2F2324007A05EA /* NetworkCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCheck.swift; sourceTree = "<group>"; };
 		D12D88B72B2F23E8007A05EA /* NetworkAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAlertViewController.swift; sourceTree = "<group>"; };
 		D12D88B92B2F2601007A05EA /* SettingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingList.swift; sourceTree = "<group>"; };
+		D12D88F12B32FFA4007A05EA /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		D12D88F32B330567007A05EA /* ShareActvityItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareActvityItems.swift; sourceTree = "<group>"; };
 		D1674CCC2B0546F9000697C2 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		D1674CD62B060887000697C2 /* MoyaLSLPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLSLPNetwork.swift; sourceTree = "<group>"; };
 		D1674CDB2B063FD2000697C2 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -359,6 +363,7 @@
 				D1CC23782AFCFF8E00684175 /* UserDefaultHelper.swift */,
 				D1D333062B20BDC900852274 /* TimeHandler.swift */,
 				D1CC237D2AFCFFAB00684175 /* Extension */,
+				D12D88F32B330567007A05EA /* ShareActvityItems.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -369,6 +374,7 @@
 				D1CC23722AFCF93700684175 /* UILabel+.swift */,
 				D1674CCC2B0546F9000697C2 /* String+.swift */,
 				D1D332F32B1CA87700852274 /* StackView+.swift */,
+				D12D88F12B32FFA4007A05EA /* UIView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -531,6 +537,7 @@
 				D1D3321D2B17863D00852274 /* AuthInterceptor.swift in Sources */,
 				D1674CE62B064842000697C2 /* MoyaAPIManager.swift in Sources */,
 				D12D88BA2B2F2601007A05EA /* SettingList.swift in Sources */,
+				D12D88F42B330567007A05EA /* ShareActvityItems.swift in Sources */,
 				D1D332CF2B1C725200852274 /* PostResponse.swift in Sources */,
 				D1D332CD2B1C6A9000852274 /* PostModel.swift in Sources */,
 				D1D333032B1F323E00852274 /* AddPostViewController.swift in Sources */,
@@ -548,6 +555,7 @@
 				D1D332F42B1CA87700852274 /* StackView+.swift in Sources */,
 				D1CC234D2AFCEB1000684175 /* AppDelegate.swift in Sources */,
 				D1B2C5CC2B15C8BF0065B51F /* Design.swift in Sources */,
+				D12D88F22B32FFA4007A05EA /* UIView+.swift in Sources */,
 				D1674CD72B060887000697C2 /* MoyaLSLPNetwork.swift in Sources */,
 				D12D88B52B2F2324007A05EA /* NetworkCheck.swift in Sources */,
 				D1D332FC2B1E3BFE00852274 /* SettingViewController.swift in Sources */,
