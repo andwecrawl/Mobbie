@@ -29,6 +29,7 @@ final class FeedViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output? {
+        let feedType = feedType ?? .mainFeed
         
         let getData = PublishSubject<Bool>()
         let nextCursor = BehaviorSubject(value: "")
@@ -51,7 +52,14 @@ final class FeedViewModel: ViewModel {
         
         cursor
             .flatMap { cursor in
-                MoyaAPIManager.shared.fetchInSignProgress(.fetchPost(nextCursor: cursor), type: PostResponse.self)
+                switch feedType {
+                case .mainFeed:
+                    return MoyaAPIManager.shared.fetchInSignProgress(.fetchPost(nextCursor: cursor), type: PostResponse.self)
+                case .profileFeed:
+                    return MoyaAPIManager.shared.fetchInSignProgress(.fetchMyPosts(userID: UserDefaultsHelper.shared.userID), type: PostResponse.self)
+                case .likedFeed:
+                    return MoyaAPIManager.shared.fetchInSignProgress(.fetchPostUserLiked, type: PostResponse.self)
+                }
             }
             .bind(with: self) { owner, response in
                 switch response {
