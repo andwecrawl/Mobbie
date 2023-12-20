@@ -303,7 +303,6 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier) as? FeedTableViewCell else { return UITableViewCell() }
             
             cell.tag = 0
-            cell.type = .detail
             cell.post = post
             cell.delegate = self
             cell.configureCell()
@@ -425,5 +424,7 @@ extension DetailViewController: CommentDelegate {
         ])
     }
     
-    
+    func alert(title: String) {
+        self.sendOneSideAlert(title: title, message: "다시 시도해 주세요!")
+    }
 }

@@ -176,7 +176,6 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource, UITabl
         let row = indexPath.row
         let post = viewModel.posts[row]
         
-        cell.type = .feed
         cell.post = post
         cell.delegate = self
         cell.tag = row
@@ -247,5 +246,9 @@ extension FeedViewController: FeedDelegate {
         print("share?")
         activeVC.popoverPresentationController?.sourceView = self.view
         self.present(activeVC, animated: true)
+    }
+    
+    func alert(title: String) {
+        self.sendOneSideAlert(title: title, message: "다시 시도해 주세요!")
     }
 }

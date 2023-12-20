@@ -13,24 +13,10 @@ protocol FeedDelegate {
     func delete(tag: Int, postID: String)
     func moveComment(tag: Int)
     func share(activeVC: UIActivityViewController)
+    func alert(title: String)
 }
 
-//extension FeedDelegate where Self: BaseViewController {
-//    
-//    func share(activeVC: UIActivityViewController) {
-//        print("share?")
-//        activeVC.popoverPresentationController?.sourceView = self.view
-//        self.present(activeVC, animated: true)
-//    }
-//}
-
 final class FeedTableViewCell: BaseTableViewCell {
-    
-    enum FeedTableViewCellType {
-        case feed
-        case detail
-    }
-
     
     private let userLabel = {
         let label = UILabel()
@@ -140,8 +126,6 @@ final class FeedTableViewCell: BaseTableViewCell {
     var post: Post?
     var delegate: FeedDelegate?
     
-    var type: FeedTableViewCellType?
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         userLabel.text = ""
@@ -151,7 +135,7 @@ final class FeedTableViewCell: BaseTableViewCell {
         settingButton.isHidden = false
     }
     
-    
+
     override func configureHierarchy() {
         
         buttonStackView.axis = .horizontal
@@ -174,7 +158,6 @@ final class FeedTableViewCell: BaseTableViewCell {
         userLabel.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaInsets).inset(16)
             make.leading.equalToSuperview().inset(20)
-            make.height.equalTo(30)
         }
         
         timeLabel.snp.makeConstraints { make in
@@ -187,12 +170,12 @@ final class FeedTableViewCell: BaseTableViewCell {
             make.trailing.equalToSuperview().inset(12)
         }
         contentLabel.snp.makeConstraints { make in
-            make.top.equalTo(userLabel.snp.bottom).offset(2)
+            make.top.equalTo(userLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalToSuperview().inset(20)
         }
         
         photoCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(contentLabel.snp.bottom).offset(4)
+            make.top.equalTo(contentLabel.snp.bottom).offset(6)
             make.horizontalEdges.equalTo(contentLabel)
             make.height.equalTo(180)
             
@@ -217,7 +200,6 @@ final class FeedTableViewCell: BaseTableViewCell {
     }
     
     override func configureView() {
-        guard let type else { return }
         timeLabel.text = "20분 전"
         contentLabel.text = "내용이에용"
         contentLabel.setLineSpacing(lineSpacing: 4)
@@ -326,12 +308,23 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     @objc func shareButtonTapped() {
         guard let post else { return }
-        contentView.backgroundColor = .background
-        let image = contentView.asImage()
+        var thumb = UIImage()
+        if let imageURL = post.image.first {
+            KingfisherHelper.shared.fetchImage(imageURL: imageURL) { image, size in
+                thumb = image
+            } errorHandler: { error in
+                print(error)
+                self.delegate?.alert(title: error.localizedDescription)
+                return
+            }
+        } else {
+            contentView.backgroundColor = .background
+            thumb = contentView.asImage()
+        }
         let title = "\(post.nickname ?? "")님의 게시글 공유하기"
         let content = post.content ?? ""
         
-        let items = [SharePinNumberActivityItemSource(title: title, content: content, image: image)]
+        let items = [SharePinNumberActivityItemSource(title: title, content: content, image: thumb)]
         let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
         delegate?.share(activeVC: activityVC)
     }
