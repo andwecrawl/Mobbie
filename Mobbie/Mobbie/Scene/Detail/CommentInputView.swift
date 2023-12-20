@@ -23,7 +23,7 @@ final class CommentInputView: UIView {
     let textView = {
         let view = UITextView()
         view.backgroundColor = .clear
-        view.font = Design.Font.preRegular.getFonts(size: 15)
+        view.font = Design.Font.preRegular.getFonts(size: 13)
         view.textColor = .white
         view.contentInset = UIEdgeInsets(top: 1, left: 2, bottom: 2, right: 2)
         return view
@@ -33,7 +33,7 @@ final class CommentInputView: UIView {
         let label = UILabel()
         label.text = "답글 게시하기"
         label.textColor = .lightGray
-        label.font = Design.Font.preRegular.getFonts(size: 15)
+        label.font = Design.Font.preRegular.getFonts(size: 13)
         return label
     }()
     

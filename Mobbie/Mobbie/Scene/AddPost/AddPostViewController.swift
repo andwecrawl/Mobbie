@@ -247,7 +247,7 @@ final class AddPostViewController: BaseViewController, TransitionProtocol {
         let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonTapped))
         cancelButton.setTitleTextAttributes([
             .foregroundColor: UIColor.white,
-            .font: Design.Font.preMedium.getFonts(size: 17)
+            .font: Design.Font.preMedium.midFont
         ], for: .normal)
         
         let addButton = UIBarButtonItem(customView: self.addButton)

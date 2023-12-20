@@ -31,7 +31,7 @@ final class DetailViewController: BaseViewController {
         config.title = "게시하기"
         var container = AttributeContainer()
         container.foregroundColor = UIColor.white
-        container.font = Design.Font.preMedium.midFont
+        container.font = Design.Font.preMedium.smallFont
         config.attributedTitle = AttributedString("게시하기", attributes: container)
         view.configuration = config
         return view
@@ -39,14 +39,22 @@ final class DetailViewController: BaseViewController {
     
     private let limitLabel = {
         let label = UILabel()
-        label.font = Design.Font.preSemiBold.midFont
+        label.font = Design.Font.preSemiBold.smallFont
         label.textColor = UIColor.highlightMint
-        label.text = "23123123/200"
+        label.text = "0/200"
         label.snp.makeConstraints { make in
-            make.width.equalTo(66)
+            make.width.equalTo(80)
         }
         label.textAlignment = .center
         return label
+    }()
+    
+    private let spacer = {
+        let view = UIView()
+        view.snp.makeConstraints { make in
+            make.width.equalTo(6)
+        }
+        return view
     }()
     
     
@@ -80,6 +88,11 @@ final class DetailViewController: BaseViewController {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func setNavigationBar() {
+        super.setNavigationBar()
+        navigationController?.navigationItem.backBarButtonItem?.title = ""
     }
     
     override func configureHierarchy() {
@@ -158,10 +171,10 @@ final class DetailViewController: BaseViewController {
         let postButton = UIBarButtonItem(customView: addButton)
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         let label = UIBarButtonItem(customView: limitLabel)
+        let spacer = UIBarButtonItem(customView: spacer)
         label.isEnabled = true
         let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpaceButton, label, fixedSpace, postButton], animated: false)
+        toolbar.setItems([flexibleSpaceButton, label, spacer, postButton], animated: false)
         toolbar.sizeToFit()
         
         userInputView.textView.inputAccessoryView = toolbar
@@ -177,6 +190,8 @@ final class DetailViewController: BaseViewController {
                 switch result {
                 case .success(_):
                     
+                    print(UserDefaultsHelper.shared.nickname)
+                    owner.commentUsers.append(UserDefaultsHelper.shared.nickname)
                     MoyaAPIManager.shared.fetchInSignProgress(.modifiyPost(postID: post._id, commentUsers: owner.commentUsers.joined(separator: ", ")), type: Post.self)
                         .subscribe(with: self) { owner, response in
                             switch response {
@@ -184,7 +199,13 @@ final class DetailViewController: BaseViewController {
                                 owner.post = result
                                 owner.commentUsers = result.commentNicknames
                                 
-                                self.tableView.reloadData()
+                                DispatchQueue.main.async {
+                                    
+                                    self.tableView.reloadData()
+                                    self.userInputView.textView.text = ""
+                                    self.userInputView.textView.resignFirstResponder()
+                                    
+                                }
                             case .failure(let error):
                                 print(error)
                                 _ = owner.commentUsers.popLast()
@@ -255,6 +276,12 @@ extension DetailViewController: UITextViewDelegate {
         }
         
         userInputView.placeholderLabel.isHidden = textView.text.isEmpty ? false : true
+        
+        let count = userInputView.textView.text.count
+        limitLabel.text = "\(count) / 150"
+        limitLabel.textColor = count > 150 ? .systemRed : .highlightMint
+        limitLabel.textAlignment = .right
+        addButton.isEnabled = count > 150 || count == 0 ? false : true
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -298,10 +325,15 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
+    
 }
 
 
 extension DetailViewController: FeedDelegate {
+    
     func like(tag: Int, result: Bool) {
         if result {
             post?.likes.append(UserDefaultsHelper.shared.userID)
@@ -327,6 +359,9 @@ extension DetailViewController: FeedDelegate {
                             }
                         case .failure(let error):
                             print(error)
+                            DispatchQueue.main.async {
+                                owner.sendOneSideAlert(title: "오류가 발생했어요.", message: "다시 시도해 주세요!")
+                            }
                         }
                     }
                     .disposed(by: self.disposeBag)
