@@ -58,6 +58,10 @@ struct DeletePostResponse: Decodable {
     var _id: String
 }
 
+struct DeleteCommentResponse: Decodable {
+    var postID: String
+}
+
 struct likedResponse: Decodable {
     var isSuccess: Bool
     
