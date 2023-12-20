@@ -57,6 +57,14 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
         return button
     }()
     
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = self.splitViewController?.view.center ?? CGPoint()
+        activityIndicator.style = UIActivityIndicatorView.Style.large
+        activityIndicator.isHidden = true
+        return activityIndicator
+    }()
+    
     let viewModel = LoginViewModel()
     
     let disposeBag = DisposeBag()
@@ -78,7 +86,8 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
             idTextField,
             passwordTextField,
             loginButton,
-            signUpButton
+            signUpButton,
+            activityIndicator
         ]
             .forEach {
                 view.addSubview($0)
@@ -144,9 +153,18 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
             }
             .disposed(by: disposeBag)
         
+        output.loginButtonTapped
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.activityIndicator.isHidden = false
+                owner.activityIndicator.startAnimating()
+            }
+            .disposed(by: disposeBag)
         
         output.canLogin
             .bind(with: self) { owner, login in
+                owner.activityIndicator.stopAnimating()
+                owner.activityIndicator.isHidden = true
                 if login {
                     self.transitionTo(FeedViewController())
                     
