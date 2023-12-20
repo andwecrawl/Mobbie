@@ -27,6 +27,7 @@ enum MoyaNetwork {
     
     // 댓글
     case writeComment(postID: String, content: String)
+    case deleteComment(postID: String, commentID: String)
     
     // 좋아요
     case liked(postID: String)
@@ -57,6 +58,8 @@ extension MoyaNetwork: TargetType {
             return "post/\(postID)"
         case .writeComment(let postID, _):
             return "post/\(postID)/comment"
+        case .deleteComment(let postID, let commentID):
+            return "post/\(postID)/comment/\(commentID)"
         case .liked(postID: let postID):
             return "post/like/\(postID)"
         }
@@ -70,7 +73,7 @@ extension MoyaNetwork: TargetType {
             return .get
         case .modifiyPost:
             return .put
-        case .deletePost:
+        case .deletePost, .deleteComment:
             return .delete
         }
     }
@@ -111,7 +114,7 @@ extension MoyaNetwork: TargetType {
             
         case .modifiyPost(_, let commentUsers):
             let content2 = MultipartFormData(provider: .data(commentUsers.data(using: .utf8)!), name: "content2")
-            var multipartData: [MultipartFormData] = [content2]
+            let multipartData: [MultipartFormData] = [content2]
             return .uploadMultipart(multipartData)
             
         case .fetchPost(let cursor):
@@ -152,7 +155,7 @@ extension MoyaNetwork: TargetType {
                 "Content-Type": "multipart/form-data",
                 "SesacKey": APIKeyURL.APIKey.rawValue
             ]
-        case .withdraw, .fetchPost, .fetchSpecificPost, .deletePost, .liked:
+        case .withdraw, .fetchPost, .fetchSpecificPost, .deletePost, .deleteComment, .liked:
             [
                 "Authorization": UserDefaultsHelper.shared.accessToken,
                 "SesacKey": APIKeyURL.APIKey.rawValue
