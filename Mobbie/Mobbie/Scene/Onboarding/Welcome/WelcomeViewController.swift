@@ -118,7 +118,6 @@ final class WelcomeViewController: BaseViewController, TransitionProtocol {
                 Nickname.shared.setNicknameRefresher()
                 
                 let vc = FeedViewController()
-                vc.feedType = .mainFeed
                 self.transitionTo(vc)
                 
             })

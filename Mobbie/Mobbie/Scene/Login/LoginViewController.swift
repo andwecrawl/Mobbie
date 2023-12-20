@@ -154,7 +154,6 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
             .disposed(by: disposeBag)
         
         output.loginButtonTapped
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.activityIndicator.isHidden = false
                 owner.activityIndicator.startAnimating()
@@ -167,7 +166,6 @@ final class LoginViewController: BaseViewController, TransitionProtocol {
                 owner.activityIndicator.isHidden = true
                 if login {
                     let vc = FeedViewController()
-                    vc.feedType = .mainFeed
                     self.transitionTo(vc)
                     
                 } else {
