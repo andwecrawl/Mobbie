@@ -71,8 +71,8 @@ enum Design {
         
         enum FontSize: CGFloat {
             case small = 14
-            case medium = 16
-            case large = 18
+            case medium = 15
+            case large = 16
             case extraLarge = 28
         }
     }
