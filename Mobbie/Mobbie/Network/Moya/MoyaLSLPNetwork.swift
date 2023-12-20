@@ -33,7 +33,7 @@ enum MoyaNetwork {
     case liked(postID: String)
     case fetchPostUserLiked
     
-    case profile
+    case fetchMyPosts(userID: String)
 }
 
 extension MoyaNetwork: TargetType {
@@ -65,8 +65,8 @@ extension MoyaNetwork: TargetType {
             return "post/\(postID)/comment/\(commentID)"
         case .liked(postID: let postID):
             return "post/like/\(postID)"
-        case .profile:
-            return "profile/me"
+        case .fetchMyPosts(let userID):
+            return "post/user/\(userID)"
         case .fetchPostUserLiked:
             return "post/like/me"
         }
@@ -76,7 +76,7 @@ extension MoyaNetwork: TargetType {
         switch self {
         case .signUp, .login, .emailValidation, .writePost, .writeComment, .liked:
             return .post
-        case .withdraw, .refreshAccessToken, .fetchPost, .fetchSpecificPost, .profile, .fetchPostUserLiked:
+        case .withdraw, .refreshAccessToken, .fetchPost, .fetchSpecificPost, .fetchMyPosts, .fetchPostUserLiked:
             return .get
         case .modifiyPost:
             return .put
@@ -162,7 +162,7 @@ extension MoyaNetwork: TargetType {
                 "Content-Type": "multipart/form-data",
                 "SesacKey": APIKeyURL.APIKey.rawValue
             ]
-        case .withdraw, .fetchPost, .fetchSpecificPost, .deletePost, .deleteComment, .liked, .profile, .fetchPostUserLiked:
+        case .withdraw, .fetchPost, .fetchSpecificPost, .deletePost, .deleteComment, .liked, .fetchMyPosts, .fetchPostUserLiked:
             [
                 "Authorization": UserDefaultsHelper.shared.accessToken,
                 "SesacKey": APIKeyURL.APIKey.rawValue
