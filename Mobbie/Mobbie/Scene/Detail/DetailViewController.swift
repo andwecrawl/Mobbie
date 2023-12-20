@@ -377,6 +377,13 @@ extension DetailViewController: FeedDelegate {
     func moveComment(tag: Int) {
         sendOneSideAlert(title: "현재 댓글창에 있어요!")
     }
+    
+    
+    func share(activeVC: UIActivityViewController) {
+        
+        activeVC.popoverPresentationController?.sourceView = self.view
+        self.present(activeVC, animated: true)
+    }
 }
 
 
@@ -387,24 +394,36 @@ extension DetailViewController: CommentDelegate {
         // comment로 고쳐야 함
         sendInteractiveAlert(title: "삭제하시겠습니까?", choices: [
             UIAlertAction(title: "취소", style: .default, handler: { _ in return }),
-            UIAlertAction(title: "삭제", style: .cancel, handler: { _ in
-                MoyaAPIManager.shared.fetchInSignProgress(.deletePost(postID: postID), type: DeletePostResponse.self)
+            UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+                MoyaAPIManager.shared.fetchInSignProgress(.deleteComment(postID: postID, commentID: commentID), type: DeleteCommentResponse.self)
                     .subscribe(with: self) { owner, response in
                         switch response {
                         case .success(let result):
-                            if post.comments[tag]._id == result._id {
-                                self.post?.comments.remove(at: tag)
-                                self.tableView.deleteRows(at: [IndexPath(row: tag, section: 0)], with: .automatic)
-                            } else {
-                                self.sendOneSideAlert(title: "댓글을 찾을 수 없습니다!")
-                            }
+                            
+                            MoyaAPIManager.shared.fetchInSignProgress(.fetchSpecificPost(postID: result.postID), type: Post.self)
+                                .subscribe(with: self) { owner, response in
+                                    switch response {
+                                    case .success(let post):
+                                        DispatchQueue.main.async {
+                                            self.post = post
+                                            self.tableView.reloadData()
+                                        }
+                                    case .failure(let error):
+                                        print("\(error)")
+                                        owner.sendOneSideAlert(title: "화면을 새로고침하지 못했어요!", message: "아래로 당겨 수동으로 새로고침해 주세요!")
+                                    }
+                                }
+                                .disposed(by: owner.disposeBag)
+                            
                         case .failure(let error):
                             print(error)
+                            self.sendOneSideAlert(title: "\(error.localizedDescription)", message: "다시 시도해 주세요!")
                         }
                     }
                     .disposed(by: self.disposeBag)
             })
         ])
     }
+    
     
 }

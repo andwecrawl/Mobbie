@@ -12,7 +12,17 @@ protocol FeedDelegate {
     func like(tag: Int, result: Bool)
     func delete(tag: Int, postID: String)
     func moveComment(tag: Int)
+    func share(activeVC: UIActivityViewController)
 }
+
+//extension FeedDelegate where Self: BaseViewController {
+//    
+//    func share(activeVC: UIActivityViewController) {
+//        print("share?")
+//        activeVC.popoverPresentationController?.sourceView = self.view
+//        self.present(activeVC, animated: true)
+//    }
+//}
 
 final class FeedTableViewCell: BaseTableViewCell {
     
@@ -37,14 +47,14 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     private let contentLabel = {
         let label = UILabel()
-        label.font = Design.Font.preRegular.getFonts(size: 15)
+        label.font = Design.Font.preRegular.midFont
         label.numberOfLines = 0
         return label
     }()
     
     private let commentButton = {
         let button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 11, weight: .medium)
         let image = UIImage(systemName: "bubble.left", withConfiguration: imageConfig)
         var config = UIButton.Configuration.plain()
         var titleContainer = AttributeContainer()
@@ -61,7 +71,7 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     let likedButton = {
         let button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .medium)
         let heartImage = UIImage(systemName: "heart", withConfiguration: imageConfig)
         let filledHeart = UIImage(systemName: "heart.fill", withConfiguration: imageConfig)
         button.setImage(heartImage, for: .normal)
@@ -79,9 +89,23 @@ final class FeedTableViewCell: BaseTableViewCell {
         return button
     }()
     
+    let remobbButton = {
+        let button = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .medium)
+        let image = UIImage(systemName: "arrow.2.squarepath", withConfiguration: imageConfig)
+        var config = UIButton.Configuration.plain()
+        config.image = image
+        config.imagePlacement = .leading
+        config.imagePadding = 4
+        config.baseBackgroundColor = .clear
+        button.configuration = config
+        button.tintColor = .gray.withAlphaComponent(0.8)
+        return button
+    }()
+    
     let shareButton = {
         let button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .medium)
         let image = UIImage(systemName: "square.and.arrow.up", withConfiguration: imageConfig)
         var config = UIButton.Configuration.plain()
         config.image = image
@@ -133,7 +157,7 @@ final class FeedTableViewCell: BaseTableViewCell {
         buttonStackView.axis = .horizontal
         buttonStackView.spacing = 8
         buttonStackView.distribution = .equalSpacing
-        buttonStackView.AddArrangedSubviews([commentButton, likedButton, shareButton])
+        buttonStackView.AddArrangedSubviews([commentButton, remobbButton, likedButton, shareButton])
         
         [
             userLabel,
@@ -178,14 +202,14 @@ final class FeedTableViewCell: BaseTableViewCell {
         buttonStackView.distribution = .equalSpacing
         buttonStackView.alignment = .leading
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(photoCollectionView.snp.bottom)
+            make.top.equalTo(photoCollectionView.snp.bottom).offset(8)
             make.leading.equalTo(contentLabel)
-            make.trailing.equalTo(photoCollectionView).inset(100)
-            make.height.equalTo(35)
-            make.bottom.equalToSuperview().inset(4)
+            make.trailing.equalTo(photoCollectionView).inset(40)
+            make.height.equalTo(20)
+            make.bottom.equalToSuperview().inset(8)
         }
         
-        [commentButton, likedButton, shareButton].forEach { button in
+        [commentButton, likedButton, remobbButton, shareButton].forEach { button in
             button.snp.makeConstraints { make in
                 make.width.equalTo(button.snp.height).multipliedBy(1.25)
             }
@@ -194,11 +218,6 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     override func configureView() {
         guard let type else { return }
-        if type == .detail {
-            contentLabel.font = Design.Font.preRegular.getFonts(size: 17)
-        } else {
-            contentLabel.font = Design.Font.preRegular.getFonts(size: 16)
-        }
         timeLabel.text = "20분 전"
         contentLabel.text = "내용이에용"
         contentLabel.setLineSpacing(lineSpacing: 4)
@@ -206,12 +225,6 @@ final class FeedTableViewCell: BaseTableViewCell {
     
     func configureCell() {
         guard let post else { return }
-        
-        if type == .detail {
-            contentLabel.font = Design.Font.preRegular.getFonts(size: 17)
-        } else {
-            contentLabel.font = Design.Font.preRegular.getFonts(size: 16)
-        }
         
         photoCollectionView.snp.updateConstraints { make in
             make.height.equalTo(220)
@@ -271,13 +284,14 @@ final class FeedTableViewCell: BaseTableViewCell {
         guard let post else { return }
         commentButton.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
         likedButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         
         let menuElement: [UIMenuElement] = [
             UIAction(title: "삭제하기", image: UIImage(systemName: "trash.fill"), handler: { _ in
                 self.delegate?.delete(tag: self.tag, postID: post._id)
             }),
             UIAction(title: "공유하기", image: UIImage(systemName: "square.and.arrow.up"), handler: { _ in
-                // 공유하깅
+                self.shareButtonTapped()
             })
         ]
         settingButton.menu = UIMenu(children: menuElement)
@@ -308,5 +322,19 @@ final class FeedTableViewCell: BaseTableViewCell {
             .disposed(by: disposeBag)
             
     }
+    
+    
+    @objc func shareButtonTapped() {
+        guard let post else { return }
+        contentView.backgroundColor = .background
+        let image = contentView.asImage()
+        let title = "\(post.nickname ?? "")님의 게시글 공유하기"
+        let content = post.content ?? ""
+        
+        let items = [SharePinNumberActivityItemSource(title: title, content: content, image: image)]
+        let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        delegate?.share(activeVC: activityVC)
+    }
+    
 }
 

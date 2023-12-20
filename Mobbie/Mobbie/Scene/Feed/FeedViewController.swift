@@ -242,4 +242,10 @@ extension FeedViewController: FeedDelegate {
         vc.post = viewModel.posts[tag]
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func share(activeVC: UIActivityViewController) {
+        print("share?")
+        activeVC.popoverPresentationController?.sourceView = self.view
+        self.present(activeVC, animated: true)
+    }
 }
