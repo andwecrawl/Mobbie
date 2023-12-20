@@ -10,18 +10,7 @@ import RxSwift
 
 final class SettingViewController: BaseViewController, TransitionProtocol {
     
-    let nicknameLabel = {
-        let label = UILabel()
-        label.text = "새콤달콤한 주전자"
-        label.font = Design.Font.preSemiBold.exlargeFont
-        return label
-    }()
-    
-    let refreshButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-        return button
-    }()
+    let nicknameView = NicknameView()
     
     private lazy var tableView = {
         let view = UITableView(frame: .zero, style: .insetGrouped)
@@ -39,8 +28,7 @@ final class SettingViewController: BaseViewController, TransitionProtocol {
     
     override func configureHierarchy() {
         [
-            nicknameLabel,
-            refreshButton,
+            nicknameView,
             tableView
         ]
             .forEach { view.addSubview($0) }
@@ -49,35 +37,17 @@ final class SettingViewController: BaseViewController, TransitionProtocol {
     
     override func setConstraints() {
         
-        nicknameLabel.sizeToFit()
-        nicknameLabel.snp.makeConstraints { make in
+        nicknameView.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.top.equalTo(view.safeAreaLayoutGuide).inset(40)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(20)
-        }
-        
-        refreshButton.snp.makeConstraints { make in
-            make.top.equalTo(nicknameLabel)
-            make.leading.equalTo(nicknameLabel.snp.trailing).offset(8)
-            make.size.equalTo(30)
+            make.height.equalTo(40)
         }
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(nicknameLabel.snp.bottom).offset(20)
+            make.top.equalTo(nicknameView.snp.bottom).offset(20)
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
-    
-    override func configureView() {
-        nicknameLabel.text = UserDefaultsHelper.shared.nickname
-        refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc func refreshButtonTapped() {
-        print("refresh")
-        UserDefaultsHelper.shared.nickname = Nickname.shared.makeNewNickname()
-        nicknameLabel.text = UserDefaultsHelper.shared.nickname
-    }
-    
 }
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
