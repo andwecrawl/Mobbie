@@ -37,19 +37,10 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         
         guard let imagePath else { return }
         
-        // 추후 이미지 넣는 코드 작성
-        let modifier = AnyModifier { request in
-            var request = request
-            request.setValue(UserDefaultsHelper.shared.accessToken, forHTTPHeaderField: "Authorization")
-            request.setValue(APIKeyURL.APIKey.rawValue, forHTTPHeaderField: "SesacKey")
-            return request
+        KingfisherHelper.shared.fetchImage(imageURL: imagePath) { image, size in
+            self.imageView.image = image
+        } errorHandler: { error in
+            self.imageView.backgroundColor = .gray
         }
-        
-        let url = URL(string: APIKeyURL.baseURL.rawValue + imagePath)
-        
-        imageView.kf.setImage(with: url, options: [
-            .requestModifier(modifier),
-            .progressiveJPEG(.init(isBlur: true, isFastestScan: true, scanInterval: 0.1))
-        ])
     }
 }
