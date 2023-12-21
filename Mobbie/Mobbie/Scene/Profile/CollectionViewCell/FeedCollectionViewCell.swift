@@ -153,7 +153,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         }
         
         timeLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(userLabel)
+            make.top.equalTo(self.safeAreaInsets).inset(20)
             make.leading.equalTo(userLabel.snp.trailing).offset(6)
         }
         
