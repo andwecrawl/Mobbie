@@ -29,18 +29,28 @@ class SegmentedCollectionCell: BaseCollectionViewCell {
     override func setConstraints() {
         namelabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(underlineView).inset(4)
+            make.bottom.equalTo(underlineView).inset(20)
         }
         
         underlineView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(2)
-            make.height.equalTo(2)
-            make.bottom.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(4)
+            make.height.equalTo(3)
+            make.bottom.equalToSuperview().inset(3)
         }
     }
     
     override func configureView() {
-        
+        underlineView.backgroundColor = .gray.withAlphaComponent(0.5)
+    }
+    
+    func configureCell(item: ProfileSegmentData) {
+        namelabel.text = item.title
+        if item.isSelected {
+            underlineView.backgroundColor = .highlightOrange
+        } else {
+            underlineView.backgroundColor = .gray.withAlphaComponent(0.5)
+            underlineView.isHidden = true
+        }
     }
     
     
