@@ -47,7 +47,7 @@ class NicknameView: UIView {
         }
         
         refreshButton.snp.makeConstraints { make in
-            make.top.equalTo(nicknameLabel)
+            make.centerY.equalTo(nicknameLabel)
             make.leading.equalTo(nicknameLabel.snp.trailing).offset(8)
             make.size.equalTo(30)
         }
