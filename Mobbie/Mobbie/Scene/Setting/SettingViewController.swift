@@ -66,7 +66,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch row {
         case 0:
-            sendOneSideAlert(title: "아직 준비되지 않았어요!", message: "ㅠㅠ 열심히 만들어 볼게요")
+            navigationController?.pushViewController(UserViewController(), animated: true)
         case 1:
             sendOneSideAlert(title: "아직 준비되지 않았어요!", message: "ㅠㅠ 열심히 만들어 볼게요")
         case 2:
