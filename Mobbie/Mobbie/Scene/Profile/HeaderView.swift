@@ -8,15 +8,24 @@
 import UIKit
 import SnapKit
 
+protocol HeaderViewDelegate {
+    func sendCellType(_ cellType: ProfileCellType)
+}
+
 class HeaderView: UICollectionReusableView {
+    static let identifier = "HeaderView"
     
-    let settings = ["내가 쓴 글", "미디어", "좋아요한 글"]
-    
-    var collectionView = {
+    lazy var collectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: setLayout())
         view.register(SegmentedCollectionCell.self, forCellWithReuseIdentifier: SegmentedCollectionCell.identifier)
+        view.dataSource = self
+        view.delegate = self
         return view
     }()
+    
+    let lineView = UIView()
+    
+    var delegate: HeaderViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,21 +40,27 @@ class HeaderView: UICollectionReusableView {
     func configureView() {
         
         self.addSubview(collectionView)
+        self.addSubview(lineView)
         
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        lineView.backgroundColor = .gray.withAlphaComponent(0.4)
+        lineView.snp.makeConstraints { make in
+            make.height.equalTo(1)
+            make.horizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview().inset(1)
+        }
     }
     
-    static func setLayout() -> UICollectionViewFlowLayout {
+    func setLayout() -> UICollectionViewFlowLayout {
         
         let layout = UICollectionViewFlowLayout()
-        let space: CGFloat = 2
-        let width: CGFloat = (UIScreen.main.bounds.width - (space * 5)) / 5
+        let width: CGFloat = (UIScreen.main.bounds.width) / 3.5
         
         layout.itemSize = CGSize(width: width, height: 50)
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: space, bottom: 0, right: space)
         
         return layout
     }
@@ -53,17 +68,32 @@ class HeaderView: UICollectionReusableView {
 
 extension HeaderView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return ProfileSegmentDataList.shared.list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SegmentedCollectionCell.identifier, for: indexPath) as? SegmentedCollectionCell else { return UICollectionViewCell() }
         
         let item = indexPath.item
-        cell.namelabel.text = settings[item]
+        let data = ProfileSegmentDataList.shared.list
+//        cell.namelabel.text = settings[item]
+        
+        cell.configureCell(item: data[item])
         
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = indexPath.item
+        
+        ProfileSegmentDataList.shared.segmentedDataTapped(index: item)
+        switch item {
+        case 1:
+            delegate?.sendCellType(.media)
+        default:
+            delegate?.sendCellType(.feed)
+        }
+        collectionView.reloadData()
+    }
     
 }
