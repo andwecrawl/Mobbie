@@ -46,6 +46,7 @@ class SegmentedCollectionCell: BaseCollectionViewCell {
     func configureCell(item: ProfileSegmentData) {
         namelabel.text = item.title
         if item.isSelected {
+            underlineView.isHidden = false
             underlineView.backgroundColor = .highlightOrange
         } else {
             underlineView.backgroundColor = .gray.withAlphaComponent(0.5)
