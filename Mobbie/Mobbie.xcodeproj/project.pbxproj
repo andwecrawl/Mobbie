@@ -92,6 +92,7 @@
 		D1FD2DB92B338119004B8CFC /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD2DB82B338119004B8CFC /* HeaderView.swift */; };
 		D1FD2DBB2B3423B6004B8CFC /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD2DBA2B3423B6004B8CFC /* MediaCollectionViewCell.swift */; };
 		D1FD2DBD2B343053004B8CFC /* ProfileSegmentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD2DBC2B343053004B8CFC /* ProfileSegmentData.swift */; };
+		D1FD2DBF2B345C97004B8CFC /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD2DBE2B345C97004B8CFC /* UserViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -173,6 +174,7 @@
 		D1FD2DB82B338119004B8CFC /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		D1FD2DBA2B3423B6004B8CFC /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1FD2DBC2B343053004B8CFC /* ProfileSegmentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSegmentData.swift; sourceTree = "<group>"; };
+		D1FD2DBE2B345C97004B8CFC /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				D1FD2DAD2B33705D004B8CFC /* UserViewController.swift */,
+				D1FD2DBE2B345C97004B8CFC /* UserViewModel.swift */,
 				D1FD2DB82B338119004B8CFC /* HeaderView.swift */,
 				D1FD2DB72B3374B4004B8CFC /* CollectionViewCell */,
 			);
@@ -587,6 +590,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1D3321D2B17863D00852274 /* AuthInterceptor.swift in Sources */,
+				D1FD2DBF2B345C97004B8CFC /* UserViewModel.swift in Sources */,
 				D1674CE62B064842000697C2 /* MoyaAPIManager.swift in Sources */,
 				D12D88BA2B2F2601007A05EA /* SettingList.swift in Sources */,
 				D12D88F42B330567007A05EA /* ShareActvityItems.swift in Sources */,
