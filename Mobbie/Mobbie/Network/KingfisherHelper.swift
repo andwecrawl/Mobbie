@@ -34,7 +34,9 @@ class KingfisherHelper {
                 case .success(let result):
                     let image = result.image
                     let size = result.image.size
-                    completionHandler(image, size)
+                    DispatchQueue.main.async {
+                        completionHandler(image, size)
+                    }
                     
                 case .failure(let error):
                     print(error)
