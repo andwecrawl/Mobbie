@@ -23,13 +23,31 @@ class MediaCollectionViewCell: BaseCollectionViewCell {
     
     override func setConstraints() {
         imageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.horizontalEdges.equalToSuperview()
         }
     }
     
-//    override func configureView(post: Post) {
-////        post.image.isEmpty
-//    }
+    override func configureView() {
+        
+    }
+    
+    func configureCell(post: Post) {
+        
+        if let image = post.image.first {
+            KingfisherHelper.shared.fetchImage(imageURL: image) { image, size in
+                let ratio = size.height / size.width
+                self.imageView.snp.makeConstraints { make in
+                    make.height.equalTo(self.imageView.snp.width).multipliedBy(ratio)
+                }
+                self.imageView.image = image
+            } errorHandler: { error in
+                print("\(error)")
+            }
+
+        }
+        
+        
+    }
     
     
 }
