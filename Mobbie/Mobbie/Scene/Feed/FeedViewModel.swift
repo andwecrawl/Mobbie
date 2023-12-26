@@ -55,10 +55,8 @@ final class FeedViewModel: ViewModel {
                 switch response {
                 case .success(let result):
                     data.onNext(.success(result))
-                    print("success Result: \(result)")
                 case .failure(let error):
                     data.onNext(.failure(error))
-                    print("error Result: \(error)")
                 }
             }
             .disposed(by: disposeBag)
