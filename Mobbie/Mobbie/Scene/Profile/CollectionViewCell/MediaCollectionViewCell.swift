@@ -24,11 +24,12 @@ class MediaCollectionViewCell: BaseCollectionViewCell {
     override func setConstraints() {
         imageView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
+            make.height.equalTo(100)
         }
     }
     
     override func configureView() {
-        
+        imageView.backgroundColor = .gray
     }
     
     func configureCell(post: Post) {
