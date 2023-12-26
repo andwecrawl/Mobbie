@@ -52,6 +52,8 @@ class HeaderView: UICollectionReusableView {
             make.horizontalEdges.equalToSuperview()
             make.bottom.equalToSuperview().inset(1)
         }
+        
+        delegate?.sendCellType(.feed)
     }
     
     func setLayout() -> UICollectionViewFlowLayout {
