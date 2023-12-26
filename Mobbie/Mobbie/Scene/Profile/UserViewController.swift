@@ -29,7 +29,7 @@ class UserViewController: BaseViewController {
     }()
     
     var nextCursor = ""
-    var viewModel = UserViewModel()
+    var ratios: [CGFloat] = []
     var cellType: ProfileCellType?
     var cellData: [Post] = []
     
@@ -48,44 +48,9 @@ class UserViewController: BaseViewController {
     
     override func configureView() {
         
-        bind()
-        viewModel = UserViewModel()
+        sendCellType(cellType ?? .feed)
     }
     
-    func bind() {
-        
-        
-        let input = UserViewModel.Input(
-        )
-        
-        guard let output = viewModel.transform(input: input) else { return }
-        
-        
-        output.cellType
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .bind(with: self) { owner, cellType in
-                print("changed \(cellType)")
-                owner.cellType = cellType
-                owner.collectionView.collectionViewLayout = owner.createLayout()
-                owner.collectionView.reloadData()
-            }
-            .disposed(by: disposeBag)
-        
-        Observable.combineLatest(output.nextCursor, output.errorMessage)
-            .bind(with: self) { owner, value in
-                let nextCursor = value.0
-                let errorMessage = value.1
-                
-                if errorMessage.isEmpty {
-                    owner.nextCursor = nextCursor
-                    owner.collectionView.reloadSections(IndexSet(arrayLiteral: 1))
-                } else {
-                    owner.sendOneSideAlert(title: errorMessage, message: "다시 시도해 주세요!")
-                }
-            }
-            .disposed(by: disposeBag)
-        
-    }
     
 }
 
@@ -98,12 +63,13 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if section == 0 {
             return 1
         } else {
-            return 10 // post 갯수로 변경
+            return cellData.count // post 갯수로 변경
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let section = indexPath.section
+        let item = indexPath.item
         
         if section == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NicknameCell.identifier, for: indexPath) as? NicknameCell else { return UICollectionViewCell() }
@@ -112,9 +78,18 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
         } else if cellType == .feed {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedCollectionViewCell.identifier, for: indexPath) as? FeedCollectionViewCell else { return UICollectionViewCell() }
             
+            let post = cellData[item]
+            cell.delegate = self
+            cell.post = post
+            cell.configureCell()
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MediaCollectionViewCell.identifier, for: indexPath) as? MediaCollectionViewCell else { return UICollectionViewCell() }
+            
+            print("==================================")
+            print("cellData: \(cellData.count), cell: \(item)")
+            let post = cellData[item]
+            cell.configureCell(post: post)
             cell.backgroundColor = .yellow
             return cell
         }
@@ -152,27 +127,32 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 
             } else if sectionNumber == 1 && cellType == .media {
                 
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .estimated(100))
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
-                // 수직 스크롤에 대한 대응까지는 온 상태!!
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 2)
-                group.interItemSpacing = .fixed(10)
-                
-                let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-                section.interGroupSpacing = 10
-                let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                             heightDimension: .estimated(44))
-                let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: headerFooterSize,
-                    elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-                sectionHeader.pinToVisibleBounds = true
-                section.boundarySupplementaryItems = [sectionHeader]
-                section.orthogonalScrollingBehavior = .none
-                
-                return section
+                if self.ratios.isEmpty {
+                    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .estimated(100))
+                    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                    
+                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
+                    // 수직 스크롤에 대한 대응까지는 온 상태!!
+                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 2)
+                    group.interItemSpacing = .fixed(10)
+                    
+                    let section = NSCollectionLayoutSection(group: group)
+                    section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+                    section.interGroupSpacing = 10
+                    let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                                  heightDimension: .estimated(44))
+                    let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                        layoutSize: headerFooterSize,
+                        elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                    sectionHeader.pinToVisibleBounds = true
+                    section.boundarySupplementaryItems = [sectionHeader]
+                    section.orthogonalScrollingBehavior = .none
+                    
+                    return section
+                } else {
+                    let ratios = self.ratios.map { Ratio(ratio: $0) }
+                    return MediaLayout(columnsCount: 2, itemRatios: ratios, spacing: 10, contentWidth: self.view.frame.width).section
+                }
                 
             } else { // feed
                 
@@ -196,7 +176,77 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 extension UserViewController: HeaderViewDelegate {
     func sendCellType(_ cellType: ProfileCellType) {
-        viewModel.cellType.accept(cellType)
+        self.cellType = cellType
+        collectionView.collectionViewLayout = createLayout()
+        fetchData(cellType)
+//        viewModel.cellType.accept(cellType)
+    }
+    
+    
+    func fetchData(_ cellType: ProfileCellType) {
+        switch cellType {
+        case .feed:
+            MoyaAPIManager.shared.fetchInSignProgress(.fetchMyPosts(userID: UserDefaultsHelper.shared.userID, cursor: nextCursor), type: PostResponse.self)
+                .subscribe(with: self) { owner, response in
+                    switch response {
+                        
+                    case .success(let result):
+                        print(result)
+                        owner.cellData = result.data
+                        owner.nextCursor = result.nextCursor
+                        owner.collectionView.reloadData()
+                    case .failure(let error):
+                        owner.sendOneSideAlert(title: error.localizedDescription, message: "다시 시도해 주세요!")
+                    }
+                }
+                .disposed(by: disposeBag)
+            
+        case .media:
+            
+            let group = DispatchGroup()
+            
+            group.enter()
+            MoyaAPIManager.shared.fetchInSignProgress(.fetchMyPosts(userID: UserDefaultsHelper.shared.userID, cursor: nextCursor), type: PostResponse.self)
+                    .subscribe(with: self) { owner, response in
+                        switch response {
+                            
+                        case .success(let result):
+                            let data = result.data.filter { $0.image.count > 0 }
+                            let ratios = data.map {
+                                CGFloat((($0.ratio ?? "") as NSString).floatValue) }
+                            owner.ratios = ratios
+                            owner.nextCursor = result.nextCursor
+                            owner.cellData = data
+                            owner.collectionView.reloadData()
+                        case .failure(let error):
+                            owner.sendOneSideAlert(title: error.localizedDescription, message: "다시 시도해 주세요!")
+                        }
+                    }
+                    .disposed(by: disposeBag)
+            
+        case .liked:
+            MoyaAPIManager.shared.fetchInSignProgress(.fetchPostUserLiked, type: PostResponse.self)
+                .subscribe(with: self) { owner, response in
+                    switch response {
+                        
+                    case .success(let result):
+                        owner.cellData = result.data
+                        owner.nextCursor = result.nextCursor
+                        owner.collectionView.reloadData()
+                    case .failure(let error):
+                        owner.sendOneSideAlert(title: error.localizedDescription, message: "다시 시도해 주세요!")
+                    }
+                }
+                .disposed(by: disposeBag)
+        }
+    }
+}
+
+
+extension UserViewController: FeedDelegate {
+    func like(tag: Int, result: Bool) {
+        
+    }
     }
     
     
