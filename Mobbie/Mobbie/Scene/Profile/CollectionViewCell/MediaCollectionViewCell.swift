@@ -23,9 +23,9 @@ class MediaCollectionViewCell: BaseCollectionViewCell {
     
     override func setConstraints() {
         imageView.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalToSuperview()
-            make.height.equalTo(100)
+            make.edges.equalToSuperview()
         }
+        
     }
     
     override func configureView() {
@@ -35,12 +35,20 @@ class MediaCollectionViewCell: BaseCollectionViewCell {
     func configureCell(post: Post) {
         
         if let image = post.image.first {
-            KingfisherHelper.shared.fetchImage(imageURL: image) { image, size in
-                let ratio = size.height / size.width
-                self.imageView.snp.makeConstraints { make in
-                    make.height.equalTo(self.imageView.snp.width).multipliedBy(ratio)
+            KingfisherHelper.shared.fetchImage(imageURL: image) { [weak self] image, size in
+                if let self {
+                    print(size)
+                    let ratio = size.height / size.width
+                    print(ratio)
+                    self.imageView.snp.remakeConstraints { make in
+                        make.edges.equalToSuperview()
+                        make.height.equalTo(self.imageView.snp.width).multipliedBy(ratio).priority(999)
+                    }
+                    self.imageView.image = image
+                    print(self.imageView.frame)
+                    
+                    invalidateIntrinsicContentSize()
                 }
-                self.imageView.image = image
             } errorHandler: { error in
                 print("\(error)")
             }
