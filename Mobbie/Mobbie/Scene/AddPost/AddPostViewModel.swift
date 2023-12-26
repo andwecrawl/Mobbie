@@ -66,7 +66,9 @@ class AddPostViewModel: ViewModel {
                 } else {
                     var data: [Data] = []
                     self.images.forEach { data.append($0.jpegData(compressionQuality: 0.5)!) }
-                    return MoyaAPIManager.shared.fetchInSignProgress(.writePost(model: PostModel(content: str, file: data)), type: Post.self)
+                    let imageSize = self.images.first!.size
+                    let ratio = imageSize.width / imageSize.height
+                    return MoyaAPIManager.shared.fetchInSignProgress(.writePost(model: PostModel(content: str, file: data, ratio: "\(ratio)")), type: Post.self)
                 }
             }
             .subscribe(with: self) { owner, response in
