@@ -33,7 +33,7 @@ enum MoyaNetwork {
     case liked(postID: String)
     case fetchPostUserLiked
     
-    case fetchMyPosts(userID: String)
+    case fetchMyPosts(userID: String, cursor: String)
 }
 
 extension MoyaNetwork: TargetType {
@@ -65,7 +65,7 @@ extension MoyaNetwork: TargetType {
             return "post/\(postID)/comment/\(commentID)"
         case .liked(postID: let postID):
             return "post/like/\(postID)"
-        case .fetchMyPosts(let userID):
+        case .fetchMyPosts(let userID, _):
             return "post/user/\(userID)"
         case .fetchPostUserLiked:
             return "post/like/me"
@@ -115,6 +115,9 @@ extension MoyaNetwork: TargetType {
                 var data: [MultipartFormData] = []
                 images.forEach { data.append(MultipartFormData(provider: .data($0), name: "file", fileName: "\($0).jpg", mimeType: "image/jpg")) }
                 multipartData.append(contentsOf: data)
+                
+                let content3 = MultipartFormData(provider: .data(model.ratio.data(using: .utf8)!), name: "content3")
+                multipartData.append(content3)
             }
             
             return .uploadMultipart(multipartData)
@@ -124,14 +127,13 @@ extension MoyaNetwork: TargetType {
             let multipartData: [MultipartFormData] = [content2]
             return .uploadMultipart(multipartData)
             
-        case .fetchPost(let cursor):
+        case .fetchPost(let cursor), .fetchMyPosts(_, let cursor):
             let params: [String: String] = [
                 "next": cursor,
                 "limit": "20",
                 "product_id": "MobbieFeed"
             ]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString )
-            
             
             // comment
         case .writeComment(_, let content):

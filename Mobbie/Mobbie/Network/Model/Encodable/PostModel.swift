@@ -13,6 +13,7 @@ struct PostModel: Encodable {
     let productID: String = "MobbieFeed"
     let nickname: String = UserDefaultsHelper.shared.nickname
     var commentUsers: String = ""
+    var ratio: String = ""
     // 이외에도 content1/2/3/4/5
     
     enum CodingKeys: String, CodingKey {
@@ -21,6 +22,7 @@ struct PostModel: Encodable {
         case productID = "product_id"
         case nickname = "content1"
         case commentUsers = "content2"
+        case ratio = "content3"
     }
 }
 

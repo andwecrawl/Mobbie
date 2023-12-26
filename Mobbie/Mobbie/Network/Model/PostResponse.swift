@@ -29,6 +29,7 @@ struct Post: Decodable {
     var productID: String?
     var nickname: String?
     var commentUser: String?
+    var ratio: String?
     
     var commentNicknames: [String] {
         commentUser?.components(separatedBy: ", ") ?? []
@@ -39,6 +40,7 @@ struct Post: Decodable {
         case hashTags, comments, productID
         case nickname = "content1"
         case commentUser = "content2"
+        case ratio = "content3"
     }
 }
 
