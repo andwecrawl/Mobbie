@@ -6,23 +6,34 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+
+enum ProfileCellType {
+    case feed
+    case media
+    case liked
+}
 
 class UserViewController: BaseViewController {
-    
-    enum CellType {
-        case feed
-        case media
-    }
     
     lazy var collectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         view.register(NicknameCell.self, forCellWithReuseIdentifier: NicknameCell.identifier)
         view.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.identifier)
+        view.register(MediaCollectionViewCell.self, forCellWithReuseIdentifier: MediaCollectionViewCell.identifier)
         view.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderView")
+        view.delegate = self
+        view.dataSource = self
         return view
     }()
     
-    var cellType: CellType?
+    var nextCursor = ""
+    var viewModel = UserViewModel()
+    var cellType: ProfileCellType?
+    var cellData: [Post] = []
+    
+    let disposeBag = DisposeBag()
     
     
     override func configureHierarchy() {
@@ -37,48 +48,43 @@ class UserViewController: BaseViewController {
     
     override func configureView() {
         
+        bind()
+        viewModel = UserViewModel()
     }
     
-    func createLayout() -> UICollectionViewCompositionalLayout {
-        let cellType = cellType ?? .feed
-        print("layout ...")
-        return UICollectionViewCompositionalLayout { (sectionNumber, layoutEnvironment) -> NSCollectionLayoutSection? in
-            
-            if sectionNumber == 0 {
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1)))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.9), heightDimension: .absolute(150)), subitems: [item])
-                
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(112)), subitems: [item])
-                let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .none
-                section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
-                return section
-                
-            } else if sectionNumber == 1 && cellType == .feed {
-                
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100)))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100)), subitems: [item])
-                let section = NSCollectionLayoutSection(group: group)
-                let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                             heightDimension: .estimated(44))
-                let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: headerFooterSize,
-                    elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-                sectionHeader.pinToVisibleBounds = true
-                section.boundarySupplementaryItems = [sectionHeader]
-                section.orthogonalScrollingBehavior = .none
-                section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
-                return section
-            } else { // media
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .estimated(100)))
-                item.contentInsets = .init(top: 0, leading: 5, bottom: 16, trailing: 5)
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)), subitems: [item])
-                let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .none
-                return section
+    func bind() {
+        
+        
+        let input = UserViewModel.Input(
+        )
+        
+        guard let output = viewModel.transform(input: input) else { return }
+        
+        
+        output.cellType
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, cellType in
+                print("changed \(cellType)")
+                owner.cellType = cellType
+                owner.collectionView.collectionViewLayout = owner.createLayout()
+                owner.collectionView.reloadData()
             }
-        }
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(output.nextCursor, output.errorMessage)
+            .bind(with: self) { owner, value in
+                let nextCursor = value.0
+                let errorMessage = value.1
+                
+                if errorMessage.isEmpty {
+                    owner.nextCursor = nextCursor
+                    owner.collectionView.reloadSections(IndexSet(arrayLiteral: 1))
+                } else {
+                    owner.sendOneSideAlert(title: errorMessage, message: "다시 시도해 주세요!")
+                }
+            }
+            .disposed(by: disposeBag)
+        
     }
     
 }
@@ -101,7 +107,6 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         if section == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NicknameCell.identifier, for: indexPath) as? NicknameCell else { return UICollectionViewCell() }
-            
             
             return cell
         } else if cellType == .feed {
