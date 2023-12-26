@@ -147,6 +147,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func setConstraints() {
+        userLabel.sizeToFit()
         userLabel.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaInsets).inset(16)
             make.leading.equalToSuperview().inset(20)
