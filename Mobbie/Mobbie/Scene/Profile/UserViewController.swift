@@ -104,10 +104,13 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             
             return cell
-        } else {
+        } else if cellType == .feed {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedCollectionViewCell.identifier, for: indexPath) as? FeedCollectionViewCell else { return UICollectionViewCell() }
             
-            
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MediaCollectionViewCell.identifier, for: indexPath) as? MediaCollectionViewCell else { return UICollectionViewCell() }
+            cell.backgroundColor = .yellow
             return cell
         }
     }
@@ -125,6 +128,63 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return header
         } else {
             return UICollectionReusableView()
+        }
+    }
+    
+    func createLayout() -> UICollectionViewCompositionalLayout {
+        let cellType = cellType ?? .feed
+        print("layout ...")
+        return UICollectionViewCompositionalLayout { (sectionNumber, layoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            if sectionNumber == 0 {
+                
+                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(112)), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .none
+                section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
+                return section
+                
+            } else if sectionNumber == 1 && cellType == .media {
+                
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .estimated(100))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
+                // 수직 스크롤에 대한 대응까지는 온 상태!!
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 2)
+                group.interItemSpacing = .fixed(10)
+                
+                let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+                section.interGroupSpacing = 10
+                let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                             heightDimension: .estimated(44))
+                let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerFooterSize,
+                    elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                sectionHeader.pinToVisibleBounds = true
+                section.boundarySupplementaryItems = [sectionHeader]
+                section.orthogonalScrollingBehavior = .none
+                
+                return section
+                
+            } else { // feed
+                
+                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100)))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100)), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                             heightDimension: .estimated(44))
+                let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerFooterSize,
+                    elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                sectionHeader.pinToVisibleBounds = true
+                section.boundarySupplementaryItems = [sectionHeader]
+                section.orthogonalScrollingBehavior = .none
+                section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
+                return section
+            }
         }
     }
 }
