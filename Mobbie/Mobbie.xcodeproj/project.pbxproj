@@ -84,6 +84,7 @@
 		D1F11B9B2B2AE71D0001DC4D /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11B9A2B2AE71D0001DC4D /* CommentTableViewCell.swift */; };
 		D1F11BA72B2C8BA00001DC4D /* CommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11BA62B2C8BA00001DC4D /* CommentInputView.swift */; };
 		D1F11BA92B2CAAE00001DC4D /* NicknameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F11BA82B2CAAE00001DC4D /* NicknameData.swift */; };
+		D1FB156B2B3B3D2800B25933 /* MediaLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FB156A2B3B3D2800B25933 /* MediaLayout.swift */; };
 		D1FD2DAE2B33705D004B8CFC /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD2DAD2B33705D004B8CFC /* UserViewController.swift */; };
 		D1FD2DB02B337085004B8CFC /* NicknameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD2DAF2B337085004B8CFC /* NicknameCell.swift */; };
 		D1FD2DB22B3371BF004B8CFC /* SegmentedCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD2DB12B3371BF004B8CFC /* SegmentedCollectionCell.swift */; };
@@ -166,6 +167,7 @@
 		D1F11B9A2B2AE71D0001DC4D /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		D1F11BA62B2C8BA00001DC4D /* CommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInputView.swift; sourceTree = "<group>"; };
 		D1F11BA82B2CAAE00001DC4D /* NicknameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameData.swift; sourceTree = "<group>"; };
+		D1FB156A2B3B3D2800B25933 /* MediaLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaLayout.swift; sourceTree = "<group>"; };
 		D1FD2DAD2B33705D004B8CFC /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		D1FD2DAF2B337085004B8CFC /* NicknameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameCell.swift; sourceTree = "<group>"; };
 		D1FD2DB12B3371BF004B8CFC /* SegmentedCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedCollectionCell.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				D1FD2DBE2B345C97004B8CFC /* UserViewModel.swift */,
 				D1FD2DB82B338119004B8CFC /* HeaderView.swift */,
 				D1FD2DB72B3374B4004B8CFC /* CollectionViewCell */,
+				D1FB156A2B3B3D2800B25933 /* MediaLayout.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 				D1CC23732AFCF93700684175 /* UILabel+.swift in Sources */,
 				D1F11BA72B2C8BA00001DC4D /* CommentInputView.swift in Sources */,
 				D18531272B14FF5200EACDAA /* WelcomeViewModel.swift in Sources */,
+				D1FB156B2B3B3D2800B25933 /* MediaLayout.swift in Sources */,
 				D1CC23612AFCEB6C00684175 /* IntroViewController.swift in Sources */,
 				D1F11B9B2B2AE71D0001DC4D /* CommentTableViewCell.swift in Sources */,
 				D1674D4C2B0B7978000697C2 /* ViewModelProtocol.swift in Sources */,
