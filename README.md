@@ -1,5 +1,5 @@
 # Mobbie
-![mobbie 001 001](https://github.com/andwecrawl/OMOBO/assets/120160532/6c27cdce-8d01-43ad-9d6f-26079ce6f52a)
+![mobbietemp 001](https://github.com/andwecrawl/SeSAC/assets/120160532/27660066-bdfd-4239-90d7-b63ef062f122)
 
 <br>
 
