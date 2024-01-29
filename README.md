@@ -76,61 +76,85 @@
 ```
 <br>
 
-### 2.Interceptor를 통한 JWT 인증 로직 구현
+### 2. 게시글 전체를 사진 형태로 공유하기
 - 문제 상황
-  - 모든 API 통신 코드마다 statusCode를 비교하여 accessToken 만료를 체크해주는 것은 비효율적이었다. accessToken 만료 시 refreshToken을 이용하여 accessToken 갱신이 가능하다면 토큰을 갱신하고, 토큰을 갱신하지 못한다면 로그인 화면으로 가는 로직을 구현해야 했다.
+  - UIActivityViewController의 ActivityItems 변경을 통해 공유 기능을 구현했으나, 글의 사진과 제목이 기본값으로 나오는 문제가 있었다.
 - 해결 방법
-  - Alamofire의 interceptor를 이용하여 해당 로직을 구현하였다. statusCode가 419(accessToken 만료)일 경우 refreshToken을 통해 accessToken을 갱신해 주고, 갱신에 실패할 경우와 statusCode가 418(refreshToken 만료)일 경우 로그인 화면으로 이동하게끔 만들어 주었다. 
+  - UIActivityItemSource를 상속받는 ShareActivityItemSource 클래스를 만들어 게시글 전체의 MetaData를 공유해 주었다. 사용자가 올린 사진이 없을 때는 `UIGraphicsImageRenderer`를 통해 게시글 자체를 공유해 주었고, 사용자가 올린 사진이 있을 경우 맨 처음 사진을 공유하도록 했다.
  
 ```swift
-final class AuthInterceptor: RequestInterceptor, TransitionProtocol {
-    
-    static let shared = AuthInterceptor()
+import LinkPresentation
+import UIKit
 
-    private init() {}
+final class SharePinNumberActivityItemSource: NSObject, UIActivityItemSource {
+    private var title: String
+    private var content: String
+    private var image: UIImage
     
-    var disposeBag = DisposeBag()
+    init(title: String, content: String, image: UIImage) {
+        self.title = title
+        self.content = content
+        self.image = image
+        
+        super.init()
+    }
     
-    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        
-           print("retry 진입")
-        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 419 || response.statusCode == 418
-           else {
-            completion(.doNotRetryWithError(error))
-               return
-           }
-        
-        if response.statusCode == 418 {
-            DispatchQueue.main.async {
-                self.transitionTo(LoginViewController())
-            }
-            return
-        }
-        
-        let task = Observable.just(())
-        
-        task
-            .observe(on: MainScheduler.asyncInstance)
-            .flatMap{ MoyaAPIManager.shared.fetchInSignProgress(.refreshAccessToken, type: TokenResponse.self) }
-            .subscribe(with: self) { owner, response in
-                switch response {
-                case .success(let result):
-                    // 토큰 재발급 성공 -> 갈아끼우기
-                    UserDefaultsHelper.shared.accessToken = result.token
-                    
-                    completion(.retry)
-                case .failure(let error):
-                    // 갱신 실패 -> 로그인 화면으로 전환
-                    completion(.doNotRetryWithError(error))
-                    
-                    self.transitionTo(LoginViewController())
-                    
-                }
-            }
-            .disposed(by: disposeBag)
-        
-       }
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return content
+    }
+    
+    func activityViewController(
+        _ activityViewController: UIActivityViewController,
+        itemForActivityType activityType: UIActivity.ActivityType?
+    ) -> Any? {
+        return content
+    }
+    
+    func activityViewController(
+        _ activityViewController: UIActivityViewController,
+        subjectForActivityType activityType: UIActivity.ActivityType?
+    ) -> String {
+        return title
+    }
+    
+    func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
+        let metaData = LPLinkMetadata()
+        metaData.title = title
+        metaData.iconProvider = NSItemProvider(object: image)
+        metaData.originalURL = URL(fileURLWithPath: content)
+        return metaData
+    }
 }
+```
+```swift
+    func share(activeVC: UIActivityViewController) {
+        activeVC.popoverPresentationController?.sourceView = self.view
+        self.present(activeVC, animated: true)
+    }
+```
+```swift
+    @objc func shareButtonTapped() {
+        guard let post else { return }
+        var thumb = UIImage()
+        if let imageURL = post.image.first {
+            KingfisherHelper.shared.fetchImage(imageURL: imageURL) { image, size in
+                thumb = image
+            } errorHandler: { error in
+                print(error)
+                self.delegate?.alert(title: error.localizedDescription)
+                return
+            }
+        } else {
+            contentView.backgroundColor = .background
+            thumb = contentView.asImage()
+        }
+        let title = "\(post.nickname ?? "")님의 게시글 공유하기"
+        let content = post.content ?? ""
+        
+        let items = [SharePinNumberActivityItemSource(title: title, content: content, image: thumb)]
+        let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        delegate?.share(activeVC: activityVC)
+    }
 ```
 
 <br>
